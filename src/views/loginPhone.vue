@@ -1,7 +1,7 @@
 <template>
     <div id="login">
         <div class="box">
-            <img src="../assets/login/组1814.png" alt="" class="logo">
+            <img src="../assets/login/组1814.png" class="logo">
             <h1>工程项目安全管理信息系统</h1>
             <div class="userName">
                 <i></i>
@@ -13,7 +13,7 @@
                 <span></span>
             </div>
             <p class="forgetPW">获取验证码</p>
-            <img src="../assets/login/组1813.png" alt="" class="loginBtn" @click="toIndex">
+            <img src="../assets/login/组1813.png" class="loginBtn" @click="toIndex">
             <div class="line">
                 <p class="lineP"></p>
                 <p>or</p>

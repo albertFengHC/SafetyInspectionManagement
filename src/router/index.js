@@ -22,6 +22,11 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/index.vue')
     },
+    {
+        path: '/MHDIList',
+        name: 'MHDIList',
+        component: () => import('../views/MHDIList.vue')
+    },
     {path: '*', redirect: '/login'}
 ];
 
