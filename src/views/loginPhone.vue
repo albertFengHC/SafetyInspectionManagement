@@ -19,7 +19,7 @@
                 <p>or</p>
                 <p class="lineP"></p>
             </div>
-            <p>使用账号密码登录</p>
+            <p class="jumpA"><router-link to="/">使用账号密码登录</router-link></p>
             <p class="boxBottom">由四川运检科技发展有限公司提供计算服务</p>
         </div>
     </div>
@@ -123,4 +123,9 @@
 
     .boxBottom
         margin-bottom 10%
+
+    .jumpA
+        a
+            color #27F2B2
+            text-decoration  none
 </style>
