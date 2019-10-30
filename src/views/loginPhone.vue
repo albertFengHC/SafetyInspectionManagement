@@ -13,7 +13,7 @@
                 <span></span>
             </div>
             <p class="forgetPW">获取验证码</p>
-            <img src="../assets/login/组1813.png" alt="" class="loginBtn">
+            <img src="../assets/login/组1813.png" alt="" class="loginBtn" @click="toIndex">
             <div class="line">
                 <p class="lineP"></p>
                 <p>or</p>
@@ -29,7 +29,12 @@
 
     export default {
         name: 'loginPhone',
-        components: {}
+        components: {},
+        methods:{
+            toIndex(){
+                this.$router.push({name: 'index'});
+            }
+        }
     }
 </script>
 
@@ -56,6 +61,7 @@
         border none
         width 100%
         padding-left 30px
+        color #27F2B2
 
     ::-webkit-input-placeholder  /* Chrome/Opera/Safari */
         color #27F2B2
@@ -70,7 +76,7 @@
         color #27F2B2
 
     .logo
-        margin-top: 25%;
+        margin-top: 15%;
 
     .userName,.passWord
         position relative
