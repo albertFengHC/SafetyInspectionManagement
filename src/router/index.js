@@ -47,6 +47,11 @@ const routes = [
         name: 'LHDTCancellation',
         component: () => import('../views/LHDTCancellation.vue')
     },
+    {
+        path: '/LHDTCancellationDetails',
+        name: 'LHDTCancellationDetails',
+        component: () => import('../views/LHDTCancellationDetails.vue')
+    },
     {path: '*', redirect: '/login'}
 ];
 
