@@ -22,7 +22,7 @@
             </div>
             <div class="bottom">
                 <div class="bottomTop">
-                    <div>
+                    <div @click="toNCOSchedule">
                         <h2>111</h2>
                         <p>未按期未销号</p>
                     </div>
@@ -121,6 +121,9 @@
                 myChart.setOption(option);
 
             },
+            toNCOSchedule(){
+                this.$router.push({name: 'NCOSchedule'});
+            }
         },
         mounted() {
             this.creatLabel();

@@ -27,6 +27,11 @@ const routes = [
         name: 'MHDIList',
         component: () => import('../views/MHDIList.vue')
     },
+    {
+        path: '/NCOSchedule',
+        name: 'NCOSchedule',
+        component: () => import('../views/NCOSchedule.vue')
+    },
     {path: '*', redirect: '/login'}
 ];
 
