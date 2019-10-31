@@ -26,7 +26,7 @@
                         <h2>111</h2>
                         <p>未按期未销号</p>
                     </div>
-                    <div>
+                    <div @click="toLUHDangers">
                         <h2>111</h2>
                         <p>未销号</p>
                     </div>
@@ -123,6 +123,9 @@
             },
             toNCOSchedule(){
                 this.$router.push({name: 'NCOSchedule'});
+            },
+            toLUHDangers(){
+                this.$router.push({name: 'LUHDangers'});
             }
         },
         mounted() {

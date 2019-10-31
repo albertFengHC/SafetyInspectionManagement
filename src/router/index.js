@@ -32,6 +32,11 @@ const routes = [
         name: 'NCOSchedule',
         component: () => import('../views/NCOSchedule.vue')
     },
+    {
+        path: '/LUHDangers',
+        name: 'LUHDangers',
+        component: () => import('../views/LUHDangers.vue')
+    },
     {path: '*', redirect: '/login'}
 ];
 

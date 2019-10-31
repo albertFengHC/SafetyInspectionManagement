@@ -1,8 +1,8 @@
 <template>
-    <div id="NCOSchedule">
+    <div id="LUHDangers">
         <div class="top">
             <div class="title">
-                <h2>未按期未销号隐患清单</h2>
+                <h2>未销号隐患清单</h2>
                 <p @click="toMHDIList"><</p>
             </div>
             <div class="topContent">
@@ -13,7 +13,7 @@
                         </div>
                     </div>
                 </div>
-                <h3 class="name">未按期未销号</h3>
+                <h3 class="name">未销号</h3>
             </div>
         </div>
         <div class="content">
@@ -37,7 +37,7 @@
 
 <script>
     export default {
-        name: "NCOSchedule",
+        name: "LUHDangers",
         methods:{
             toMHDIList(){
                 this.$router.push({name: 'MHDIList'});
@@ -47,7 +47,7 @@
 </script>
 
 <style scoped lang="stylus">
-    #NCOSchedule
+    #LUHDangers
         width 100%
         height 100%
         margin 0
@@ -73,7 +73,7 @@
         border-bottom-right-radius 15px
         border-bottom-left-radius 15px
         box-shadow 0 3px 0 #d6d6d6
-        background-color #CE0C0C
+        background-color #E1A14C
         color #fff
         padding 30px
         display flex
@@ -100,7 +100,7 @@
                 align-items center
             .num
                 background-color #fff
-                color #CE0C0C
+                color #E1A14C
         .name
             h3
                 font-size 1.2rem
@@ -116,7 +116,7 @@
                 h3
                     color #333
             .infoRight
-                color #CE0C0C
+                color #E1A14C
                 span
                     display inline-block
                     color #9E9E9E
