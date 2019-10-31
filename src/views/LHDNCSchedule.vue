@@ -137,6 +137,7 @@
             background-color #1752DB
             color #fff
             width 80%
+            height 35px
             padding 5px
             border-radius 15px
             border none
