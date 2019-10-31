@@ -3,7 +3,7 @@
         <div class="topContent">
             <div class="top">
                 <h2>隐患排查清单管理</h2>
-                <p><span><</span>应用</p>
+                <p @click="toIndex"><span><</span>应用</p>
             </div>
             <div class="search">
                 <div class="name">
@@ -32,11 +32,11 @@
                     </div>
                 </div>
                 <div class="bottomBottom">
-                    <div>
+                    <div @click="toLHDNCSchedule">
                         <h2>111</h2>
                         <p>未按期已销号</p>
                     </div>
-                    <div>
+                    <div @click="toLHDTCancellation">
                         <h2>111</h2>
                         <p>按期销号</p>
                     </div>
@@ -121,12 +121,22 @@
                 myChart.setOption(option);
 
             },
+            toIndex(){
+                this.$router.push({name: 'index'});
+            },
             toNCOSchedule(){
                 this.$router.push({name: 'NCOSchedule'});
             },
             toLUHDangers(){
                 this.$router.push({name: 'LUHDangers'});
-            }
+            },
+            toLHDNCSchedule(){
+                this.$router.push({name: 'LHDNCSchedule'});
+            },
+            toLHDTCancellation(){
+                this.$router.push({name: 'LHDTCancellation'});
+            },
+
         },
         mounted() {
             this.creatLabel();
