@@ -57,6 +57,16 @@ const routes = [
         name: 'LHDNCScheduleDetails',
         component: () => import('../views/LHDNCScheduleDetails.vue')
     },
+    {
+        path: '/NCOScheduleDetails',
+        name: 'NCOScheduleDetails',
+        component: () => import('../views/NCOScheduleDetails.vue')
+    },
+    {
+        path: '/LUHDangersDetails',
+        name: 'LUHDangersDetails',
+        component: () => import('../views/LUHDangersDetails.vue')
+    },
     {path: '*', redirect: '/login'}
 ];
 
