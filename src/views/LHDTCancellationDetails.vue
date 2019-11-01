@@ -229,12 +229,9 @@
                 margin 10px 0
                 span
                     color #1752DB
-                    display inline-block
-                    margin-left 10px
-                    border 1px solid #1752db
-                    border-radius 50%
                     height 13px
                     width 13px
+                    font-weight bold
         .contentMId
             border-bottom 2px solid #eee
             .photoList
@@ -276,6 +273,7 @@
                     display flex
                     justify-content space-between
                     padding 10px 0
+                    border-bottom  1px solid #eee
                     h4
                         padding 10px 0
                     p
