@@ -1,9 +1,9 @@
 <template>
-    <div id="LHDTCancellationDetails">
+    <div id="LHDNCScheduleDetails">
         <div class="top">
             <div class="title">
                 <h2>成宜公司【安巡查】009</h2>
-                <p @click="toLHDTCancellation"><</p>
+                <p @click="toLHDNCSchedule"><</p>
             </div>
         </div>
         <div class="content">
@@ -12,7 +12,7 @@
                     <p><span>被检查单位</span>TJ2-中铁四局</p>
                     <p><span>被检查记录编号</span>成宜公司【安巡查】009</p>
                     <p><span>检查时间</span>2019-09-03</p>
-                    <img src="../assets/DHDIList/组1174.png" class="logoImg">
+                    <img src="../assets/DHDIList/组1602.png" class="logoImg">
                 </div>
                 <div class="projectName">
                     <p><span>存在隐患工程名称</span>深基坑施工</p>
@@ -111,6 +111,7 @@
                         <div>
                             <p>整改填报人</p>
                             <p>TJ2-中铁四局</p>
+                            <p class="delay">超期一天</p>
                         </div>
                         <p>09.03<span>16:36</span></p>
                     </div>
@@ -161,17 +162,17 @@
 
 <script>
     export default {
-        name: "LHDTCancellationDetails",
+        name: "LHDNCScheduleDetails",
         methods:{
-            toLHDTCancellation(){
-                this.$router.push({name: 'LHDTCancellation'});
+            toLHDNCSchedule(){
+                this.$router.push({name: 'LHDNCSchedule'});
             }
         }
     }
 </script>
 
 <style scoped lang="stylus">
-    #LHDTCancellationDetails
+    #LHDNCScheduleDetails
         width 100%
         height 100%
         margin 0
@@ -286,6 +287,8 @@
                         border 1px solid #1752DB
                         border-radius 10px
                         text-align center
+                    .delay
+                        color #CE0C0C
 
     .bottom
         position relative
