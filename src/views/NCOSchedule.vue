@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="content">
-            <div class="info">
+            <div class="info" @click="toNCOScheduleDetails">
                 <div class="infoLeft">
                     <h3>安巡查0001</h3>
                     <p>单位名称：成宜项目分公司</p>
@@ -41,6 +41,9 @@
         methods:{
             toMHDIList(){
                 this.$router.push({name: 'MHDIList'});
+            },
+            toNCOScheduleDetails(){
+                this.$router.push({name: 'NCOScheduleDetails'});
             }
         }
     }

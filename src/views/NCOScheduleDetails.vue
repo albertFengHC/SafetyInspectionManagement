@@ -3,7 +3,7 @@
         <div class="top">
             <div class="title">
                 <h2>成宜公司【安巡查】009</h2>
-                <p @click="toLHDTCancellation"><</p>
+                <p @click="toNCOSchedule"><</p>
             </div>
         </div>
         <div class="content">
@@ -105,7 +105,7 @@
     export default {
         name: "NCOScheduleDetails",
         methods:{
-            toLHDTCancellation(){
+            toNCOSchedule(){
                 this.$router.push({name: 'NCOSchedule'});
             }
         }
