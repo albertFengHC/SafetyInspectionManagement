@@ -30,7 +30,38 @@
             </div>
         </div>
         <div class="content">
+            <div class="contentTop">
+                <p><span>整改记录编号</span>TJ4【安整改】001</p>
+                <p><span>整改完成时间</span>2019-09-05</p>
+                <p><span>整改详情描述</span>按规范要求整改完成</p>
+                <div>
+                    <span>整改前照片</span>
+                    <img src="">
+                    <img src="">
+                    <img src="">
+                </div>
+                <div>
+                    <span>整改后照片</span>
+                    <img src="">
+                    <img src="">
+                    <img src="">
+                </div>
+                <div>
+                    <p>整改记录及相关资料</p>
+                    <div>
+                        <i></i>
+                        <p>详情说明</p>
+                        <button>预览</button>
+                    </div>
+                </div>
+                <p><span>整改单位负责人</span>苗争</p>
+            </div>
+            <div class="contentBottom">
+                <h3>巡查整改人员流程</h3>
+                <div>
 
+                </div>
+            </div>
         </div>
         <div class="bottom">
 
