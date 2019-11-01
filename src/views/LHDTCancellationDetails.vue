@@ -69,7 +69,7 @@
                 </div>
                 <div class="file">
                     <p>整改记录及相关资料</p>
-                    <div>
+                    <div class="fileContent">
                         <i></i>
                         <p>详情说明</p>
                         <button>预览</button>
@@ -79,13 +79,61 @@
             </div>
             <div class="contentBottom">
                 <h3>巡查整改人员流程</h3>
-                <div>
-                    <div>
-                        <img src="">
+                <div class="process">
+                    <div class="processInfo">
+                        <div>
+                            <img src="../assets/DHDIList/已同意.png">
+                        </div>
                         <h4>张瑜佳</h4>
                         <div>
                             <p>检查人</p>
                             <p>成宜项目分公司</p>
+                        </div>
+                        <p>09.03<span>16:36</span></p>
+                    </div>
+                    <div class="processInfo">
+                        <div>
+                            <img src="../assets/DHDIList/已同意.png">
+                        </div>
+                        <h4>苗争</h4>
+                        <div>
+                            <p>签收人</p>
+                            <p>TJ2-中铁四局</p>
+                            <p class="remarks">传阅2人</p>
+                        </div>
+                        <p>09.03<span>16:36</span></p>
+                    </div>
+                    <div class="processInfo">
+                        <div>
+                            <img src="../assets/DHDIList/已同意.png">
+                        </div>
+                        <h4>苗争</h4>
+                        <div>
+                            <p>整改填报人</p>
+                            <p>TJ2-中铁四局</p>
+                        </div>
+                        <p>09.03<span>16:36</span></p>
+                    </div>
+                    <div class="processInfo">
+                        <div>
+                            <img src="../assets/DHDIList/已同意.png">
+                        </div>
+                        <h4>张瑜佳</h4>
+                        <div>
+                            <p>复核验证人</p>
+                            <p>TJ2-中铁四局</p>
+                        </div>
+                        <p>09.03<span>16:36</span></p>
+                    </div>
+                    <div class="processInfo">
+                        <div>
+                            <img src="../assets/DHDIList/已同意.png">
+                        </div>
+                        <h4>黄蓉</h4>
+                        <div>
+                            <p>复核验证人</p>
+                            <p>TJ2-中铁四局</p>
+                            <p class="remarks">抄送3人</p>
                         </div>
                         <p>09.03<span>16:36</span></p>
                     </div>
@@ -188,23 +236,71 @@
                     height 13px
                     width 13px
         .contentMId
+            border-bottom 2px solid #eee
             .photoList
+                padding 10px 0
                 img
                     width 30%
                     height auto
                     margin 0 1.6%
+            .file
+                color #999
+                .fileContent
+                    position relative
+                    padding 5px 10px
+                    padding-left 25px
+                    background-color #F2F2F2
+                    p
+                        margin 0
+                    i
+                        display inline-block
+                        background url('../assets/DHDIList/附件.png') no-repeat
+                        width 13px
+                        height 13px
+                        position absolute
+                        left 5px
+                        top 8px
+                    button
+                        border-radius 10px
+                        border 1px solid #999
+                        background-color #F2F2F2
+                        color #999
+                        position absolute
+                        right 5px
+                        top 5px
+                        outline none
+        .contentBottom
+            .process
+                padding 15px 0
+                .processInfo
+                    display flex
+                    justify-content space-between
+                    padding 10px 0
+                    h4
+                        padding 10px 0
+                    p
+                        color #999
+                    span
+                        margin-left 5px
+                    .remarks
+                        color #1752DB
+                        border 1px solid #1752DB
+                        border-radius 10px
+                        text-align center
 
     .bottom
-        position fixed
+        position relative
         bottom 0
         background-color #fff
         width 100%
         text-align center
         color #999999
+        border-top 2px solid #eee
         .bottomContent
-            padding 5%
+            padding 0 5%
             display flex
             justify-content space-between
             div
                 padding 5%
+                flex 1
 </style>
