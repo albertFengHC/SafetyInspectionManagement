@@ -12,7 +12,7 @@
                     <p><span>被检查单位</span>TJ2-中铁四局</p>
                     <p><span>被检查记录编号</span>成宜公司【安巡查】009</p>
                     <p><span>检查时间</span>2019-09-03</p>
-                    <img src="../assets/DHDIList/组1174.png" class="logoImg">
+                    <img src="../../assets/DHDIList/组1174.png" class="logoImg">
                 </div>
                 <div class="projectName">
                     <p><span>存在隐患工程名称</span>深基坑施工</p>
@@ -51,20 +51,20 @@
                 <div>
                     <span>整改前照片</span>
                     <div class="photoList">
-                        <img src="../assets/DHDIList/现场监控1.png">
-                        <img src="../assets/DHDIList/现场监控2.png">
-                        <img src="../assets/DHDIList/现场监控3.png">
-                        <img src="../assets/DHDIList/现场监控1.png">
-                        <img src="../assets/DHDIList/现场监控2.png">
-                        <img src="../assets/DHDIList/现场监控3.png">
+                        <img src="../../assets/DHDIList/现场监控1.png">
+                        <img src="../../assets/DHDIList/现场监控2.png">
+                        <img src="../../assets/DHDIList/现场监控3.png">
+                        <img src="../../assets/DHDIList/现场监控1.png">
+                        <img src="../../assets/DHDIList/现场监控2.png">
+                        <img src="../../assets/DHDIList/现场监控3.png">
                     </div>
                 </div>
                 <div>
                     <span>整改后照片</span>
                     <div class="photoList">
-                        <img src="../assets/DHDIList/现场监控4.png">
-                        <img src="../assets/DHDIList/现场监控5.png">
-                        <img src="../assets/DHDIList/现场监控6.png">
+                        <img src="../../assets/DHDIList/现场监控4.png">
+                        <img src="../../assets/DHDIList/现场监控5.png">
+                        <img src="../../assets/DHDIList/现场监控6.png">
                     </div>
                 </div>
                 <div class="file">
@@ -82,7 +82,7 @@
                 <div class="process">
                     <div class="processInfo">
                         <div>
-                            <img src="../assets/DHDIList/已同意.png">
+                            <img src="../../assets/DHDIList/已同意.png">
                         </div>
                         <h4>张瑜佳</h4>
                         <div>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="processInfo">
                         <div>
-                            <img src="../assets/DHDIList/已同意.png">
+                            <img src="../../assets/DHDIList/已同意.png">
                         </div>
                         <h4>苗争</h4>
                         <div>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="processInfo">
                         <div>
-                            <img src="../assets/DHDIList/已同意.png">
+                            <img src="../../assets/DHDIList/已同意.png">
                         </div>
                         <h4>苗争</h4>
                         <div>
@@ -116,7 +116,7 @@
                     </div>
                     <div class="processInfo">
                         <div>
-                            <img src="../assets/DHDIList/已同意.png">
+                            <img src="../../assets/DHDIList/已同意.png">
                         </div>
                         <h4>张瑜佳</h4>
                         <div>
@@ -127,7 +127,7 @@
                     </div>
                     <div class="processInfo">
                         <div>
-                            <img src="../assets/DHDIList/已同意.png">
+                            <img src="../../assets/DHDIList/已同意.png">
                         </div>
                         <h4>黄蓉</h4>
                         <div>
@@ -143,15 +143,15 @@
         <div class="bottom">
             <div class="bottomContent">
                 <div>
-                    <img src="../assets/DHDIList/路径1294.png">
+                    <img src="../../assets/DHDIList/路径1294.png">
                     <p>评论</p>
                 </div>
                 <div>
-                    <img src="../assets/DHDIList/组1208.png">
+                    <img src="../../assets/DHDIList/组1208.png">
                     <p>分享</p>
                 </div>
                 <div>
-                    <img src="../assets/DHDIList/组1209.png">
+                    <img src="../../assets/DHDIList/组1209.png">
                     <p>打印</p>
                 </div>
             </div>
@@ -251,7 +251,7 @@
                         margin 0
                     i
                         display inline-block
-                        background url('../assets/DHDIList/附件.png') no-repeat
+                        background url('../../assets/DHDIList/附件.png') no-repeat
                         width 13px
                         height 13px
                         position absolute

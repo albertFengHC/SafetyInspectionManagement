@@ -1,9 +1,9 @@
 <template>
-    <div id="LUHDangersDetails">
+    <div id="NCOScheduleDetails">
         <div class="top">
             <div class="title">
                 <h2>成宜公司【安巡查】009</h2>
-                <p @click="toLUHDangers"><</p>
+                <p @click="toNCOSchedule"><</p>
             </div>
         </div>
         <div class="content">
@@ -48,7 +48,7 @@
                 <div class="process">
                     <div class="processInfo">
                         <div>
-                            <img src="../assets/DHDIList/已同意.png">
+                            <img src="../../assets/DHDIList/已同意.png">
                         </div>
                         <h4>张瑜佳</h4>
                         <div>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="processInfo">
                         <div>
-                            <img src="../assets/DHDIList/已同意.png">
+                            <img src="../../assets/DHDIList/已同意.png">
                         </div>
                         <h4>苗争</h4>
                         <div>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="processInfo NSNumber">
                         <div>
-                            <img src="../assets/DHDIList/未整改.png">
+                            <img src="../../assets/DHDIList/未整改.png">
                         </div>
                         <p>超期5天，未销号</p>
                     </div>
@@ -81,19 +81,19 @@
         <div class="bottom">
             <div class="bottomContent">
                 <div>
-                    <img src="../assets/DHDIList/路径1352.png">
+                    <img src="../../assets/DHDIList/路径1352.png">
                     <p>催办</p>
                 </div>
                 <div>
-                    <img src="../assets/DHDIList/路径1294.png">
+                    <img src="../../assets/DHDIList/路径1294.png">
                     <p>评论</p>
                 </div>
                 <div>
-                    <img src="../assets/DHDIList/组1208.png">
+                    <img src="../../assets/DHDIList/组1208.png">
                     <p>分享</p>
                 </div>
                 <div>
-                    <img src="../assets/DHDIList/组1209.png">
+                    <img src="../../assets/DHDIList/组1209.png">
                     <p>打印</p>
                 </div>
             </div>
@@ -103,17 +103,17 @@
 
 <script>
     export default {
-        name: "LUHDangersDetails",
+        name: "NCOScheduleDetails",
         methods:{
-            toLUHDangers(){
-                this.$router.push({name: 'LUHDangers'});
+            toNCOSchedule(){
+                this.$router.push({name: 'NCOSchedule'});
             }
         }
     }
 </script>
 
 <style scoped lang="stylus">
-    #LUHDangersDetails
+    #NCOScheduleDetails
         width 100%
         height 100%
         margin 0

@@ -16,7 +16,7 @@
                     <p>清单管理</p>
                 </div>
                 <div>
-                    <img src="../assets/index/组1823.png">
+                    <img src="../assets/index/组1823.png" @click="toDIPSHazards">
                     <p>安全隐患</p>
                     <p>日常巡查</p>
                 </div>
@@ -58,6 +58,9 @@
         methods:{
             toMHDIList(){
                 this.$router.push({name: 'MHDIList'});
+            },
+            toDIPSHazards(){
+                this.$router.push({name: 'DIPSHazards'});
             }
         }
     }

@@ -196,11 +196,11 @@
 
         .name
             i
-                background url('../assets/MHDIList/组611.png') no-repeat
+                background url('../../assets/MHDIList/组611.png') no-repeat
 
         .company
             i
-                background url('../assets/MHDIList/路径946.png') no-repeat
+                background url('../../assets/MHDIList/路径946.png') no-repeat
 
 
     .boxContent
