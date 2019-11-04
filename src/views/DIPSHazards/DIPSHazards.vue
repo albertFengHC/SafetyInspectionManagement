@@ -10,6 +10,7 @@
                 <div class="name">
                     <i></i>
                     <input type="text" placeholder="请输入姓名">
+<!--                    <input type="search" placeholder="请输入姓名" @click="search($event)">-->
                 </div>
                 <div class="company">
                     <i></i>
@@ -44,6 +45,9 @@
             }
         },
         methods: {
+            search(e){
+                console.log(e);
+            },
             toIndex() {
                 this.$router.push({name: 'index'});
             },
@@ -123,15 +127,16 @@
                 background-size 100% 100%
                 position absolute
                 top 40%
-                left 35%
 
         .name
             i
                 background url('../../assets/MHDIList/组611.png') no-repeat
+                right  5%
 
         .company
             i
                 background url('../../assets/MHDIList/路径946.png') no-repeat
+                left 35%
 
     .boxContent
         flex 3

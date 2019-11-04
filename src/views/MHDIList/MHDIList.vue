@@ -192,15 +192,16 @@
                 background-size 100% 100%
                 position absolute
                 top 40%
-                left 35%
 
         .name
             i
                 background url('../../assets/MHDIList/组611.png') no-repeat
+                right  5%
 
         .company
             i
                 background url('../../assets/MHDIList/路径946.png') no-repeat
+                left 35%
 
 
     .boxContent
