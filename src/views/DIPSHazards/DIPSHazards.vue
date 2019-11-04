@@ -19,76 +19,16 @@
         </div>
         <div class="boxContent">
             <div class="content">
-                <div class="info" @click="toNCOScheduleDetails">
-                    <div class="infoLeft">
-                        <h3>安巡查0001</h3>
-                        <p>单位名称：成宜项目分公司</p>
-                        <p>监察人：张瑜佳</p>
-                        <p>检查时间：2019-09-11</p>
-                    </div>
-                    <div class="infoRight">未提交<span>></span></div>
-                </div>
-                <div class="info" @click="toNCOScheduleDetails">
-                    <div class="infoLeft">
-                        <h3>安巡查0001</h3>
-                        <p>单位名称：成宜项目分公司</p>
-                        <p>监察人：张瑜佳</p>
-                        <p>检查时间：2019-09-11</p>
-                    </div>
-                    <div class="infoRight">未提交<span>></span></div>
-                </div>
-                <div class="info" @click="toNCOScheduleDetails">
-                    <div class="infoLeft">
-                        <h3>安巡查0001</h3>
-                        <p>单位名称：成宜项目分公司</p>
-                        <p>监察人：张瑜佳</p>
-                        <p>检查时间：2019-09-11</p>
-                    </div>
-                    <div class="infoRight">未提交<span>></span></div>
-                </div>
-                <div class="info" @click="toNCOScheduleDetails">
-                    <div class="infoLeft">
-                        <h3>安巡查0001</h3>
-                        <p>单位名称：成宜项目分公司</p>
-                        <p>监察人：张瑜佳</p>
-                        <p>检查时间：2019-09-11</p>
-                    </div>
-                    <div class="infoRight">未提交<span>></span></div>
-                </div>
-                <div class="info" @click="toNCOScheduleDetails">
-                    <div class="infoLeft">
-                        <h3>安巡查0001</h3>
-                        <p>单位名称：成宜项目分公司</p>
-                        <p>监察人：张瑜佳</p>
-                        <p>检查时间：2019-09-11</p>
-                    </div>
-                    <div class="infoRight">未提交<span>></span></div>
-                </div>
-                <div class="info" @click="toNCOScheduleDetails">
-                    <div class="infoLeft">
-                        <h3>安巡查0001</h3>
-                        <p>单位名称：成宜项目分公司</p>
-                        <p>监察人：张瑜佳</p>
-                        <p>检查时间：2019-09-11</p>
-                    </div>
-                    <div class="infoRight">未提交<span>></span></div>
-                </div>
-                <div class="info" @click="toNCOScheduleDetails">
-                    <div class="infoLeft">
-                        <h3>安巡查0001</h3>
-                        <p>单位名称：成宜项目分公司</p>
-                        <p>监察人：张瑜佳</p>
-                        <p>检查时间：2019-09-11</p>
-                    </div>
-                    <div class="infoRight">未提交<span>></span></div>
-                </div>
+                <keep-alive>
+                    <router-view/>
+                </keep-alive>
             </div>
             <div class="bottom">
                 <div>
-                    <p :class="{'active':activeClass===1}">未提交</p>
-                    <p>待签收</p>
-                    <p>拒绝签收</p>
-                    <p>已签收</p>
+                    <p :class="{'active':activeClass===1}" @click="toNoSign">未提交</p>
+                    <p :class="{'active':activeClass===2}" @click="toWaitingSign">待签收</p>
+                    <p :class="{'active':activeClass===3}" @click="toRefuseSign">拒绝签收</p>
+                    <p :class="{'active':activeClass===4}" @click="toAlreadySign">已签收</p>
                 </div>
             </div>
         </div>
@@ -107,9 +47,22 @@
             toIndex() {
                 this.$router.push({name: 'index'});
             },
-            toNCOScheduleDetails(){
-
-            }
+            toNoSign(){
+                this.$router.push({name: 'NoSign'});
+                this.activeClass = 1;
+            },
+            toWaitingSign(){
+                this.$router.push({name: 'WaitingSign'});
+                this.activeClass = 2;
+            },
+            toRefuseSign(){
+                this.$router.push({name: 'RefuseSign'});
+                this.activeClass = 3;
+            },
+            toAlreadySign(){
+                this.$router.push({name: 'AlreadySign'});
+                this.activeClass = 4;
+            },
         }
     }
 </script>
@@ -145,6 +98,7 @@
             font-size 1rem
             font-style normal
             color #1752db
+            font-weight bold
 
     .search
         text-align center
@@ -184,24 +138,6 @@
 
     .content
         margin-bottom 20%
-        .info
-            padding 15px 25px
-            display flex
-            justify-content space-between
-            align-items center
-            border-bottom  1px solid #eee
-            .infoLeft
-                color #9E9E9E
-                h3
-                    color #333
-            .infoRight
-                color #1752DB
-                span
-                    display inline-block
-                    color #9E9E9E
-                    margin-left 15px
-                    font-size 1rem
-                    font-weight bold
 
     .bottom
         text-align center

@@ -60,7 +60,7 @@
                 this.$router.push({name: 'MHDIList'});
             },
             toDIPSHazards(){
-                this.$router.push({name: 'DIPSHazards'});
+                this.$router.push({name: 'NoSign'});
             }
         }
     }
