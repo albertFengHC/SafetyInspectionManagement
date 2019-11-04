@@ -109,11 +109,13 @@
                 font-size 1.2rem
 
     .content
+        margin-bottom 20%
         .info
             padding 15px 25px
             display flex
             justify-content space-between
             align-items center
+            border-bottom  1px solid #eee
             .infoLeft
                 color #9E9E9E
                 h3
