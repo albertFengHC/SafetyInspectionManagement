@@ -70,7 +70,29 @@ const routes = [
     {
         path: '/DIPSHazards',
         name: 'DIPSHazards',
-        component: () => import('../views/DIPSHazards/DIPSHazards.vue')
+        component: () => import('../views/DIPSHazards/DIPSHazards.vue'),
+        children:[
+            {
+                path: '/NoSign',
+                name: 'NoSign',
+                component: () => import('../views/DIPSHazards/NoSign.vue'),
+            },
+            {
+                path: '/WaitingSign',
+                name: 'WaitingSign',
+                component: () => import('../views/DIPSHazards/WaitingSign.vue'),
+            },
+            {
+                path: '/RefuseSign',
+                name: 'RefuseSign',
+                component: () => import('../views/DIPSHazards/RefuseSign.vue'),
+            },
+            {
+                path: '/AlreadySign',
+                name: 'AlreadySign',
+                component: () => import('../views/DIPSHazards/AlreadySign.vue'),
+            }
+        ]
     },
     {path: '*', redirect: '/login'}
 ];
