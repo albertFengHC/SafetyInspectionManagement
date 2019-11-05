@@ -144,6 +144,9 @@
         outline none
         border none
 
+    i
+        font-style normal
+
     .top
         padding 15px
         position relative
@@ -160,12 +163,13 @@
     .content
         margin-bottom 20%
         padding 10px 5%
+        padding-bottom 10%
 
     .contentList
         display flex
         justify-content space-between
         border-bottom 1px solid #EEEEEE
-        padding 5px 0
+        padding 10px 0
         p
             flex 1
             padding 3px 5px
