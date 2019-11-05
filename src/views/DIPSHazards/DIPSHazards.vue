@@ -28,7 +28,7 @@
                 <div>
                     <p :class="{'active':activeClass===1}" @click="toNoSign">未提交</p>
                     <p :class="{'active':activeClass===2}" @click="toWaitingSign">待签收</p>
-                    <p :class="{'active':activeClass===3}" @click="toRefuseSign">拒绝签收</p>
+<!--                    <p :class="{'active':activeClass===3}" @click="toRefuseSign">拒绝签收</p>-->
                     <p :class="{'active':activeClass===4}" @click="toAlreadySign">已签收</p>
                 </div>
             </div>
@@ -59,10 +59,10 @@
                 this.$router.push({name: 'WaitingSign'});
                 this.activeClass = 2;
             },
-            toRefuseSign(){
-                this.$router.push({name: 'RefuseSign'});
-                this.activeClass = 3;
-            },
+            // toRefuseSign(){
+            //     this.$router.push({name: 'RefuseSign'});
+            //     this.activeClass = 3;
+            // },
             toAlreadySign(){
                 this.$router.push({name: 'AlreadySign'});
                 this.activeClass = 4;
