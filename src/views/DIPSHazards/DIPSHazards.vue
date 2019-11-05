@@ -4,7 +4,7 @@
             <div class="top">
                 <h2>安全隐患日常巡查</h2>
                 <p @click="toIndex"><span><</span>应用</p>
-                <i>新增</i>
+                <i @click="toAddInfo">新增</i>
             </div>
             <div class="search">
                 <div class="name">
@@ -45,6 +45,9 @@
             }
         },
         methods: {
+            toAddInfo(){
+                this.$router.push({name: 'addInfo'});
+            },
             search(e){
                 console.log(e);
             },

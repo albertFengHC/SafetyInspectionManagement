@@ -82,17 +82,22 @@ const routes = [
                 name: 'WaitingSign',
                 component: () => import('../views/DIPSHazards/WaitingSign.vue'),
             },
-            {
-                path: '/RefuseSign',
-                name: 'RefuseSign',
-                component: () => import('../views/DIPSHazards/RefuseSign.vue'),
-            },
+            // {
+            //     path: '/RefuseSign',
+            //     name: 'RefuseSign',
+            //     component: () => import('../views/DIPSHazards/RefuseSign.vue'),
+            // },
             {
                 path: '/AlreadySign',
                 name: 'AlreadySign',
                 component: () => import('../views/DIPSHazards/AlreadySign.vue'),
-            }
+            },
         ]
+    },
+    {
+        path: '/addInfo',
+        name: 'addInfo',
+        component: () => import('../views/DIPSHazards/addInfo.vue'),
     },
     {path: '*', redirect: '/login'}
 ];
