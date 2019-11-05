@@ -20,7 +20,7 @@
                 <p class="lineP"></p>
             </div>
             <p class="jumpA"><router-link to="loginPhone">使用手机动态码登录</router-link></p>
-            <p class="boxBottom">由四川运检科技发展有限公司提供计算服务</p>
+            <p class="boxBottom">由四川云检科技发展有限公司提供计算服务</p>
         </div>
     </div>
 </template>

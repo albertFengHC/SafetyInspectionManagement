@@ -37,8 +37,32 @@
                     <input type="text" placeholder="请输入">
                 </div>
                 <div class="contentListProblem">
-                    <p>检查发现问题</p>
-                    <i><span>+</span></i>
+                    <div class="problems">
+                        <div class="problemsTitle">
+                            <h3>检查发现问题</h3>
+                            <i><span>+</span></i>
+                        </div>
+<!--                        <div class="problemsInfo">-->
+<!--                            <div class="problemsInfoList">-->
+<!--                                <div class="problemsInfoListTitle">-->
+<!--                                    <p>103020601</p>-->
+<!--                                    <p>Ⅲ级</p>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <p>1.灌注前没有二次清孔。</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="problemsInfoList">-->
+<!--                                <div class="problemsInfoListTitle">-->
+<!--                                    <p>103020601</p>-->
+<!--                                    <p>Ⅲ级</p>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <p>1.灌注前没有二次清孔。</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
                 </div>
                 <div class="contentList">
                     <p><span>*</span>问题描述</p>
@@ -189,26 +213,39 @@
             color #757575
 
     .contentListProblem
-        display flex
-        justify-content space-between
-        border-bottom 1px solid #EEEEEE
-        padding 15px
-        p
-            font-weight bold
-        i
-            color #1752db
-            border 1px dashed #1752db
-            border-radius 50%
-            height 15px
-            width 15px
-            font-weight bold
-            display inline-block
-            span
+        .problems
+            .problemsTitle
                 display flex
-                justify-content center
-                align-items center
-                height 15px
-                width 15px
+                justify-content space-between
+                border-bottom 1px solid #EEEEEE
+                padding 15px
+                p
+                    font-weight bold
+                i
+                    color #1752db
+                    border 1px dashed #1752db
+                    border-radius 50%
+                    height 15px
+                    width 15px
+                    font-weight bold
+                    display inline-block
+                    span
+                        display flex
+                        justify-content center
+                        align-items center
+                        height 15px
+                        width 15px
+
+    .problemsInfo
+        padding 10px
+        background-color #F2F2F2
+        border-radius 15px
+        .problemsInfoList
+            display flex
+            justify-content space-between
+            .problemsInfoListTitle
+                p
+                    margin 0
 
     .contentListPhoto,.contentListFile
         display flex
