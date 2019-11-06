@@ -22,21 +22,21 @@
             </div>
             <div class="bottom">
                 <div class="bottomTop">
-                    <div @click="toNCOSchedule">
+                    <div @click="toNCOSchedule" class="RColor">
                         <h2>111</h2>
                         <p>未按期未销号</p>
                     </div>
-                    <div @click="toLUHDangers">
+                    <div @click="toLUHDangers" class="YColor">
                         <h2>111</h2>
                         <p>未销号</p>
                     </div>
                 </div>
                 <div class="bottomBottom">
-                    <div @click="toLHDNCSchedule">
+                    <div @click="toLHDNCSchedule" class="BColor">
                         <h2>111</h2>
                         <p>未按期已销号</p>
                     </div>
-                    <div @click="toLHDTCancellation">
+                    <div @click="toLHDTCancellation" class="GColor">
                         <h2>111</h2>
                         <p>按期销号</p>
                     </div>
@@ -230,5 +230,12 @@
             margin 10px
             padding 15px
             border-radius 5px
-
+        .RColor
+            color #ce0c0c
+        .YColor
+            color #e1a14c
+        .BColor
+            color #1752db
+        .GColor
+            color #4dbb95
 </style>
