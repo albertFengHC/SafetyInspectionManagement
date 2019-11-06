@@ -42,26 +42,30 @@
                             <h3>检查发现问题</h3>
                             <i><span>+</span></i>
                         </div>
-<!--                        <div class="problemsInfo">-->
-<!--                            <div class="problemsInfoList">-->
-<!--                                <div class="problemsInfoListTitle">-->
-<!--                                    <p>103020601</p>-->
-<!--                                    <p>Ⅲ级</p>-->
-<!--                                </div>-->
-<!--                                <div>-->
-<!--                                    <p>1.灌注前没有二次清孔。</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="problemsInfoList">-->
-<!--                                <div class="problemsInfoListTitle">-->
-<!--                                    <p>103020601</p>-->
-<!--                                    <p>Ⅲ级</p>-->
-<!--                                </div>-->
-<!--                                <div>-->
-<!--                                    <p>1.灌注前没有二次清孔。</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <div class="problemsInfo">
+                            <div class="problemsInfoList">
+                                <div class="problemsInfoListTitle">
+                                    <p>103020601</p>
+                                    <p>Ⅲ级</p>
+                                    <i><span>x</span></i>
+                                </div>
+                                <div class="problemsInfoListContent">
+                                    <p>1.灌注前没有二次清孔。</p>
+                                    <p>1.灌注前没有二次清孔。</p>
+                                    <p>1.灌注前没有二次清孔。</p>
+                                </div>
+                            </div>
+                            <div class="problemsInfoList">
+                                <div class="problemsInfoListTitle">
+                                    <p>103020601</p>
+                                    <p>Ⅲ级</p>
+                                    <i><span>x</span></i>
+                                </div>
+                                <div class="problemsInfoListContent">
+                                    <p>1.灌注前没有二次清孔。</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="contentList">
@@ -238,14 +242,37 @@
 
     .problemsInfo
         padding 10px
-        background-color #F2F2F2
-        border-radius 15px
         .problemsInfoList
-            display flex
-            justify-content space-between
+            padding 15px 10px
+            background-color #F2F2F2
+            border-radius 15px
+            margin 15px 0
             .problemsInfoListTitle
+                display flex
+                justify-content space-between
+                text-align center
+                padding-bottom 10px
+                font-weight bold
                 p
                     margin 0
+                i
+                    color #fff
+                    border 1px dashed #626262
+                    background-color #626262
+                    border-radius 50%
+                    height 15px
+                    width 15px
+                    font-weight bold
+                    display inline-block
+                    span
+                        display flex
+                        justify-content center
+                        align-items center
+                        height 15px
+                        width 15px
+            .problemsInfoListContent
+                p
+                    padding 5px 0
 
     .contentListPhoto,.contentListFile
         display flex
