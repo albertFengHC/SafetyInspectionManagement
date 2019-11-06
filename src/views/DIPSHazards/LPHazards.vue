@@ -2,7 +2,7 @@
     <div id="LPHazards">
         <div class="topContent">
             <div class="top">
-                <h2>安全隐患日常巡查</h2>
+                <h2>选择隐患清单</h2>
                 <p @click="toAddInfo"><span><</span></p>
                 <i>=</i>
             </div>
