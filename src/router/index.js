@@ -99,6 +99,11 @@ const routes = [
         name: 'addInfo',
         component: () => import('../views/DIPSHazards/addInfo.vue'),
     },
+    {
+        path: '/LPHazards',
+        name: 'LPHazards',
+        component: () => import('../views/DIPSHazards/LPHazards.vue'),
+    },
     {path: '*', redirect: '/login'}
 ];
 

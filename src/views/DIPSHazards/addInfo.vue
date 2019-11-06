@@ -40,7 +40,7 @@
                     <div class="problems">
                         <div class="problemsTitle">
                             <h3>检查发现问题</h3>
-                            <i><span>+</span></i>
+                            <i @click="toLPHazards"><span>+</span></i>
                         </div>
                         <div class="problemsInfo">
                             <div class="problemsInfoList">
@@ -155,6 +155,9 @@
             },
             toIndex(){
                 this.$router.push({name: 'NoSign'});
+            },
+            toLPHazards(){
+                this.$router.push({name: 'LPHazards'});
             }
         }
     }
