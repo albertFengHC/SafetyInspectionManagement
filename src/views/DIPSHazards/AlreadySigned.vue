@@ -297,7 +297,10 @@
                     display flex
                     justify-content space-between
                     align-items center
+                    p
+                        color #999
                 .processInfoCirculantBottom
+                    color #999
                     padding-left 20%
                     display flex
                     justify-content space-between
