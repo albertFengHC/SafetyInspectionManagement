@@ -3,7 +3,7 @@
         <div class="top">
             <div class="title">
                 <h2>成宜公司【安巡查】009</h2>
-                <p @click="toLHDTCancellation"><</p>
+                <p @click="toAlreadySign"><</p>
             </div>
         </div>
         <div class="content">
@@ -156,8 +156,8 @@
     export default {
         name: "AlreadySigned",
         methods:{
-            toLHDTCancellation(){
-                this.$router.push({name: 'LHDTCancellation'});
+            toAlreadySign(){
+                this.$router.push({name: 'AlreadySign'});
             }
         }
     }
@@ -311,7 +311,7 @@
                         margin 0
                     .rightPerson
                         flex 1
-                        text-align center
+                        text-align left
                         margin-left 15px
                         p
                             padding-left 5px
