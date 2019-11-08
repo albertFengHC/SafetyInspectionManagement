@@ -104,6 +104,11 @@ const routes = [
         name: 'LPHazards',
         component: () => import('../views/DIPSHazards/LPHazards.vue'),
     },
+    {
+        path: '/AlreadySigned',
+        name: 'AlreadySigned',
+        component: () => import('../views/DIPSHazards/AlreadySigned.vue'),
+    },
     {path: '*', redirect: '/login'}
 ];
 
