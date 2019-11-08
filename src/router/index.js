@@ -105,9 +105,9 @@ const routes = [
         component: () => import('../views/DIPSHazards/LPHazards.vue'),
     },
     {
-        path: '/AlreadySigned',
-        name: 'AlreadySigned',
-        component: () => import('../views/DIPSHazards/AlreadySigned.vue'),
+        path: '/AlreadySignDetails',
+        name: 'AlreadySignDetails',
+        component: () => import('../views/DIPSHazards/AlreadySignDetails.vue'),
     },
     {path: '*', redirect: '/login'}
 ];

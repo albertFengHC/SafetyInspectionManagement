@@ -1,5 +1,5 @@
 <template>
-    <div id="AlreadySigned">
+    <div id="AlreadySignDetails">
         <div class="top">
             <div class="title">
                 <h2>成宜公司【安巡查】009</h2>
@@ -154,7 +154,7 @@
 
 <script>
     export default {
-        name: "AlreadySigned",
+        name: "AlreadySignDetails",
         methods:{
             toAlreadySign(){
                 this.$router.push({name: 'AlreadySign'});
@@ -164,7 +164,7 @@
 </script>
 
 <style scoped lang="stylus">
-    #AlreadySigned
+    #AlreadySignDetails
         width 100%
         height 100%
         margin 0

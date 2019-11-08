@@ -17,7 +17,7 @@
         name: "AlreadySign",
         methods:{
             toAlreadySignDetails(){
-                this.$router.push({name: 'AlreadySigned'});
+                this.$router.push({name: 'AlreadySignDetails'});
             }
         }
     }
