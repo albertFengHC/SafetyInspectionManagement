@@ -4,10 +4,10 @@
             <div class="top">
                 <h2>选择隐患清单</h2>
                 <p @click="toAddInfo"><span><</span></p>
-                <i></i>
+                <i @click="showList"></i>
             </div>
             <div class="search">
-                <h3>102施工隧道</h3>
+                <h3>{{projectName}}</h3>
                 <div class="name">
                     <select name="" id="1">
                         <option value="">请输入姓名</option>
@@ -51,16 +51,57 @@
                 </div>
             </div>
         </div>
+        <div class="listInfoShadow" v-show="listInfoShow" @click="listInfoHide"></div>
+        <div class="listInfo" v-show="listInfoShow">
+            <div>
+                <p v-for="(data,i) in list" :key="i" @click="getListInfo(data)">{{data}}</p>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
         name: "LPHazards",
+        data(){
+          return{
+              listInfoShow: false,
+              projectName: '',
+              list:[
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+                  '101通用管理要求',
+              ]
+          }
+        },
         methods:{
             toAddInfo(){
                 this.$router.push({name: 'addInfo'});
             },
+            showList(){
+                this.listInfoShow = true;
+            },
+            listInfoHide(){
+                this.listInfoShow = false;
+            },
+            getListInfo(data){
+                console.log(data);
+                this.projectName = data;
+                this.listInfoShow = false;
+            }
         }
     }
 </script>
@@ -185,5 +226,26 @@
                 color #fff
                 flex 1
                 margin 0 5%
+
+    .listInfoShadow
+        position absolute
+        width 100%
+        height 100%
+        background-color rgba(146, 146, 146, 0.51)
+        z-index 10
+
+    .listInfo
+        position: absolute;
+        height: 100%;
+        right: 0;
+        overflow-y: auto;
+        background-color: #fff;
+        width: 60%;
+        z-index 100
+        div
+            padding: 20px;
+            p
+                padding 10px 0
+                font-size 1rem
 
 </style>
