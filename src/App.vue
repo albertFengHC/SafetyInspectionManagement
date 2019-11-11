@@ -14,7 +14,7 @@
         width 100%
         height 100%
         margin 0
-        font-size 12px
+        font-size 0.9rem
         /*overflow scroll*/
         /*-webkit-overflow-scrolling: touch;*/
         -webkit-overflow-scrolling: auto;

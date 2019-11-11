@@ -17,7 +17,7 @@
         name: "WaitingSign",
         methods:{
             toWaitingSignDetails(){
-
+                this.$router.push({name: 'WaitingSignDetails'});
             }
         }
     }

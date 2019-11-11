@@ -109,6 +109,11 @@ const routes = [
         name: 'AlreadySignDetails',
         component: () => import('../views/DIPSHazards/AlreadySignDetails.vue'),
     },
+    {
+        path: '/WaitingSignDetails',
+        name: 'WaitingSignDetails',
+        component: () => import('../views/DIPSHazards/WaitingSignDetails.vue'),
+    },
     {path: '*', redirect: '/login'}
 ];
 
