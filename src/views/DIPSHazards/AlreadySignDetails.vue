@@ -121,11 +121,11 @@
                         </div>
                         <div class="processInfoCirculantBottom">
                             <div>
-                                <img src="../../assets/DHDIList/已同意.png">
+                                <img src="../../assets/DHDIList/人员头像864.png">
                                 <p>罗云</p>
                             </div>
                             <div class="rightPerson">
-                                <img src="../../assets/DHDIList/已同意.png">
+                                <img src="../../assets/DHDIList/人员头像864.png">
                                 <p>卫凤</p>
                             </div>
                         </div>
