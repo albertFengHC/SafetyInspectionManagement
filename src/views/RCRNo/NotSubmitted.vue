@@ -4,7 +4,7 @@
             <div class="infoLeft">
                 <h3>安巡查0001</h3>
                 <p>单位名称：成宜项目分公司</p>
-                <p>监察人：张瑜佳</p>
+                <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
             </div>
             <div class="infoRight">未提交<span>></span></div>
@@ -13,7 +13,7 @@
             <div class="infoLeft">
                 <h3>安巡查0001</h3>
                 <p>单位名称：成宜项目分公司</p>
-                <p>监察人：张瑜佳</p>
+                <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
             </div>
             <div class="infoRight">未提交<span>></span></div>
@@ -22,7 +22,7 @@
             <div class="infoLeft">
                 <h3>安巡查0001</h3>
                 <p>单位名称：成宜项目分公司</p>
-                <p>监察人：张瑜佳</p>
+                <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
             </div>
             <div class="infoRight">未提交<span>></span></div>
@@ -31,7 +31,7 @@
             <div class="infoLeft">
                 <h3>安巡查0001</h3>
                 <p>单位名称：成宜项目分公司</p>
-                <p>监察人：张瑜佳</p>
+                <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
             </div>
             <div class="infoRight">未提交<span>></span></div>
@@ -40,7 +40,7 @@
             <div class="infoLeft">
                 <h3>安巡查0001</h3>
                 <p>单位名称：成宜项目分公司</p>
-                <p>监察人：张瑜佳</p>
+                <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
             </div>
             <div class="infoRight">未提交<span>></span></div>
@@ -49,7 +49,7 @@
             <div class="infoLeft">
                 <h3>安巡查0001</h3>
                 <p>单位名称：成宜项目分公司</p>
-                <p>监察人：张瑜佳</p>
+                <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
             </div>
             <div class="infoRight">未提交<span>></span></div>
@@ -58,7 +58,25 @@
             <div class="infoLeft">
                 <h3>安巡查0001</h3>
                 <p>单位名称：成宜项目分公司</p>
-                <p>监察人：张瑜佳</p>
+                <p>整改人：苗争</p>
+                <p>检查时间：2019-09-11</p>
+            </div>
+            <div class="infoRight">未提交<span>></span></div>
+        </div>
+        <div class="info" @click="toNotSubmittedDetails">
+            <div class="infoLeft">
+                <h3>安巡查0001</h3>
+                <p>单位名称：成宜项目分公司</p>
+                <p>整改人：苗争</p>
+                <p>检查时间：2019-09-11</p>
+            </div>
+            <div class="infoRight">未提交<span>></span></div>
+        </div>
+        <div class="info" @click="toNotSubmittedDetails">
+            <div class="infoLeft">
+                <h3>安巡查0001</h3>
+                <p>单位名称：成宜项目分公司</p>
+                <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
             </div>
             <div class="infoRight">未提交<span>></span></div>
@@ -71,7 +89,7 @@
         name: "NotSubmitted",
         methods: {
             toNotSubmittedDetails() {
-                this.$router.push({name: 'addInfo'});
+                this.$router.push({name: 'NotSubmittedDetails'});
             }
         }
     }

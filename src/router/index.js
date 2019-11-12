@@ -141,6 +141,26 @@ const routes = [
             },
         ]
     },
+    {
+        path: '/NotSubmittedDetails',
+        name: 'NotSubmittedDetails',
+        component: () => import('../views/RCRNo/NotSubmittedDetails.vue'),
+    },
+    {
+        path: '/ApprovalPendingDetails',
+        name: 'ApprovalPendingDetails',
+        component: () => import('../views/RCRNo/ApprovalPendingDetails.vue'),
+    },
+    {
+        path: '/RefuseExaminationApprovalDetails',
+        name: 'RefuseExaminationApprovalDetails',
+        component: () => import('../views/RCRNo/RefuseExaminationApprovalDetails.vue'),
+    },
+    {
+        path: '/CompletionExaminationApprovalDetails',
+        name: 'CompletionExaminationApprovalDetails',
+        component: () => import('../views/RCRNo/CompletionExaminationApprovalDetails.vue'),
+    },
     {path: '*', redirect: '/login'}
 ];
 
