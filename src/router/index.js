@@ -114,6 +114,33 @@ const routes = [
         name: 'WaitingSignDetails',
         component: () => import('../views/DIPSHazards/WaitingSignDetails.vue'),
     },
+    {
+        path: '/RCRNo',
+        name: 'RCRNo',
+        component: () => import('../views/RCRNo/RCRNo.vue'),
+        children:[
+            {
+                path: '/NotSubmitted',
+                name: 'NotSubmitted',
+                component: () => import('../views/RCRNo/NotSubmitted.vue'),
+            },
+            {
+                path: '/ApprovalPending',
+                name: 'ApprovalPending',
+                component: () => import('../views/RCRNo/ApprovalPending.vue'),
+            },
+            {
+                path: '/RefuseExaminationApproval',
+                name: 'RefuseExaminationApproval',
+                component: () => import('../views/RCRNo/RefuseExaminationApproval.vue'),
+            },
+            {
+                path: '/CompletionExaminationApproval',
+                name: 'CompletionExaminationApproval',
+                component: () => import('../views/RCRNo/CompletionExaminationApproval.vue'),
+            },
+        ]
+    },
     {path: '*', redirect: '/login'}
 ];
 

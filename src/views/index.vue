@@ -101,7 +101,7 @@
                             <p>日常巡查</p>
                         </div>
                         <div>
-                            <img src="../assets/index/组1824.png">
+                            <img src="../assets/index/组1824.png" @click="toRCRNo">
                             <p>整改闭合</p>
                             <p>复合销号</p>
                         </div>
@@ -167,6 +167,9 @@
             },
             toDIPSHazards(){
                 this.$router.push({name: 'NoSign'});
+            },
+            toRCRNo(){
+                this.$router.push({name: 'NotSubmitted'});
             }
         }
     }

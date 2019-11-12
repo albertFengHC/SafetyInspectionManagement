@@ -256,7 +256,7 @@
                         outline none
         .contentBottom
             .process
-                padding 15px 0
+                /*padding 15px 0*/
                 .processInfo
                     display flex
                     justify-content space-between
