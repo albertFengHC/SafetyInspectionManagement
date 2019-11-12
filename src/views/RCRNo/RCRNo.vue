@@ -26,7 +26,7 @@
                 <div>
                     <p :class="{'active':activeClass===1}" @click="toNotSubmitted">未提交</p>
                     <p :class="{'active':activeClass===2}" @click="toApprovalPending">待审批</p>
-                    <p :class="{'active':activeClass===3}" @click="toRefuseSign">审批拒绝</p>
+<!--                    <p :class="{'active':activeClass===3}" @click="toRefuseSign">审批拒绝</p>-->
                     <p :class="{'active':activeClass===4}" @click="toAlreadySign">审批通过</p>
                 </div>
             </div>
@@ -57,10 +57,10 @@
                 this.$router.push({name: 'ApprovalPending'});
                 this.activeClass = 2;
             },
-            toRefuseSign(){
-                this.$router.push({name: 'RefuseExaminationApproval'});
-                this.activeClass = 3;
-            },
+            // toRefuseSign(){
+            //     this.$router.push({name: 'RefuseExaminationApproval'});
+            //     this.activeClass = 3;
+            // },
             toAlreadySign(){
                 this.$router.push({name: 'CompletionExaminationApproval'});
                 this.activeClass = 4;
@@ -150,7 +150,7 @@
         width 100%
         background-color #fff
         div
-            padding 5%
+            padding 5% 10%
             display flex
             justify-content space-between
             p
