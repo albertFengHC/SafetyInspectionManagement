@@ -161,6 +161,11 @@ const routes = [
         name: 'CompletionExaminationApprovalDetails',
         component: () => import('../views/RCRNo/CompletionExaminationApprovalDetails.vue'),
     },
+    {
+        path: '/AlreadySignDetailsView',
+        name: 'AlreadySignDetailsView',
+        component: () => import('../views/RCRNo/AlreadySignDetailsView.vue'),
+    },
     {path: '*', redirect: '/login'}
 ];
 
