@@ -3,7 +3,7 @@
         <div class="topContent">
             <div class="top">
                 <h2>成宜公司【安巡查】009</h2>
-                <p @click="toIndex"><span><</span></p>
+                <p @click="toNotSubmitted"><span><</span></p>
             </div>
         </div>
         <div class="boxContent">
@@ -103,8 +103,8 @@
             save(){
 
             },
-            toIndex(){
-                this.$router.push({name: 'NoSign'});
+            toNotSubmitted(){
+                this.$router.push({name: 'NotSubmitted'});
             },
             toLPHazards(){
                 this.$router.push({name: 'LPHazards'});
