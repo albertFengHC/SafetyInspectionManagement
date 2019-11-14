@@ -10,13 +10,13 @@
             <div class="contentTop">
                 <div class="topUser">
                     <div>
-                        <img src="../../assets/DHDIList/已同意.png">
+                        <img src="../../assets/RCRNo/人员头像864.png">
                     </div>
                     <div class="topUserBottom">
                         <h4>张瑜佳</h4>
                         <p>已签收</p>
                     </div>
-                    <img src="../../assets/DHDIList/已签收.png" class="logoImg">
+                    <img src="../../assets/RCRNo/已签收.png" class="logoImg">
                 </div>
                 <div class="topInfo">
                     <p><span>签收编号</span>20190905163600018409</p>
@@ -70,12 +70,12 @@
                 <div>
                     <span>现场照片</span>
                     <div class="photoList">
-                        <img src="../../assets/DHDIList/现场监控1.png">
-                        <img src="../../assets/DHDIList/现场监控2.png">
-                        <img src="../../assets/DHDIList/现场监控3.png">
-                        <img src="../../assets/DHDIList/现场监控1.png">
-                        <img src="../../assets/DHDIList/现场监控2.png">
-                        <img src="../../assets/DHDIList/现场监控3.png">
+                        <img src="../../assets/RCRNo/现场监控1.png">
+                        <img src="../../assets/RCRNo/现场监控2.png">
+                        <img src="../../assets/RCRNo/现场监控3.png">
+                        <img src="../../assets/RCRNo/现场监控1.png">
+                        <img src="../../assets/RCRNo/现场监控2.png">
+                        <img src="../../assets/RCRNo/现场监控3.png">
                     </div>
                 </div>
                 <div class="file">
@@ -91,7 +91,7 @@
                 <div class="process">
                     <div class="processInfo">
                         <div>
-                            <img src="../../assets/DHDIList/已同意.png">
+                            <img src="../../assets/RCRNo/已同意.png">
                         </div>
                         <h4>张瑜佳</h4>
                         <div>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="processInfo">
                         <div>
-                            <img src="../../assets/DHDIList/已同意.png">
+                            <img src="../../assets/RCRNo/已同意.png">
                         </div>
                         <h4>苗争</h4>
                         <div>
@@ -112,7 +112,7 @@
                     <div class="processInfoCirculant">
                         <div class="processInfoCirculantTop">
                             <div>
-                                <img src="../../assets/DHDIList/传阅人.png">
+                                <img src="../../assets/RCRNo/传阅人.png">
                             </div>
                             <h4>2人</h4>
                             <div>
@@ -121,11 +121,11 @@
                         </div>
                         <div class="processInfoCirculantBottom">
                             <div>
-                                <img src="../../assets/DHDIList/人员头像864.png">
+                                <img src="../../assets/RCRNo/人员头像864.png">
                                 <p>罗云</p>
                             </div>
                             <div class="rightPerson">
-                                <img src="../../assets/DHDIList/人员头像864.png">
+                                <img src="../../assets/RCRNo/人员头像864.png">
                                 <p>卫凤</p>
                             </div>
                         </div>
@@ -245,7 +245,7 @@
                         margin 0
                     i
                         display inline-block
-                        background url('../../assets/DHDIList/附件.png') no-repeat
+                        background url('../../assets/RCRNo/附件.png') no-repeat
                         width 13px
                         height 13px
                         position absolute
