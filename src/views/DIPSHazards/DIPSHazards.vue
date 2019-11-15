@@ -9,12 +9,13 @@
             <div class="search">
                 <div class="name">
                     <i></i>
-                    <input type="text" placeholder="请输入姓名">
+                    <input type="text" placeholder="请输入名称或编号">
 <!--                    <input type="search" placeholder="请输入姓名" @click="search($event)">-->
                 </div>
                 <div class="company">
-                    <i></i>
-                    <input type="text" placeholder="请选择单位">
+                    <select name="" id="">
+                        <option value="请选择单位">请选择单位</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -115,7 +116,7 @@
         .name, .company
             padding 10px 0
             position relative
-            input
+            input,select
                 padding 10px
                 width 70%
                 border-radius 10px
@@ -130,16 +131,10 @@
                 background-size 100% 100%
                 position absolute
                 top 40%
-
         .name
             i
                 background url('../../assets/MHDIList/组611.png') no-repeat
                 right  5%
-
-        .company
-            i
-                background url('../../assets/MHDIList/路径946.png') no-repeat
-                left 35%
 
     .boxContent
         flex 3

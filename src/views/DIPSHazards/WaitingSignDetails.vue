@@ -116,25 +116,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="signAdvice">
+                    <p>签收意见</p>
+                    <div>
+                        <textarea name="" id="" cols="45" rows="10"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="bottom">
             <div class="agreeBtn">
-                <button>同意</button>
-            </div>
-            <div class="bottomContent">
-                <div>
-                    <img src="../../assets/DHDIList/路径1294.png">
-                    <p>评论</p>
-                </div>
-                <div>
-                    <img src="../../assets/DHDIList/组1208.png">
-                    <p>分享</p>
-                </div>
-                <div>
-                    <img src="../../assets/DHDIList/组1209.png">
-                    <p>打印</p>
-                </div>
+                <button>签收</button>
             </div>
         </div>
     </div>
@@ -146,7 +138,8 @@
         methods:{
             toAlreadySign(){
                 this.$router.push({name: 'WaitingSign'});
-            }
+            },
+
         }
     }
 </script>
@@ -298,10 +291,13 @@
                             color #999
                     h4
                         flex 2
+            .signAdvice
+                text-align center
+                div
+                    margin-top 10px
 
 
     .bottom
-        position relative
         bottom 0
         background-color #fff
         width 100%
@@ -320,11 +316,4 @@
                 border-radius 15px
                 border none
                 outline none
-        .bottomContent
-            padding 0 5%
-            display flex
-            justify-content space-between
-            div
-                padding 5%
-                flex 1
 </style>

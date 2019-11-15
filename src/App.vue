@@ -15,5 +15,7 @@
         font-size 0.9rem
         /*overflow scroll*/
         /*-webkit-overflow-scrolling: touch;*/
-        -webkit-overflow-scrolling: auto;
+        -webkit-overflow-scrolling auto
+    select
+        box-sizing content-box
 </style>

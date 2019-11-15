@@ -3,7 +3,7 @@
         <div class="top">
             <div class="title">
                 <p @click="toMHDIList"><</p>
-                <h2>未按期已销号隐患清单</h2>
+                <h2>未按期已销号统计</h2>
                 <div>
                     <div class="num">
                         <h3>86</h3>

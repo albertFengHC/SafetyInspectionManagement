@@ -78,26 +78,26 @@
                 </div>
             </div>
         </div>
-        <div class="bottom">
-            <div class="bottomContent">
-                <div>
-                    <img src="../../assets/DHDIList/路径1352.png">
-                    <p>催办</p>
-                </div>
-                <div>
-                    <img src="../../assets/DHDIList/路径1294.png">
-                    <p>评论</p>
-                </div>
-                <div>
-                    <img src="../../assets/DHDIList/组1208.png">
-                    <p>分享</p>
-                </div>
-                <div>
-                    <img src="../../assets/DHDIList/组1209.png">
-                    <p>打印</p>
-                </div>
-            </div>
-        </div>
+<!--        <div class="bottom">-->
+<!--            <div class="bottomContent">-->
+<!--                <div>-->
+<!--                    <img src="../../assets/DHDIList/路径1352.png">-->
+<!--                    <p>催办</p>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <img src="../../assets/DHDIList/路径1294.png">-->
+<!--                    <p>评论</p>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <img src="../../assets/DHDIList/组1208.png">-->
+<!--                    <p>分享</p>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <img src="../../assets/DHDIList/组1209.png">-->
+<!--                    <p>打印</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </template>
 
@@ -196,19 +196,19 @@
                         color #ce0c0c
                         flex 4
 
-    .bottom
-        position relative
-        bottom 0
-        background-color #fff
-        width 100%
-        text-align center
-        color #999999
-        border-top 2px solid #eee
-        .bottomContent
-            padding 0 5%
-            display flex
-            justify-content space-between
-            div
-                padding 5%
-                flex 1
+    /*.bottom*/
+    /*    position relative*/
+    /*    bottom 0*/
+    /*    background-color #fff*/
+    /*    width 100%*/
+    /*    text-align center*/
+    /*    color #999999*/
+    /*    border-top 2px solid #eee*/
+    /*    .bottomContent*/
+    /*        padding 0 5%*/
+    /*        display flex*/
+    /*        justify-content space-between*/
+    /*        div*/
+    /*            padding 5%*/
+    /*            flex 1*/
 </style>
