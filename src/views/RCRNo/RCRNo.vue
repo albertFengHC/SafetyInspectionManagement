@@ -26,8 +26,8 @@
                 <div>
                     <p :class="{'active':activeClass===1}" @click="toNotSubmitted">未提交</p>
                     <p :class="{'active':activeClass===2}" @click="toApprovalPending">待复核</p>
-                    <p :class="{'active':activeClass===3}" @click="toRefuseSign">审批拒绝</p>
-                    <p :class="{'active':activeClass===4}" @click="toAlreadySign">审批通过</p>
+                    <p :class="{'active':activeClass===3}" @click="toRefuseSign">复核不通过</p>
+                    <p :class="{'active':activeClass===4}" @click="toAlreadySign">复核通过</p>
                 </div>
             </div>
         </div>

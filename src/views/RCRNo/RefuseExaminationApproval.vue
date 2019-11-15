@@ -7,7 +7,7 @@
                 <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
             </div>
-            <div class="infoRight">审批拒绝<span>></span></div>
+            <div class="infoRight">复核不通过<span>></span></div>
         </div>
     </div>
 </template>

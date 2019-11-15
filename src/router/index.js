@@ -129,11 +129,11 @@ const routes = [
                 name: 'ApprovalPending',
                 component: () => import('../views/RCRNo/ApprovalPending.vue'),
             },
-            // {
-            //     path: '/RefuseExaminationApproval',
-            //     name: 'RefuseExaminationApproval',
-            //     component: () => import('../views/RCRNo/RefuseExaminationApproval.vue'),
-            // },
+            {
+                path: '/RefuseExaminationApproval',
+                name: 'RefuseExaminationApproval',
+                component: () => import('../views/RCRNo/RefuseExaminationApproval.vue'),
+            },
             {
                 path: '/CompletionExaminationApproval',
                 name: 'CompletionExaminationApproval',

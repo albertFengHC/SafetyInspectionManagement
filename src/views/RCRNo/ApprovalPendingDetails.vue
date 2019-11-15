@@ -102,21 +102,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="bottom">
-            <div class="bottomContent">
-                <div>
-                    <img src="../../assets/RCRNo/路径1352.png">
-                    <p>催办</p>
-                </div>
-                <div>
-                    <img src="../../assets/RCRNo/路径1294.png">
-                    <p>评论</p>
-                </div>
-                <div>
-                    <img src="../../assets/RCRNo/撤销.png">
-                    <p>撤回</p>
+                <div class="signAdvice">
+                    <p>复核意见</p>
+                    <div>
+                        <textarea name="" id="" cols="45" rows="10"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -238,6 +228,10 @@
                         top 5px
                         outline none
         .contentBottom
+            .signAdvice
+                text-align center
+                div
+                    margin-top 10px
             .process
                 /*padding 15px 0*/
                 .processInfo
@@ -266,6 +260,7 @@
                         flex 2
                         padding-left 1
 
+
                 .processInfoCirculantTop
                     display flex
                     justify-content space-between
@@ -276,21 +271,4 @@
                             color #999
                     h4
                         flex 2
-
-
-    .bottom
-        position relative
-        bottom 0
-        background-color #fff
-        width 100%
-        text-align center
-        color #999999
-        border-top 2px solid #eee
-        .bottomContent
-            padding 0 5%
-            display flex
-            justify-content space-between
-            div
-                padding 5%
-                flex 1
 </style>
