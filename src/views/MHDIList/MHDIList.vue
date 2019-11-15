@@ -2,17 +2,14 @@
     <div id="MHDIList">
         <div class="topContent">
             <div class="top">
-                <h2>隐患排查清单管理</h2>
+                <h2>安全隐患统计分析</h2>
                 <p @click="toIndex"><span><</span>应用</p>
             </div>
             <div class="search">
-                <div class="name">
-                    <i></i>
-                    <input type="text" placeholder="请输入姓名">
-                </div>
                 <div class="company">
-                    <i></i>
-                    <input type="text" placeholder="请选择单位">
+                    <select name="" id="">
+                        <option value="请选择单位">请选择单位</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -174,10 +171,10 @@
         border-bottom 2px solid #EEEEEE
         border-radius 15px
         box-shadow 0 3px 0 #d6d6d6
-        .name, .company
+        .company
             padding 10px 0
             position relative
-            input
+            select
                 padding 10px
                 width 70%
                 border-radius 10px
@@ -185,23 +182,6 @@
                 border none
                 background-color #F2F2F2
                 text-align center
-            i
-                display inline-block
-                width 21px
-                height 22px
-                background-size 100% 100%
-                position absolute
-                top 40%
-
-        .name
-            i
-                background url('../../assets/MHDIList/组611.png') no-repeat
-                right  5%
-
-        .company
-            i
-                background url('../../assets/MHDIList/路径946.png') no-repeat
-                left 35%
 
 
     .boxContent

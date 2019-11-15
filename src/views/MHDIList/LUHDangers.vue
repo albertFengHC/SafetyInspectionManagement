@@ -2,19 +2,24 @@
     <div id="LUHDangers">
         <div class="top">
             <div class="title">
-                <h2>未销号隐患清单</h2>
                 <p @click="toMHDIList"><</p>
-            </div>
-            <div class="topContent">
-                <div class="circle">
-                    <div>
-                        <div class="num">
-                            <h2>86</h2>
-                        </div>
+                <h2>未销号统计</h2>
+                <div>
+                    <div class="num">
+                        <h3>86</h3>
                     </div>
                 </div>
-                <h3 class="name">未销号</h3>
             </div>
+<!--            <div class="topContent">-->
+<!--                <div class="circle">-->
+<!--                    <div>-->
+<!--                        <div class="num">-->
+<!--                            <h2>86</h2>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <h3 class="name">未销号</h3>-->
+<!--            </div>-->
         </div>
         <div class="content">
             <div class="info" @click="toLUHDangersDetails">
@@ -62,54 +67,29 @@
         position relative
         text-align center
         border-bottom 2px solid #EEEEEE
-        p
-            position absolute
-            color #999999
-            top 27%
-            left 10%
-            font-size 1.5rem
-            font-weight bold
-
-    .topContent
-        text-align center
-        border-bottom 2px solid #EEEEEE
-        border-bottom-right-radius 15px
-        border-bottom-left-radius 15px
-        box-shadow 0 3px 0 #d6d6d6
         background-color #E1A14C
         color #fff
-        padding 30px
         display flex
-        flex-direction column
         justify-content space-between
         align-items center
-        .circle
+        p
+            font-size 1.5rem
+            font-weight bold
+        .num
             border 1px solid #fff
             border-radius 50%
-            height 100px
-            width 100px
-            line-height 100px
+            height 20px
+            width 20px
             display flex
             justify-content center
             align-items center
-            margin-bottom 15px
-            div
-                border 1px solid #fff
-                border-radius 50%
-                height 80%
-                width 80%
-                display flex
-                justify-content center
-                align-items center
-            .num
-                background-color #fff
-                color #E1A14C
-        .name
-            h3
-                font-size 1.2rem
+            padding 5px
+            background-color #fff
+            color #E1A14C
 
     .content
         margin-bottom 20%
+        padding-bottom 15%
         .info
             padding 15px 25px
             display flex
