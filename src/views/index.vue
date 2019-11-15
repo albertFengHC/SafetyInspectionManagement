@@ -3,7 +3,6 @@
         <div class="top">
             <div class="topContent">
                 <h2>工程项目安全管理信息系统</h2>
-                <p>+</p>
             </div>
             <img src="../assets/index/topImg2x.png" class="topImg">
         </div>
@@ -15,7 +14,7 @@
                         <div>
                             <img src="../assets/index/组1813.png">
                             <p>单位技术</p>
-                            <p>人员管理</p>
+                            <p>人员巡查</p>
                         </div>
                         <div>
                             <img src="../assets/index/组1814.png">
@@ -92,22 +91,22 @@
                     <div class="SRMControlTop">
                         <div>
                             <img src="../assets/index/组1822.png" @click="toMHDIList">
-                            <p>隐患排查</p>
-                            <p>清单管理</p>
+                            <p>安全隐患</p>
+                            <p>统计分析</p>
                         </div>
                         <div>
                             <img src="../assets/index/组1823.png" @click="toDIPSHazards">
-                            <p>安全隐患</p>
-                            <p>日常巡查</p>
+                            <p>隐患日常</p>
+                            <p>巡查管理</p>
                         </div>
                         <div>
                             <img src="../assets/index/组1824.png" @click="toRCRNo">
-                            <p>整改闭合</p>
-                            <p>复合销号</p>
+                            <p>整改复核</p>
+                            <p>销号管理</p>
                         </div>
                         <div>
                             <img src="../assets/index/组1825.png">
-                            <p>监管安全</p>
+                            <p>安全监理</p>
                             <p>生产日志</p>
                         </div>
                     </div>
@@ -126,7 +125,7 @@
                     <div class="ERMControlTop">
                         <div>
                             <img src="../assets/index/组1827.png">
-                            <p>成熟保障</p>
+                            <p>应急保障</p>
                             <p>物资管理</p>
                         </div>
                     </div>
@@ -141,10 +140,6 @@
             <div>
                 <img src="../assets/index/选中/组1811.png">
                 <p>应用</p>
-            </div>
-            <div>
-                <img src="../assets/index/未选中/组1826.png">
-                <p>朋友</p>
             </div>
             <div>
                 <img src="../assets/index/未选中/组1830.png">
@@ -193,12 +188,6 @@
         background-color #1752DB
         text-align center
         padding 20px
-        position relative
-        p
-            font-size 2rem
-            position absolute
-            top 20%
-            right 5%
 
     .topImg
         width 100%
