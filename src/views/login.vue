@@ -41,16 +41,12 @@
             toIndex(){
                 this.$router.push({name: 'index'});
             },
-            loginData(){
-                const value = {
-                    username: 'zhangyj',
-                    password: '123456',
-                };
-                this.getLoginUrl(value);
-            }
         },
         mounted() {
-            this.loginData();
+            this.getLoginUrl({
+                username: 'zhangyj',
+                password: '123456',
+            });
         }
     }
 </script>
