@@ -28,6 +28,7 @@
 <script>
     // @ is an alias to /src
     // import HelloWorld from '@/components/HelloWorld.vue'
+    import {mapState, mapActions, mapMutations} from 'vuex'
 
     export default {
         name: 'login',
@@ -35,9 +36,21 @@
 
         },
         methods:{
+            ...mapActions(['getLoginUrl']),
+            ...mapMutations(['LoginUrl']),
             toIndex(){
                 this.$router.push({name: 'index'});
+            },
+            loginData(){
+                const value = {
+                    username: 'zhangyj',
+                    password: '123456',
+                };
+                this.getLoginUrl(value);
             }
+        },
+        mounted() {
+            this.loginData();
         }
     }
 </script>

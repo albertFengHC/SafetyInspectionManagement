@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-// const baseUrl = 'http://192.168.1.5:8080/safeScreen/App/';
-const baseUrl = 'http://129.28.66.56:8088/safeScreen/App/';
+// const baseUrl = 'http://192.168.1.5:8044/safeScreen/App/';
+const baseUrl = 'http://129.28.66.56:8044/safeScreen/App/';
 
 //登录
-export function LoginUrl(url ,parameter){
+export function LoginUrl(parameter){
     return new Promise((resolve,reject) => {
         axios({
             method: 'post',

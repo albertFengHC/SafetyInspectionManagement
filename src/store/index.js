@@ -1,15 +1,53 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {LoginUrl} from './../urlBase';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
+
+const state = {
+    companyTree: '',
+    userInfo: '',
+    trapClass: '',
+    reviewCheck: '',
+    trapType: '',
+    testType: '',
+    trapLevel: '',
+    testObject: ''
+};
+
+const mutations = {
+    LoginUrlData(state, password) {
+        const that = this;
+        const parameter = password;
+        // 发送 POST 请求
+        LoginUrl(parameter)
+            .then(function (data) {
+                console.log(data);
+                state.companyTree = data.companyTree;
+                state.userInfo = data.userInfo;
+                state.trapClass = data.trapClass;
+                state.reviewCheck = data.reviewCheck;
+                state.trapType = data.trapType;
+                state.testType = data.testType;
+                state.trapLevel = data.trapLevel;
+                state.testObject = data.testObject;
+                console.log(that.state);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    },
+};
+
+const actions = {
+    getLoginUrl(store, value) {
+        store.commit('LoginUrlData', value)
+    },
+};
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+    state: state,
+    mutations: mutations,
+    actions: actions,
+    modules: {}
 })
