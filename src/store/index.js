@@ -16,9 +16,12 @@ const state = {
 };
 
 const mutations = {
-    LoginUrlData(state, password) {
+    LoginUrlData(state, value) {
         const that = this;
-        const parameter = password;
+        const parameter =  {
+            username: value.username,
+            password: value.password,
+        };
         // 发送 POST 请求
         LoginUrl(parameter)
             .then(function (data) {
