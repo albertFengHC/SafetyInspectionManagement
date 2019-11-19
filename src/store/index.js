@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {LoginUrl} from './../urlBase';
+import router from './../router/index'
 
 Vue.use(Vuex);
 
 const state = {
+    loginState: '',
     companyTree: '',
     userInfo: '',
     trapClass: '',
@@ -17,15 +19,14 @@ const state = {
 
 const mutations = {
     LoginUrlData(state, value) {
-        const that = this;
-        const parameter =  {
+        const parameter = {
             username: value.username,
             password: value.password,
         };
         // 发送 POST 请求
         LoginUrl(parameter)
-            .then(function (data) {
-                console.log(data);
+            .then(function (dataUrl) {
+                const data = dataUrl.data;
                 state.companyTree = data.companyTree;
                 state.userInfo = data.userInfo;
                 state.trapClass = data.trapClass;
@@ -34,12 +35,14 @@ const mutations = {
                 state.testType = data.testType;
                 state.trapLevel = data.trapLevel;
                 state.testObject = data.testObject;
-                console.log(that.state);
+                router.push({name: 'index'}).then(() => {});
             })
-            .catch(function (error) {
-                // console.log(error);
-            });
-    },
+            .catch(data => {
+                console.log(data);
+                state.loginState= data;
+                alert('账户或密码错误');
+        });
+    }
 };
 
 const actions = {

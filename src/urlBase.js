@@ -12,7 +12,11 @@ export function LoginUrl(parameter){
             data: parameter,
         })
             .then(response => {
-                resolve(response.data.data);
+                if(response.data.errcode === '-1'){
+                    reject(response.data.errcode);
+                }else {
+                    resolve(response.data);
+                }
             })
             .catch(function (error) {
                 // console.log(error);

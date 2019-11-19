@@ -5,11 +5,11 @@
             <h1>工程项目安全管理信息系统</h1>
             <div class="userName">
                 <i></i>
-                <input type="text" placeholder="请输入账号">
+                <input type="text" placeholder="请输入账号" v-model="userName">
             </div>
             <div class="passWord">
                 <i></i>
-                <input type="text" placeholder="请输入密码">
+                <input type="text" placeholder="请输入密码" v-model="passWord">
                 <span></span>
             </div>
             <p class="forgetPW">忘记密码？</p>
@@ -19,7 +19,9 @@
                 <p>or</p>
                 <p class="lineP"></p>
             </div>
-            <p class="jumpA"><router-link to="loginPhone">使用手机动态码登录</router-link></p>
+            <p class="jumpA">
+                <router-link to="loginPhone">使用手机动态码登录</router-link>
+            </p>
             <p class="boxBottom">由四川云检科技发展有限公司提供计算服务</p>
         </div>
     </div>
@@ -32,22 +34,30 @@
 
     export default {
         name: 'login',
-        components: {
-
+        data() {
+            return {
+                userName: '',
+                passWord: '',
+            }
         },
-        methods:{
+        components: {},
+        methods: {
             ...mapActions(['getLoginUrl']),
             ...mapMutations(['LoginUrl']),
-            toIndex(){
-                this.$router.push({name: 'index'});
+            toIndex() {
+                this.getLoginUrl({
+                    username: this.userName,
+                    password: this.passWord,
+                })
             },
         },
         mounted() {
-            this.getLoginUrl({
-                username: 'zhangyj',
-                password: '123456',
-            });
-        }
+
+        },
+        computed: mapState([
+            // 映射 this.count 为 store.state.count
+            'loginState'
+        ])
     }
 </script>
 
@@ -76,28 +86,29 @@
         padding-left 30px
         color #27F2B2
 
-    ::-webkit-input-placeholder  /* Chrome/Opera/Safari */
+    ::-webkit-input-placeholder /* Chrome/Opera/Safari */
         color #27F2B2
 
-    ::-moz-placeholder  /* Firefox 19+ */
+    ::-moz-placeholder /* Firefox 19+ */
         color #27F2B2
 
-    :-ms-input-placeholder  /* IE 10+ */
+    :-ms-input-placeholder /* IE 10+ */
         color #27F2B2
 
-    :-moz-placeholder  /* Firefox 18- */
+    :-moz-placeholder /* Firefox 18- */
         color #27F2B2
 
     .logo
         margin-top: 15%;
 
-    .userName,.passWord
+    .userName, .passWord
         position relative
         padding 8px
         padding-left 30px
         border 1px solid #27f2b2
         border-radius 20px
         width 60%
+
         i
             display inline-block
             width 21px
@@ -114,13 +125,14 @@
     .passWord
         i
             background url('../assets/login/组509.png') no-repeat
+
         span
             display inline-block
             background url('../assets/login/组331.png') no-repeat
             background-size 100% 100%
             position absolute
             top 15px
-            right  8px
+            right 8px
             width 18px
             height 8px
 
@@ -134,6 +146,7 @@
         text-align center
         display flex
         justify-content space-between
+
         .lineP
             display inline-block
             border-bottom 1px solid #27F2B2
@@ -146,5 +159,5 @@
     .jumpA
         a
             color #27F2B2
-            text-decoration  none
+            text-decoration none
 </style>
