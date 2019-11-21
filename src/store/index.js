@@ -38,9 +38,9 @@ const mutations = {
                 router.push({name: 'index'}).then(() => {});
             })
             .catch(data => {
-                console.log(data);
+                // console.log(data);
                 state.loginState= data;
-                alert('账户或密码错误');
+                // alert('账户或密码错误');
         });
     }
 };

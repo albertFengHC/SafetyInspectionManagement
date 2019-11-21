@@ -24,6 +24,7 @@
             </p>
             <p class="boxBottom">由四川云检科技发展有限公司提供计算服务</p>
         </div>
+        <Alert type="error" v-show="this.loginState === '-1'">账户或密码错误</Alert>
     </div>
 </template>
 
@@ -54,10 +55,16 @@
         mounted() {
 
         },
-        computed: mapState([
-            // 映射 this.count 为 store.state.count
-            'loginState'
-        ])
+        computed: {
+            ...mapState({
+                loginState:'loginState'
+            })
+        },
+        watch:{
+            loginState:function (o,n) {
+                console.log(o,n);
+            }
+        }
     }
 </script>
 
