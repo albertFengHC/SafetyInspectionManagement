@@ -24,7 +24,7 @@
             </p>
             <p class="boxBottom">由四川云检科技发展有限公司提供计算服务</p>
         </div>
-        <Alert type="error" v-show="this.loginState === '-1'">账户或密码错误</Alert>
+        <Alert type="error" v-show="this.loginState === '-1'" class="logInfo">账号或密码错误</Alert>
     </div>
 </template>
 
@@ -56,13 +56,11 @@
 
         },
         computed: {
-            ...mapState({
-                loginState:'loginState'
-            })
+            ...mapState(['loginState'])
         },
         watch:{
-            loginState:function (o,n) {
-                console.log(o,n);
+            loginState:function (o) {
+                console.log(o);
             }
         }
     }
@@ -167,4 +165,9 @@
         a
             color #27F2B2
             text-decoration none
+
+    .logInfo
+        position absolute
+        top 5%
+        left 5%
 </style>

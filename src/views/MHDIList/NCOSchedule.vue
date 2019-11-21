@@ -22,14 +22,14 @@
 <!--            </div>-->
         </div>
         <div class="content">
-            <div class="info" @click="toNCOScheduleDetails">
+            <div class="info" @click="toNCOScheduleDetails(data)" v-for="data in listData" :value="data.fTrapno" :key="data.fId">
                 <div class="infoLeft">
-                    <h3>安巡查0001</h3>
-                    <p>单位名称：成宜项目分公司</p>
-                    <p>监察人：张瑜佳</p>
-                    <p>检查时间：2019-09-11</p>
+                    <h3>{{data.fTrapno}}</h3>
+                    <p>单位名称：{{data.fPassivename}}</p>
+                    <p>监察人：{{data.fCheckname}}</p>
+                    <p>检查时间：{{data.fCheckdate}}</p>
                 </div>
-                <div class="infoRight">超期一天<span>></span></div>
+                <div class="infoRight">超期{{data.difference}}天<span>></span></div>
             </div>
         </div>
         <div class="bottom">
@@ -41,16 +41,48 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import {NCOScheduleUrl} from './../../urlBase';
+
     export default {
         name: "NCOSchedule",
+        data(){
+            return{
+                listData:''
+            }
+        },
         methods:{
             toMHDIList(){
                 this.$router.push({name: 'MHDIList'});
             },
-            toNCOScheduleDetails(){
-                this.$router.push({name: 'NCOScheduleDetails'});
+            toNCOScheduleDetails(data){
+                this.$router.push({name: 'NCOScheduleDetails',params: { fId: data.fId}});
+            },
+            getList(){
+                const that = this;
+                const logInfo = this.userInfo;
+                const parameter = {
+                    companyId: logInfo.companyId,
+                    userId: logInfo.userId,
+                    realId: logInfo.realId,
+                    modelType: '4'
+                };
+                NCOScheduleUrl(parameter)
+                    .then(function (data) {
+                        that.listData = data.trapDailyList;
+                        console.log(that.listData);
+                    })
+                    .catch(data => {
+
+                    });
             }
-        }
+        },
+        mounted() {
+          this.getList();
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 

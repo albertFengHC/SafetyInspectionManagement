@@ -40,8 +40,10 @@ const mutations = {
             .catch(data => {
                 // console.log(data);
                 state.loginState= data;
-                // alert('账户或密码错误');
-        });
+                setTimeout(()=>{
+                    state.loginState = 1;
+                }, 3000);
+            });
     }
 };
 

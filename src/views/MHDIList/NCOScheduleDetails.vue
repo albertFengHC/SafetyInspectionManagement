@@ -102,13 +102,43 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import {NCOScheduleDetailsUrl} from './../../urlBase';
+
     export default {
         name: "NCOScheduleDetails",
+        data(){
+            return{
+                listData:''
+            }
+        },
         methods:{
             toNCOSchedule(){
                 this.$router.push({name: 'NCOSchedule'});
+            },
+            getList(){
+                const that = this;
+                const logInfo = this.userInfo;
+                const parameter = {
+                    fId: this.$route.params.fId,
+                    userId: logInfo.userId,
+                };
+                NCOScheduleDetailsUrl(parameter)
+                    .then(function (data) {
+                        that.listData = data;
+                        console.log(that.listData);
+                    })
+                    .catch(data => {
+
+                    });
             }
-        }
+        },
+        mounted() {
+            this.getList();
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 

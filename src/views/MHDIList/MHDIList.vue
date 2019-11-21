@@ -7,9 +7,8 @@
             </div>
             <div class="search">
                 <div class="company">
-                    <select name="" id="">
-                        <option value="请选择单位">请选择单位</option>
-                    </select>
+                    <p @click="showCompany" class="searchSel">选择公司<span>{{searchValSel}}</span></p>
+                    <Tree :data="companyTreeList" v-show="showCompanyVal === 1" @on-select-change="searchValSelF"></Tree>
                 </div>
             </div>
         </div>
@@ -44,10 +43,17 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import {MHDIListUrl} from './../../urlBase';
+
     export default {
         name: "MHDIList",
         data() {
-            return {}
+            return {
+                companyTreeList : [],
+                showCompanyVal: 0,
+                searchValSel: '',
+            }
         },
         methods: {
             creatLabel() {
@@ -113,10 +119,8 @@
                         },
                     ]
                 };
-
                 // 绘制图表
                 myChart.setOption(option);
-
             },
             toIndex(){
                 this.$router.push({name: 'index'});
@@ -133,11 +137,87 @@
             toLHDTCancellation(){
                 this.$router.push({name: 'LHDTCancellation'});
             },
+            showCompany(){
+                this.showCompanyVal = 1;
+            },
+            searchValSelF(e){
+                this.searchValSel= e[0].title;
+                this.showCompanyVal = 0;
+            },
+            getCompanyTreeList(){
+                let newCompanyTree = this.companyTree;
+                // function getCompanyTreeData(data){
+                //     let CompanyTreeF = [];
+                //     data.map(val=>{
+                //         if (val.children.length) {
+                //             val.children.map(val => {
+                //                 CompanyTreeF.push(
+                //                     {
+                //                         title: val.f_FullName,
+                //                         id: val.f_CompanyId,
+                //                         children: getCompanyTreeData(data) //递归遍历
+                //                     }
+                //                 )
+                //             });
+                //         }else {
+                //             CompanyTreeF.push(
+                //                 {
+                //                     title: val.f_FullName,
+                //                     id: val.f_CompanyId,
+                //                 }
+                //             )
+                //         }
+                //     });
+                // }
+                // getCompanyTreeData(newCompanyTree);
 
+                let newCompanyTreeList = '';
+                let resetTree = (data)=> {
+                    let newTree = data.map(item => {
+                        if (item.children) {
+                            return {
+                                // ...item,
+                                title: item.f_FullName,
+                                id: item.f_CompanyId,
+                                children: resetTree(item.children)
+                            }
+                        } else {
+                            return {
+                                // ...item,
+                                title: item.f_FullName,
+                                id: item.f_CompanyId,
+                            }
+                        }
+                    });
+                    return newTree;
+                };
+                newCompanyTreeList = resetTree(newCompanyTree);
+                this.companyTreeList = newCompanyTreeList;
+            },
+            getIndexData(){
+                console.log(this.userInfo);
+                const logInfo = this.userInfo;
+                const parameter = {
+                    companyId: logInfo.companyId,
+                    userId: logInfo.userId,
+                };
+                MHDIListUrl(parameter)
+                    .then(function (data) {
+                        console.log(data);
+                    })
+                    .catch(data => {
+
+                    });
+            }
         },
         mounted() {
             this.creatLabel();
-        }
+            this.getCompanyTreeList();
+            this.getIndexData();
+        },
+        computed: {
+            ...mapState(['companyTree','userInfo'])
+        },
     }
 </script>
 
@@ -174,14 +254,16 @@
         .company
             padding 10px 0
             position relative
-            select
+            .searchSel
                 padding 10px
-                width 70%
-                border-radius 10px
+                width 100%
                 box-shadow none
                 border none
-                background-color #F2F2F2
                 text-align center
+                span
+                    font-weight bold
+                    display inline-block
+                    margin-left 15px
 
 
     .boxContent

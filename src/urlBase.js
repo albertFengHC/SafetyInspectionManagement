@@ -23,3 +23,54 @@ export function LoginUrl(parameter){
             });
     })
 }
+
+//隐患排查清单管理首页
+export function MHDIListUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/getPersonByCompanyId.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}
+
+//隐患排查清单管理未按期销号统计
+export function NCOScheduleUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/getTrapDailyList.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}
+
+//隐患排查清单管理未按期销号统计详情
+export function NCOScheduleDetailsUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/getTrapDailyByFid.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}
