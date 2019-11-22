@@ -56,7 +56,7 @@
                 this.$router.push({name: 'MHDIList'});
             },
             toNCOScheduleDetails(data){
-                this.$router.push({name: 'NCOScheduleDetails',params: { fId: data.fId,companyName:data.fTrapno}});
+                this.$router.push({name: 'NCOScheduleDetails',params: { fId: data.fId,fTrapno:data.fTrapno}});
             },
             getList(){
                 const that = this;
