@@ -9,39 +9,30 @@
         <div class="content">
             <div class="contentTop">
                 <div class="topInfo">
-                    <p><span>被检查单位</span>TJ2-中铁四局</p>
-                    <p><span>被检查记录编号</span>成宜公司【安巡查】009</p>
-                    <p><span>检查时间</span>2019-09-03</p>
+                    <p><span>被检查单位</span>{{listData.checkTrapDaily.fPassivename}}</p>
+                    <p><span>被检查记录编号</span>{{listData.checkTrapDaily.fTrapno}}</p>
+                    <p><span>检查时间</span>{{listData.checkTrapDaily.fCheckdates}}</p>
                 </div>
                 <div class="projectName">
-                    <p><span>存在隐患工程名称</span>深基坑施工</p>
+                    <p><span>存在隐患工程名称</span>{{listData.checkTrapDaily.fDangername}}</p>
                 </div>
                 <div class="problems">
                     <h3>检查发现问题</h3>
                     <div class="problemsInfo">
-                        <div class="problemsInfoList">
+                        <div class="problemsInfoList" v-for="data in listData.checkTrapDaily.recordMessageItem" :value="data.fItemno" :key="data.fId">
                             <div class="problemsInfoListTitle">
-                                <p>103020601</p>
-                                <p>Ⅲ级</p>
+                                <p>{{data.fItemno}}</p>
+                                <p>{{data.fTraplevel}}</p>
                             </div>
                             <div>
-                                <p>1.灌注前没有二次清孔。</p>
-                            </div>
-                        </div>
-                        <div class="problemsInfoList">
-                            <div class="problemsInfoListTitle">
-                                <p>103020601</p>
-                                <p>Ⅲ级</p>
-                            </div>
-                            <div>
-                                <p>1.灌注前没有二次清孔。</p>
+                                <p>{{data.fItemname}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="moreProblemsInfoList">
-                    <p>查看更多<span>></span></p>
-                </div>
+<!--                <div class="moreProblemsInfoList">-->
+<!--                    <p>查看更多<span>></span></p>-->
+<!--                </div>-->
             </div>
             <div class="contentBottom">
                 <h3>巡查整改人员流程</h3>
@@ -50,30 +41,30 @@
                         <div>
                             <img src="../../assets/DHDIList/已同意.png">
                         </div>
-                        <h4>张瑜佳</h4>
+                        <h4>{{listData.lrCheckTasks[0].checkName}}</h4>
                         <div>
-                            <p>检查人</p>
-                            <p>成宜项目分公司</p>
+                            <p>{{listData.lrCheckTasks[0].checkJob}}</p>
+                            <p>{{listData.lrCheckTasks[0].checkCompany}}</p>
                         </div>
-                        <p>09.03<span>16:36</span></p>
+                        <p>{{listData.lrCheckTasks[0].checkDate}}</p>
                     </div>
                     <div class="processInfo">
                         <div>
                             <img src="../../assets/DHDIList/已同意.png">
                         </div>
-                        <h4>苗争</h4>
+                        <h4>{{listData.lrCheckTasks[1].checkName}}</h4>
                         <div>
-                            <p>签收人</p>
-                            <p>TJ2-中铁四局</p>
-                            <p class="remarks">传阅2人</p>
+                            <p>{{listData.lrCheckTasks[1].checkJob}}</p>
+                            <p>{{listData.lrCheckTasks[1].checkCompany}}</p>
+                            <p class="remarks">{{listData.lrCheckTasks[1].text}}</p>
                         </div>
-                        <p>09.03<span>16:36</span></p>
+                        <p>{{listData.lrCheckTasks[1].checkDate}}</p>
                     </div>
                     <div class="processInfo NSNumber">
                         <div>
                             <img src="../../assets/DHDIList/未整改.png">
                         </div>
-                        <p>超期5天，未销号</p>
+                        <p>超期{{this.$route.params.difference}}天，未销号</p>
                     </div>
                 </div>
             </div>
@@ -178,6 +169,7 @@
                 border-top 1px solid #F5F5F5
                 border-bottom 1px solid #F5F5F5
             .problems
+                padding-bottom 15px
                 .problemsInfo
                     padding 10px
                     background-color #F2F2F2
@@ -211,8 +203,6 @@
                     p
                         color #999
                         margin 5px 0
-                    span
-                        margin-left 5px
                     .remarks
                         color #1752DB
                         border 1px solid #1752DB
