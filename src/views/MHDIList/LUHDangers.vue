@@ -6,30 +6,20 @@
                 <h2>未销号统计</h2>
                 <div>
                     <div class="num">
-                        <h3>86</h3>
+                        <h4>{{listData.length}}</h4>
                     </div>
                 </div>
             </div>
-<!--            <div class="topContent">-->
-<!--                <div class="circle">-->
-<!--                    <div>-->
-<!--                        <div class="num">-->
-<!--                            <h2>86</h2>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <h3 class="name">未销号</h3>-->
-<!--            </div>-->
         </div>
         <div class="content">
-            <div class="info" @click="toLUHDangersDetails">
+            <div class="info" @click="toLUHDangersDetails(data)" v-for="data in listData" :value="data.fTrapno" :key="data.fId">
                 <div class="infoLeft">
-                    <h3>安巡查0001</h3>
-                    <p>单位名称：成宜项目分公司</p>
-                    <p>监察人：张瑜佳</p>
-                    <p>检查时间：2019-09-11</p>
+                    <h3>{{data.fTrapno}}</h3>
+                    <p>单位名称：{{data.fPassivename}}</p>
+                    <p>监察人：{{data.fCheckname}}</p>
+                    <p>检查时间：{{data.fCheckdate}}</p>
                 </div>
-                <div class="infoRight">超期一天<span>></span></div>
+                <div class="infoRight">超期{{data.difference}}天<span>></span></div>
             </div>
         </div>
         <div class="bottom">
@@ -41,16 +31,47 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import {NCOScheduleUrl} from './../../urlBase';
+
     export default {
         name: "LUHDangers",
+        data(){
+            return{
+                listData:''
+            }
+        },
         methods:{
             toMHDIList(){
                 this.$router.push({name: 'MHDIList'});
             },
-            toLUHDangersDetails(){
-                this.$router.push({name: 'LUHDangersDetails'});
+            toLUHDangersDetails(data){
+                this.$router.push({name: 'LUHDangersDetails',params: { fId: data.fId,fTrapno:data.fTrapno,difference:data.difference}});
+            },
+            getList(){
+                const that = this;
+                const logInfo = this.userInfo;
+                const parameter = {
+                    companyId: this.$route.params.companyId,
+                    userId: logInfo.userId,
+                    realId: logInfo.realId,
+                    modelType: '3'
+                };
+                NCOScheduleUrl(parameter)
+                    .then(function (data) {
+                        that.listData = data.trapDailyList;
+                    })
+                    .catch(data => {
+
+                    });
             }
-        }
+        },
+        mounted() {
+            this.getList();
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 

@@ -132,13 +132,13 @@
                 this.$router.push({name: 'NCOSchedule',params: { companyId: this.companyId}});
             },
             toLUHDangers(){
-                this.$router.push({name: 'LUHDangers'});
+                this.$router.push({name: 'LUHDangers',params: { companyId: this.companyId}});
             },
             toLHDNCSchedule(){
-                this.$router.push({name: 'LHDNCSchedule'});
+                this.$router.push({name: 'LHDNCSchedule',params: { companyId: this.companyId}});
             },
             toLHDTCancellation(){
-                this.$router.push({name: 'LHDTCancellation'});
+                this.$router.push({name: 'LHDTCancellation',params: { companyId: this.companyId}});
             },
             showCompany(){
                 this.showCompanyVal = 1;
