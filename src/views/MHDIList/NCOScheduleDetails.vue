@@ -2,7 +2,7 @@
     <div id="NCOScheduleDetails">
         <div class="top">
             <div class="title">
-                <h2>成宜公司【安巡查】009</h2>
+                <h2>{{this.$route.params.fTrapno}}</h2>
                 <p @click="toNCOSchedule"><</p>
             </div>
         </div>

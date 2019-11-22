@@ -6,7 +6,7 @@
                 <h2>未按期未销号统计</h2>
                 <div>
                     <div class="num">
-                        <h3>86</h3>
+                        <h4>86</h4>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 this.$router.push({name: 'MHDIList'});
             },
             toNCOScheduleDetails(data){
-                this.$router.push({name: 'NCOScheduleDetails',params: { fId: data.fId}});
+                this.$router.push({name: 'NCOScheduleDetails',params: { fId: data.fId,companyName:data.fTrapno}});
             },
             getList(){
                 const that = this;

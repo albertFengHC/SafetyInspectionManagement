@@ -29,7 +29,7 @@ export function MHDIListUrl(parameter){
     return new Promise((resolve,reject) => {
         axios({
             method: 'post',
-            url: baseUrl+'CheckTrap/getPersonByCompanyId.do',
+            url: baseUrl+'CheckTrap/getTrapDaily.do',
             data: parameter,
         })
             .then(response => {

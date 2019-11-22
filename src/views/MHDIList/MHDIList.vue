@@ -19,21 +19,21 @@
             <div class="bottom">
                 <div class="bottomTop">
                     <div @click="toNCOSchedule" class="RColor">
-                        <h2>111</h2>
+                        <h2>{{indexData.noPunctualNoSale}}</h2>
                         <p>未按期未销号</p>
                     </div>
                     <div @click="toLUHDangers" class="YColor">
-                        <h2>111</h2>
+                        <h2>{{indexData.noSale}}</h2>
                         <p>未销号</p>
                     </div>
                 </div>
                 <div class="bottomBottom">
                     <div @click="toLHDNCSchedule" class="BColor">
-                        <h2>111</h2>
+                        <h2>{{indexData.noPunctualSale}}</h2>
                         <p>未按期已销号</p>
                     </div>
                     <div @click="toLHDTCancellation" class="GColor">
-                        <h2>111</h2>
+                        <h2>{{indexData.punctualSale}}</h2>
                         <p>按期销号</p>
                     </div>
                 </div>
@@ -50,6 +50,7 @@
         name: "MHDIList",
         data() {
             return {
+                indexData:'',
                 companyTreeList : [],
                 showCompanyVal: 0,
                 searchValSel: '',
@@ -89,7 +90,7 @@
                                     show: true,
                                     position: 'center',
                                     formatter: function (argument) {
-                                        let html = '总数' + "\n" + '1111';
+                                        let html = '总数' + "\n" + that.indexData.trapDaily;
                                         return html;
                                     },
                                     textStyle: {
@@ -112,8 +113,8 @@
                                 }
                             },
                             data: [
-                                {value: 20, name: '处理完结数'},
-                                {value: 60, name: '正在处理数'},
+                                {value: that.indexData.noPunctualSale+that.indexData.punctualSale, name: '处理完结数'},
+                                {value: that.indexData.noPunctualNoSale+that.indexData.noSale, name: '正在处理数'},
                             ],
                             color: ['#00B050', '#FFC000'],
                         },
@@ -196,6 +197,7 @@
             },
             getIndexData(){
                 console.log(this.userInfo);
+                const that = this;
                 const logInfo = this.userInfo;
                 const parameter = {
                     companyId: logInfo.companyId,
@@ -204,6 +206,9 @@
                 MHDIListUrl(parameter)
                     .then(function (data) {
                         console.log(data);
+                        that.indexData = data.trapDailyList[0];
+                        //数据返回后调用生成图表
+                        that.creatLabel();
                     })
                     .catch(data => {
 
@@ -211,7 +216,6 @@
             }
         },
         mounted() {
-            this.creatLabel();
             this.getCompanyTreeList();
             this.getIndexData();
         },
