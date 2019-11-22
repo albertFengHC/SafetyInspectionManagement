@@ -2,69 +2,54 @@
     <div id="LHDNCScheduleDetails">
         <div class="top">
             <div class="title">
-                <h2>成宜公司【安巡查】009</h2>
+                <h2>{{this.$route.params.fTrapno}}</h2>
                 <p @click="toLHDNCSchedule"><</p>
             </div>
         </div>
         <div class="content">
             <div class="contentTop">
                 <div class="topInfo">
-                    <p><span>被检查单位</span>TJ2-中铁四局</p>
-                    <p><span>被检查记录编号</span>成宜公司【安巡查】009</p>
-                    <p><span>检查时间</span>2019-09-03</p>
+                    <p><span>被检查单位</span>{{listData.checkTrapDaily.fPassivename}}</p>
+                    <p><span>被检查记录编号</span>{{listData.checkTrapDaily.fTrapno}}</p>
+                    <p><span>检查时间</span>{{listData.checkTrapDaily.fCheckdates}}</p>
                     <img src="../../assets/DHDIList/组1602.png" class="logoImg">
                 </div>
                 <div class="projectName">
-                    <p><span>存在隐患工程名称</span>深基坑施工</p>
+                    <p><span>存在隐患工程名称</span>{{listData.checkTrapDaily.fDangername}}</p>
                 </div>
                 <div class="problems">
                     <h3>检查发现问题</h3>
                     <div class="problemsInfo">
-                        <div class="problemsInfoList">
+                        <div class="problemsInfoList" v-for="data in listData.checkTrapDaily.recordMessageItem" :value="data.fItemno" :key="data.fId">
                             <div class="problemsInfoListTitle">
-                                <p>103020601</p>
-                                <p>Ⅲ级</p>
+                                <p>{{data.fItemno}}</p>
+                                <p>{{data.fTraplevel}}</p>
                             </div>
                             <div>
-                                <p>1.灌注前没有二次清孔。</p>
-                            </div>
-                        </div>
-                        <div class="problemsInfoList">
-                            <div class="problemsInfoListTitle">
-                                <p>103020601</p>
-                                <p>Ⅲ级</p>
-                            </div>
-                            <div>
-                                <p>1.灌注前没有二次清孔。</p>
+                                <p>{{data.fItemname}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="moreProblemsInfoList">
-                    <p>查看更多<span>></span></p>
-                </div>
+<!--                <div class="moreProblemsInfoList">-->
+<!--                    <p>查看更多<span>></span></p>-->
+<!--                </div>-->
             </div>
             <div class="contentMId">
-                <p><span>整改记录编号</span>TJ4【安整改】001</p>
-                <p><span>整改完成时间</span>2019-09-05</p>
-                <p><span>整改详情描述</span>按规范要求整改完成</p>
+                <p><span>整改记录编号</span>{{listData.checkTrapBack.fBackno}}</p>
+                <p><span>整改完成时间</span>{{listData.checkTrapBack.fFinishdates}}</p>
+                <p><span>整改详情描述</span>{{listData.checkTrapBack.fBackdetail}}</p>
                 <div>
                     <span>整改前照片</span>
                     <div class="photoList">
-                        <img src="../../assets/DHDIList/现场监控1.png">
-                        <img src="../../assets/DHDIList/现场监控2.png">
-                        <img src="../../assets/DHDIList/现场监控3.png">
-                        <img src="../../assets/DHDIList/现场监控1.png">
-                        <img src="../../assets/DHDIList/现场监控2.png">
-                        <img src="../../assets/DHDIList/现场监控3.png">
+<!--                        <img src="../../assets/DHDIList/现场监控1.png">-->
+                        <img :src="data" v-for="data in listData.backBeforePic">
                     </div>
                 </div>
                 <div>
                     <span>整改后照片</span>
                     <div class="photoList">
-                        <img src="../../assets/DHDIList/现场监控4.png">
-                        <img src="../../assets/DHDIList/现场监控5.png">
-                        <img src="../../assets/DHDIList/现场监控6.png">
+                        <img :src="data" v-for="data in listData.backAfterPic">
                     </div>
                 </div>
                 <div class="file">
@@ -75,68 +60,45 @@
                         <button>预览</button>
                     </div>
                 </div>
-                <p><span>整改单位负责人</span>苗争</p>
+                <p><span>整改单位负责人</span>{{listData.checkTrapBack.fAcceptname}}</p>
             </div>
             <div class="contentBottom">
                 <h3>巡查整改人员流程</h3>
                 <div class="process">
-                    <div class="processInfo">
+                    <div class="processInfo" v-for="data in listData.lrCheckTasks" :value="data.checkJob" :key="data.checkJob">
                         <div>
                             <img src="../../assets/DHDIList/已同意.png">
                         </div>
-                        <h4>张瑜佳</h4>
+                        <h4>{{data.checkName}}</h4>
                         <div>
-                            <p>检查人</p>
-                            <p>成宜项目分公司</p>
+                            <p>{{data.checkJob}}</p>
+                            <p>{{data.checkCompany}}</p>
+                            <p class="remarks" v-show="data.text">{{data.text}}</p>
                         </div>
-                        <p>09.03<span>16:36</span></p>
+                        <p>{{data.checkDate}}</p>
                     </div>
                     <div class="processInfo">
                         <div>
                             <img src="../../assets/DHDIList/已同意.png">
                         </div>
-                        <h4>苗争</h4>
+                        <h4>{{listData.recordReview.fCreateusername}}</h4>
                         <div>
-                            <p>签收人</p>
-                            <p>TJ2-中铁四局</p>
-                            <p class="remarks">传阅2人</p>
+                            <p>{{listData.recordReview.fStatus}}</p>
+                            <p>{{listData.recordReview.fCompanyname}}</p>
                         </div>
-                        <p>09.03<span>16:36</span></p>
+                        <p>{{listData.recordReview.fReviewdates}}</p>
                     </div>
                     <div class="processInfo">
                         <div>
                             <img src="../../assets/DHDIList/已同意.png">
                         </div>
-                        <h4>苗争</h4>
+                        <h4>{{listData.recordReview.fReviewname}}</h4>
                         <div>
-                            <p>整改填报人</p>
-                            <p>TJ2-中铁四局</p>
-                            <p class="delay">超期一天</p>
+                            <p>{{listData.recordReview.fMessage}}</p>
+                            <p>{{listData.recordReview.fCompanyname}}</p>
+<!--                            <p class="remarks">抄送3人</p>-->
                         </div>
-                        <p>09.03<span>16:36</span></p>
-                    </div>
-                    <div class="processInfo">
-                        <div>
-                            <img src="../../assets/DHDIList/已同意.png">
-                        </div>
-                        <h4>张瑜佳</h4>
-                        <div>
-                            <p>复核验证人</p>
-                            <p>TJ2-中铁四局</p>
-                        </div>
-                        <p>09.03<span>16:36</span></p>
-                    </div>
-                    <div class="processInfo">
-                        <div>
-                            <img src="../../assets/DHDIList/已同意.png">
-                        </div>
-                        <h4>黄蓉</h4>
-                        <div>
-                            <p>复核验证人</p>
-                            <p>TJ2-中铁四局</p>
-                            <p class="remarks">抄送3人</p>
-                        </div>
-                        <p>09.03<span>16:36</span></p>
+                        <p>{{listData.recordReview.fReviewdates}}</p>
                     </div>
                 </div>
             </div>
@@ -145,13 +107,44 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import {NCOScheduleDetailsUrl} from './../../urlBase';
+
     export default {
         name: "LHDNCScheduleDetails",
+        data(){
+            return{
+                listData:''
+            }
+        },
         methods:{
             toLHDNCSchedule(){
                 this.$router.push({name: 'LHDNCSchedule'});
+            },
+            getList(){
+                const that = this;
+                const logInfo = this.userInfo;
+                const parameter = {
+                    fId: this.$route.params.fId,
+                    userId: logInfo.userId,
+                };
+                NCOScheduleDetailsUrl(parameter)
+                    .then(function (data) {
+                        console.log(data);
+                        console.log(data.checkTrapDaily.fPassivename);
+                        that.listData = data;
+                    })
+                    .catch(data => {
+
+                    });
             }
-        }
+        },
+        mounted() {
+            this.getList();
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 
