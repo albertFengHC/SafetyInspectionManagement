@@ -117,7 +117,6 @@
                 NCOScheduleDetailsUrl(parameter)
                     .then(function (data) {
                         that.listData = data;
-                        console.log(that.listData);
                     })
                     .catch(data => {
 

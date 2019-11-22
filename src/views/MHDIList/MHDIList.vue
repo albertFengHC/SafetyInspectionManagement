@@ -50,6 +50,7 @@
         name: "MHDIList",
         data() {
             return {
+                logInfo:'',
                 indexData:'',
                 companyTreeList : [],
                 showCompanyVal: 0,
@@ -144,6 +145,12 @@
             searchValSelF(e){
                 this.searchValSel= e[0].title;
                 this.showCompanyVal = 0;
+                console.log(e[0].id);
+                const parameter = {
+                    companyId: e[0].id,
+                    userId: this.logInfo.userId,
+                };
+                this.getIndexData(parameter);
             },
             getCompanyTreeList(){
                 let newCompanyTree = this.companyTree;
@@ -195,17 +202,10 @@
                 newCompanyTreeList = resetTree(newCompanyTree);
                 this.companyTreeList = newCompanyTreeList;
             },
-            getIndexData(){
-                console.log(this.userInfo);
+            getIndexData(parameter){
                 const that = this;
-                const logInfo = this.userInfo;
-                const parameter = {
-                    companyId: logInfo.companyId,
-                    userId: logInfo.userId,
-                };
                 MHDIListUrl(parameter)
                     .then(function (data) {
-                        console.log(data);
                         that.indexData = data.trapDailyList[0];
                         //数据返回后调用生成图表
                         that.creatLabel();
@@ -217,7 +217,12 @@
         },
         mounted() {
             this.getCompanyTreeList();
-            this.getIndexData();
+            this.logInfo = this.userInfo;
+            const parameter = {
+                companyId: this.logInfo.companyId,
+                userId: this.logInfo.userId,
+            };
+            this.getIndexData(parameter);
         },
         computed: {
             ...mapState(['companyTree','userInfo'])

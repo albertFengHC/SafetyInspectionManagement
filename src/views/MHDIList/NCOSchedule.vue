@@ -70,7 +70,6 @@
                 NCOScheduleUrl(parameter)
                     .then(function (data) {
                         that.listData = data.trapDailyList;
-                        console.log(that.listData);
                     })
                     .catch(data => {
 
