@@ -202,6 +202,8 @@
                     p
                         color #999
                         margin 5px 0
+                    span
+                        margin-left 5px
                     .remarks
                         color #1752DB
                         border 1px solid #1752DB
