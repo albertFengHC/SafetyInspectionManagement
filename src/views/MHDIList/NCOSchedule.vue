@@ -62,7 +62,7 @@
                 const that = this;
                 const logInfo = this.userInfo;
                 const parameter = {
-                    companyId: logInfo.companyId,
+                    companyId: this.$route.params.companyId,
                     userId: logInfo.userId,
                     realId: logInfo.realId,
                     modelType: '4'

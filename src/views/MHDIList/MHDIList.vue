@@ -55,6 +55,7 @@
                 companyTreeList : [],
                 showCompanyVal: 0,
                 searchValSel: '',
+                companyId:''
             }
         },
         methods: {
@@ -128,7 +129,7 @@
                 this.$router.push({name: 'index'});
             },
             toNCOSchedule(){
-                this.$router.push({name: 'NCOSchedule'});
+                this.$router.push({name: 'NCOSchedule',params: { companyId: this.companyId}});
             },
             toLUHDangers(){
                 this.$router.push({name: 'LUHDangers'});
@@ -145,9 +146,9 @@
             searchValSelF(e){
                 this.searchValSel= e[0].title;
                 this.showCompanyVal = 0;
-                console.log(e[0].id);
+                this.companyId = e[0].id;
                 const parameter = {
-                    companyId: e[0].id,
+                    companyId: this.companyId,
                     userId: this.logInfo.userId,
                 };
                 this.getIndexData(parameter);
