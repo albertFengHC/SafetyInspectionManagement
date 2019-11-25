@@ -260,36 +260,36 @@
                     top 5px
                     outline none
 
-        .contentBottom
-            .process
-                padding 15px 0
-                .processInfo
-                    display flex
-                    justify-content space-between
+    .contentBottom
+        .process
+            padding 15px 0
+            .processInfo
+                display flex
+                justify-content space-between
+                padding 10px 0
+                border-bottom  1px solid #eee
+                h4
                     padding 10px 0
-                    border-bottom  1px solid #eee
-                    h4
-                        padding 10px 0
-                        flex 2
-                    .processInfoContent
-                        flex 3
-                    p
-                        color #999
-                        margin 5px 0
-                    span
-                        margin-left 5px
-                    .remarks
-                        color #1752DB
-                        border 1px solid #1752DB
-                        border-radius 10px
-                        text-align center
-                .NSNumber
-                    align-items center
-                    div
-                        flex 1
-                    p
-                        color #ce0c0c
-                        flex 4
+                    flex 2
+                .processInfoContent
+                    flex 3
+                p
+                    color #999
+                    margin 5px 0
+                span
+                    margin-left 5px
+                .remarks
+                    color #1752DB
+                    border 1px solid #1752DB
+                    border-radius 10px
+                    text-align center
+            .NSNumber
+                align-items center
+                div
+                    flex 1
+                p
+                    color #ce0c0c
+                    flex 4
 
     /*.bottom*/
     /*    position relative*/
