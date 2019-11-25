@@ -133,7 +133,7 @@
                                 <div>
                                     <span>复核照片及资料</span>
                                     <div class="photoList">
-                                        <img :src="recordReviewFile">
+                                        <img :src="listData.recordReviewFile">
                                     </div>
                                 </div>
                             </div>

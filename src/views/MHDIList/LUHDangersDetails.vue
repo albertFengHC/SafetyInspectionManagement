@@ -44,6 +44,22 @@
                             <p><span>整改截止时间</span>{{listData.checkTrapDaily.fLastdates}}</p>
                             <p><span>整改责任人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
                             <p><span>需传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
+                            <div class="contentMId">
+                                <div>
+                                    <span>检查现场照片</span>
+                                    <div class="photoList">
+                                        <img :src="data" v-for="data in listData.checkTrapDailyFileList">
+                                    </div>
+                                </div>
+                                <div class="file">
+                                    <p>整改附件</p>
+                                    <div class="fileContent">
+                                        <i></i>
+                                        <p>详情说明</p>
+                                        <button>预览</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!--                <div class="moreProblemsInfoList">-->
                         <!--                    <p>查看更多<span>></span></p>-->
@@ -52,29 +68,6 @@
                     <div class="contentBottom">
                         <h3>巡查整改人员流程</h3>
                         <div class="process">
-<!--                            <div class="processInfo">-->
-<!--                                <div>-->
-<!--                                    <img src="../../assets/DHDIList/已同意.png">-->
-<!--                                </div>-->
-<!--                                <h4>{{listData.lrCheckTasks[0].checkName}}</h4>-->
-<!--                                <div>-->
-<!--                                    <p>{{listData.lrCheckTasks[0].checkJob}}</p>-->
-<!--                                    <p>{{listData.lrCheckTasks[0].checkCompany}}</p>-->
-<!--                                </div>-->
-<!--                                <p>{{listData.lrCheckTasks[0].checkDate}}</p>-->
-<!--                            </div>-->
-<!--                            <div class="processInfo">-->
-<!--                                <div>-->
-<!--                                    <img src="../../assets/DHDIList/已同意.png">-->
-<!--                                </div>-->
-<!--                                <h4>{{listData.lrCheckTasks[1].checkName}}</h4>-->
-<!--                                <div>-->
-<!--                                    <p>{{listData.lrCheckTasks[1].checkJob}}</p>-->
-<!--                                    <p>{{listData.lrCheckTasks[1].checkCompany}}</p>-->
-<!--                                    <p class="remarks" v-show="listData.lrCheckTasks[1].text">{{listData.lrCheckTasks[1].text}}</p>-->
-<!--                                </div>-->
-<!--                                <p>{{listData.lrCheckTasks[1].checkDate}}</p>-->
-<!--                            </div>-->
                             <div class="processInfo" v-for="data in listData.lrCheckTasks" :value="data.checkJob" :key="data.checkJob">
                                 <div>
                                     <img src="../../assets/DHDIList/已同意.png">
@@ -142,6 +135,14 @@
                             <p><span>复核意见</span>{{listData.recordReview.fMessage}}</p>
                             <p><span>复核结果</span>{{listData.recordReview.fStatus}}</p>
                             <p><span>复核照片及资料</span>{{listData.recordReview.fCheckdates}}</p>
+                            <div class="contentMId">
+                                <div>
+                                    <span>复核照片及资料</span>
+                                    <div class="photoList">
+                                        <img :src="listData.recordReviewFile">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
