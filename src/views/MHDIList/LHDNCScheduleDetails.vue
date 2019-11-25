@@ -43,36 +43,14 @@
                             <p><span>隐患类别</span>{{listData.checkTrapDaily.fTrapclass}}</p>
                             <p><span>隐患类型</span>{{listData.checkTrapDaily.fTraptype}}</p>
                             <p><span>整改截止时间</span>{{listData.checkTrapDaily.fLastdates}}</p>
-                            <p><span>待签收人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
-                            <p><span>待传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
+                            <p><span>整改责任人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
+                            <p><span>需传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
                         </div>
                         <!--                <div class="moreProblemsInfoList">-->
                         <!--                    <p>查看更多<span>></span></p>-->
                         <!--                </div>-->
                     </div>
-                    <div class="contentMId">
-                        <div>
-                            <span>整改前照片</span>
-                            <div class="photoList">
-                                <!--                        <img src="../../assets/DHDIList/现场监控1.png">-->
-                                <img :src="data" v-for="data in listData.backBeforePic">
-                            </div>
-                        </div>
-                        <div>
-                            <span>整改后照片</span>
-                            <div class="photoList">
-                                <img :src="data" v-for="data in listData.backAfterPic">
-                            </div>
-                        </div>
-                        <div class="file">
-                            <p>整改记录及相关资料</p>
-                            <div class="fileContent">
-                                <i></i>
-                                <p>详情说明</p>
-                                <button>预览</button>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="contentBottom">
                         <h3>巡查整改人员流程</h3>
                         <div class="process">
@@ -81,7 +59,7 @@
                                     <img src="../../assets/DHDIList/已同意.png">
                                 </div>
                                 <h4>{{data.checkName}}</h4>
-                                <div>
+                                <div class="processInfoContent">
                                     <p>{{data.checkJob}}</p>
                                     <p>{{data.checkCompany}}</p>
                                     <p class="remarks" v-show="data.text">{{data.text}}</p>
@@ -115,7 +93,7 @@
                     </div>
                 </div>
             </TabPane>
-            <TabPane label="巡查整改情况">
+            <TabPane label="巡查整改情况" :disabled="listData.checkTrapBack === null">
                 <div class="content" v-if="listData.checkTrapBack != null">
                     <div class="contentTop">
                         <div class="topInfo">
@@ -123,14 +101,35 @@
                             <p><span>整改填报人</span>{{listData.checkTrapBack.fAcceptname}}</p>
                             <p><span>整改情况综述</span>{{listData.checkTrapBack.fBackdesc}}</p>
                             <p><span>整改详细情况</span>{{listData.checkTrapBack.fBackdetail}}</p>
-                            <p><span>整改记录及相关资料</span>{{listData.checkTrapBack.fCheckdates}}</p>
+                            <div class="contentMId">
+                                <div>
+                                    <span>整改前照片</span>
+                                    <div class="photoList">
+                                        <img :src="data" v-for="data in listData.backBeforePic">
+                                    </div>
+                                </div>
+                                <div>
+                                    <span>整改后照片</span>
+                                    <div class="photoList">
+                                        <img :src="data" v-for="data in listData.backAfterPic">
+                                    </div>
+                                </div>
+                                <div class="file">
+                                    <p>整改记录及相关资料</p>
+                                    <div class="fileContent">
+                                        <i></i>
+                                        <p>详情说明</p>
+                                        <button>预览</button>
+                                    </div>
+                                </div>
+                            </div>
                             <p><span>整改单位负责人</span>{{listData.checkTrapBack.fAcceptname}}</p>
                             <p><span>整改完成时间</span>{{listData.checkTrapBack.fFinishdates}}</p>
                         </div>
                     </div>
                 </div>
             </TabPane>
-            <TabPane label="整改复核情况">
+            <TabPane label="整改复核情况" :disabled="listData.recordReview === null">
                 <div class="content" v-if="listData.recordReview != null">
                     <div class="contentTop">
                         <div class="topInfo">
@@ -295,6 +294,9 @@
                     border-bottom  1px solid #eee
                     h4
                         padding 10px 0
+                        flex 2
+                    .processInfoContent
+                        flex 3
                     p
                         color #999
                         margin 5px 0

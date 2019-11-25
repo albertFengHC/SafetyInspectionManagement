@@ -42,8 +42,8 @@
                             <p><span>隐患类别</span>{{listData.checkTrapDaily.fTrapclass}}</p>
                             <p><span>隐患类型</span>{{listData.checkTrapDaily.fTraptype}}</p>
                             <p><span>整改截止时间</span>{{listData.checkTrapDaily.fLastdates}}</p>
-                            <p><span>待签收人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
-                            <p><span>待传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
+                            <p><span>整改责任人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
+                            <p><span>需传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
                         </div>
                         <!--                <div class="moreProblemsInfoList">-->
                         <!--                    <p>查看更多<span>></span></p>-->
@@ -52,28 +52,40 @@
                     <div class="contentBottom">
                         <h3>巡查整改人员流程</h3>
                         <div class="process">
-                            <div class="processInfo">
+<!--                            <div class="processInfo">-->
+<!--                                <div>-->
+<!--                                    <img src="../../assets/DHDIList/已同意.png">-->
+<!--                                </div>-->
+<!--                                <h4>{{listData.lrCheckTasks[0].checkName}}</h4>-->
+<!--                                <div>-->
+<!--                                    <p>{{listData.lrCheckTasks[0].checkJob}}</p>-->
+<!--                                    <p>{{listData.lrCheckTasks[0].checkCompany}}</p>-->
+<!--                                </div>-->
+<!--                                <p>{{listData.lrCheckTasks[0].checkDate}}</p>-->
+<!--                            </div>-->
+<!--                            <div class="processInfo">-->
+<!--                                <div>-->
+<!--                                    <img src="../../assets/DHDIList/已同意.png">-->
+<!--                                </div>-->
+<!--                                <h4>{{listData.lrCheckTasks[1].checkName}}</h4>-->
+<!--                                <div>-->
+<!--                                    <p>{{listData.lrCheckTasks[1].checkJob}}</p>-->
+<!--                                    <p>{{listData.lrCheckTasks[1].checkCompany}}</p>-->
+<!--                                    <p class="remarks" v-show="listData.lrCheckTasks[1].text">{{listData.lrCheckTasks[1].text}}</p>-->
+<!--                                </div>-->
+<!--                                <p>{{listData.lrCheckTasks[1].checkDate}}</p>-->
+<!--                            </div>-->
+                            <div class="processInfo" v-for="data in listData.lrCheckTasks" :value="data.checkJob" :key="data.checkJob">
                                 <div>
                                     <img src="../../assets/DHDIList/已同意.png">
                                 </div>
-                                <h4>{{listData.lrCheckTasks[0].checkName}}</h4>
-                                <div>
-                                    <p>{{listData.lrCheckTasks[0].checkJob}}</p>
-                                    <p>{{listData.lrCheckTasks[0].checkCompany}}</p>
+                                <h4>{{data.checkName}}</h4>
+                                <div class="processInfoContent">
+                                    <p>{{data.checkJob}}</p>
+                                    <p>{{data.checkCompany}}</p>
+                                    <p class="remarks" v-show="data.text">{{data.text}}</p>
                                 </div>
-                                <p>{{listData.lrCheckTasks[0].checkDate}}</p>
-                            </div>
-                            <div class="processInfo">
-                                <div>
-                                    <img src="../../assets/DHDIList/已同意.png">
-                                </div>
-                                <h4>{{listData.lrCheckTasks[1].checkName}}</h4>
-                                <div>
-                                    <p>{{listData.lrCheckTasks[1].checkJob}}</p>
-                                    <p>{{listData.lrCheckTasks[1].checkCompany}}</p>
-                                    <p class="remarks" v-show="listData.lrCheckTasks[1].text">{{listData.lrCheckTasks[1].text}}</p>
-                                </div>
-                                <p>{{listData.lrCheckTasks[1].checkDate}}</p>
+                                <p>{{data.checkDate}}</p>
                             </div>
                             <div class="processInfo NSNumber">
                                 <div>
@@ -93,7 +105,28 @@
                             <p><span>整改填报人</span>{{listData.checkTrapBack.fAcceptname}}</p>
                             <p><span>整改情况综述</span>{{listData.checkTrapBack.fBackdesc}}</p>
                             <p><span>整改详细情况</span>{{listData.checkTrapBack.fBackdetail}}</p>
-                            <p><span>整改记录及相关资料</span>{{listData.checkTrapBack.fCheckdates}}</p>
+                            <div class="contentMId">
+                                <div>
+                                    <span>整改前照片</span>
+                                    <div class="photoList">
+                                        <img :src="data" v-for="data in listData.backBeforePic">
+                                    </div>
+                                </div>
+                                <div>
+                                    <span>整改后照片</span>
+                                    <div class="photoList">
+                                        <img :src="data" v-for="data in listData.backAfterPic">
+                                    </div>
+                                </div>
+                                <div class="file">
+                                    <p>整改记录及相关资料</p>
+                                    <div class="fileContent">
+                                        <i></i>
+                                        <p>详情说明</p>
+                                        <button>预览</button>
+                                    </div>
+                                </div>
+                            </div>
                             <p><span>整改单位负责人</span>{{listData.checkTrapBack.fAcceptname}}</p>
                             <p><span>整改完成时间</span>{{listData.checkTrapBack.fFinishdates}}</p>
                         </div>
@@ -213,7 +246,42 @@
                     width 13px
                     font-weight bold
 
-        .contentBottom
+    .contentMId
+        border-bottom 2px solid #eee
+        .photoList
+            padding 10px 0
+            img
+                width 30%
+                height auto
+                margin 0 1.6%
+        .file
+            color #999
+            .fileContent
+                position relative
+                padding 5px 10px
+                padding-left 25px
+                background-color #F2F2F2
+                p
+                    margin 0
+                i
+                    display inline-block
+                    background url('../../assets/DHDIList/附件.png') no-repeat
+                    width 13px
+                    height 13px
+                    position absolute
+                    left 5px
+                    top 8px
+                button
+                    border-radius 10px
+                    border 1px solid #999
+                    background-color #F2F2F2
+                    color #999
+                    position absolute
+                    right 5px
+                    top 5px
+                    outline none
+
+    .contentBottom
             .process
                 padding 15px 0
                 .processInfo
@@ -223,6 +291,9 @@
                     border-bottom  1px solid #eee
                     h4
                         padding 10px 0
+                        flex 2
+                    .processInfoContent
+                        flex 3
                     p
                         color #999
                         margin 5px 0

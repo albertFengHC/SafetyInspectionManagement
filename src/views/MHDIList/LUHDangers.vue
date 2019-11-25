@@ -19,7 +19,7 @@
                     <p>监察人：{{data.fCheckname}}</p>
                     <p>检查时间：{{data.fCheckdate}}</p>
                 </div>
-                <div class="infoRight">超期{{data.difference}}天<span>></span></div>
+                <div class="infoRight">剩余{{data.difference}}天<span>></span></div>
             </div>
         </div>
         <div class="bottom">
