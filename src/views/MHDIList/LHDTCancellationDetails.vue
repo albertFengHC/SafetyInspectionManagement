@@ -45,32 +45,26 @@
                             <p><span>整改截止时间</span>{{listData.checkTrapDaily.fLastdates}}</p>
                             <p><span>整改责任人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
                             <p><span>需传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
+                            <div class="contentMId">
+                                <div>
+                                    <span>检查现场照片</span>
+                                    <div class="photoList">
+                                        <img :src="data" v-for="data in listData.checkTrapDailyFileList">
+                                    </div>
+                                </div>
+                                <div class="file">
+                                    <p>整改附件</p>
+                                    <div class="fileContent">
+                                        <i></i>
+                                        <p>详情说明</p>
+                                        <button>预览</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!--                <div class="moreProblemsInfoList">-->
                         <!--                    <p>查看更多<span>></span></p>-->
                         <!--                </div>-->
-                    </div>
-                    <div class="contentMId">
-                        <div>
-                            <span>整改前照片</span>
-                            <div class="photoList">
-                                <img :src="data" v-for="data in listData.backBeforePic">
-                            </div>
-                        </div>
-                        <div>
-                            <span>整改后照片</span>
-                            <div class="photoList">
-                                <img :src="data" v-for="data in listData.backAfterPic">
-                            </div>
-                        </div>
-                        <div class="file">
-                            <p>整改记录及相关资料</p>
-                            <div class="fileContent">
-                                <i></i>
-                                <p>详情说明</p>
-                                <button>预览</button>
-                            </div>
-                        </div>
                     </div>
                     <div class="contentBottom">
                         <h3>巡查整改人员流程</h3>
@@ -135,7 +129,14 @@
                             <p><span>复核时间</span>{{listData.recordReview.fReviewdates}}</p>
                             <p><span>复核意见</span>{{listData.recordReview.fMessage}}</p>
                             <p><span>复核结果</span>{{listData.recordReview.fStatus}}</p>
-                            <p><span>复核照片及资料</span>{{listData.recordReview.fCheckdates}}</p>
+                            <div class="contentMId">
+                                <div>
+                                    <span>复核照片及资料</span>
+                                    <div class="photoList">
+                                        <img :src="recordReviewFile">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
