@@ -84,7 +84,7 @@
                                 <div>
                                     <img src="../../assets/DHDIList/未整改.png">
                                 </div>
-                                <p>超期{{this.$route.params.difference}}天，未销号</p>
+                                <p>超期{{this.$route.params.difference}}天，已销号</p>
                             </div>
                         </div>
                     </div>
@@ -310,7 +310,7 @@
                     div
                         flex 1
                     p
-                        color #ce0c0c
+                        color #1752DB
                         flex 4
 
 </style>
