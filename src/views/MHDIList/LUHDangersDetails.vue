@@ -30,6 +30,21 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <p><span>检查单位</span>{{listData.checkTrapDaily.fCompanyname}}</p>
+                    <p><span>经度</span>{{listData.checkTrapDaily.fLatitude}}</p>
+                    <p><span>纬度</span>{{listData.checkTrapDaily.fLongitude}}</p>
+                    <p><span>发现问题描述</span>{{listData.checkTrapDaily.fProblemdesc}}</p>
+                    <p><span>整改要求</span>{{listData.checkTrapDaily.fRequiredesc}}</p>
+                    <p><span>排查对象</span>{{listData.checkTrapDaily.fTestobject}}</p>
+                    <p><span>隐患类别</span>{{listData.checkTrapDaily.fTrapclass}}</p>
+                    <p><span>隐患类型</span>{{listData.checkTrapDaily.fTraptype}}</p>
+                    <p><span>检查人</span>{{listData.checkTrapDaily.fCheckname}}</p>
+                    <p><span>状态</span>{{listData.checkTrapDaily.fStatus}}</p>
+                    <p><span>整改截止日期</span>{{listData.checkTrapDaily.fLastdates}}</p>
+                    <p><span>待签收人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
+                    <p><span>待传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
+                </div>
 <!--                <div class="moreProblemsInfoList">-->
 <!--                    <p>查看更多<span>></span></p>-->
 <!--                </div>-->
