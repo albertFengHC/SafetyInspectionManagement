@@ -257,10 +257,10 @@
             font-size 1rem
 
     .search
-        text-align center
         border-bottom 2px solid #EEEEEE
         border-radius 15px
         box-shadow 0 3px 0 #d6d6d6
+        padding-left 15px
         .company
             padding 10px 0
             position relative
@@ -269,7 +269,6 @@
                 width 100%
                 box-shadow none
                 border none
-                text-align center
                 span
                     font-weight bold
                     display inline-block
