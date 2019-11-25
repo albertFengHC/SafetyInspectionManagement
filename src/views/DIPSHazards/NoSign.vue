@@ -29,7 +29,6 @@
 
             },
             getListData(param){
-                console.log(param);
                 const that = this;
                 const logInfo = this.userInfo;
                 let parameter = {
@@ -51,10 +50,6 @@
         },
         mounted() {
             this.logInfo = this.userInfo;
-            const parameter = {
-                companyId: this.logInfo.companyId,
-                userId: this.logInfo.userId,
-            };
         },
         computed: {
             ...mapState(['userInfo'])
