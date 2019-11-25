@@ -186,14 +186,14 @@
                         if (item.children) {
                             return {
                                 // ...item,
-                                title: item.f_FullName,
+                                title: item.f_ShortName,
                                 id: item.f_CompanyId,
                                 children: resetTree(item.children)
                             }
                         } else {
                             return {
                                 // ...item,
-                                title: item.f_FullName,
+                                title: item.f_ShortName,
                                 id: item.f_CompanyId,
                             }
                         }

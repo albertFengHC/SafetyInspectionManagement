@@ -6,118 +6,150 @@
                 <p @click="toLHDNCSchedule"><</p>
             </div>
         </div>
-        <div class="content">
-            <div class="contentTop">
-                <div class="topInfo">
-                    <p><span>被检查单位</span>{{listData.checkTrapDaily.fPassivename}}</p>
-                    <p><span>被检查记录编号</span>{{listData.checkTrapDaily.fTrapno}}</p>
-                    <p><span>检查时间</span>{{listData.checkTrapDaily.fCheckdates}}</p>
-                    <img src="../../assets/DHDIList/组1602.png" class="logoImg">
-                </div>
-                <div class="projectName">
-                    <p><span>存在隐患工程名称</span>{{listData.checkTrapDaily.fDangername}}</p>
-                </div>
-                <div class="problems">
-                    <h3>检查发现问题</h3>
-                    <div class="problemsInfo">
-                        <div class="problemsInfoList" v-for="data in listData.checkTrapDaily.recordMessageItem" :value="data.fItemno" :key="data.fId">
-                            <div class="problemsInfoListTitle">
-                                <p>{{data.fItemno}}</p>
-                                <p>{{data.fTraplevel}}</p>
+        <Tabs>
+            <TabPane label="隐患巡查情况">
+                <div class="content">
+                    <div class="contentTop">
+                        <div class="topInfo">
+                            <p><span>被检查单位</span>{{listData.checkTrapDaily.fPassivename}}</p>
+                            <p><span>被检查记录编号</span>{{listData.checkTrapDaily.fTrapno}}</p>
+                            <p><span>检查时间</span>{{listData.checkTrapDaily.fCheckdates}}</p>
+                            <img src="../../assets/DHDIList/组1602.png" class="logoImg">
+                        </div>
+                        <div class="projectName">
+                            <p><span>存在隐患工程名称</span>{{listData.checkTrapDaily.fDangername}}</p>
+                        </div>
+                        <div class="problems">
+                            <h3>检查发现问题</h3>
+                            <div class="problemsInfo">
+                                <div class="problemsInfoList" v-for="data in listData.checkTrapDaily.recordMessageItem" :value="data.fItemno" :key="data.fId">
+                                    <div class="problemsInfoListTitle">
+                                        <p>{{data.fItemno}}</p>
+                                        <p>{{data.fTraplevel}}</p>
+                                    </div>
+                                    <div>
+                                        <p>{{data.fItemname}}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <p>{{data.fItemname}}</p>
+                        </div>
+                        <div>
+                            <p><span>检查单位</span>{{listData.checkTrapDaily.fCompanyname}}</p>
+                            <p><span>经度</span>{{listData.checkTrapDaily.fLatitude}}</p>
+                            <p><span>纬度</span>{{listData.checkTrapDaily.fLongitude}}</p>
+                            <p><span>发现问题描述</span>{{listData.checkTrapDaily.fProblemdesc}}</p>
+                            <p><span>整改要求</span>{{listData.checkTrapDaily.fRequiredesc}}</p>
+                            <p><span>排查对象</span>{{listData.checkTrapDaily.fTestobject}}</p>
+                            <p><span>隐患类别</span>{{listData.checkTrapDaily.fTrapclass}}</p>
+                            <p><span>隐患类型</span>{{listData.checkTrapDaily.fTraptype}}</p>
+                            <p><span>检查人</span>{{listData.checkTrapDaily.fCheckname}}</p>
+                            <p><span>状态</span>{{listData.checkTrapDaily.fStatus}}</p>
+                            <p><span>整改截止日期</span>{{listData.checkTrapDaily.fLastdates}}</p>
+                            <p><span>待签收人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
+                            <p><span>待传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
+                        </div>
+                        <!--                <div class="moreProblemsInfoList">-->
+                        <!--                    <p>查看更多<span>></span></p>-->
+                        <!--                </div>-->
+                    </div>
+                    <div class="contentMId">
+                        <p><span>整改记录编号</span>{{listData.checkTrapBack.fBackno}}</p>
+                        <p><span>整改完成时间</span>{{listData.checkTrapBack.fFinishdates}}</p>
+                        <p><span>整改详情描述</span>{{listData.checkTrapBack.fBackdetail}}</p>
+                        <div>
+                            <span>整改前照片</span>
+                            <div class="photoList">
+                                <!--                        <img src="../../assets/DHDIList/现场监控1.png">-->
+                                <img :src="data" v-for="data in listData.backBeforePic">
                             </div>
                         </div>
+                        <div>
+                            <span>整改后照片</span>
+                            <div class="photoList">
+                                <img :src="data" v-for="data in listData.backAfterPic">
+                            </div>
+                        </div>
+                        <div class="file">
+                            <p>整改记录及相关资料</p>
+                            <div class="fileContent">
+                                <i></i>
+                                <p>详情说明</p>
+                                <button>预览</button>
+                            </div>
+                        </div>
+                        <p><span>整改单位负责人</span>{{listData.checkTrapBack.fAcceptname}}</p>
+                    </div>
+                    <div class="contentBottom">
+                        <h3>巡查整改人员流程</h3>
+                        <div class="process">
+                            <div class="processInfo" v-for="data in listData.lrCheckTasks" :value="data.checkJob" :key="data.checkJob">
+                                <div>
+                                    <img src="../../assets/DHDIList/已同意.png">
+                                </div>
+                                <h4>{{data.checkName}}</h4>
+                                <div>
+                                    <p>{{data.checkJob}}</p>
+                                    <p>{{data.checkCompany}}</p>
+                                    <p class="remarks" v-show="data.text">{{data.text}}</p>
+                                </div>
+                                <p>{{data.checkDate}}</p>
+                            </div>
+                            <!--                    <div class="processInfo">-->
+                            <!--                        <div>-->
+                            <!--                            <img src="../../assets/DHDIList/已同意.png">-->
+                            <!--                        </div>-->
+                            <!--                        <h4>{{listData.recordReview.fCreateusername}}</h4>-->
+                            <!--                        <div>-->
+                            <!--                            <p>{{listData.recordReview.fStatus}}</p>-->
+                            <!--                            <p>{{listData.recordReview.fCompanyname}}</p>-->
+                            <!--                        </div>-->
+                            <!--                        <p>{{listData.recordReview.fReviewdates}}</p>-->
+                            <!--                    </div>-->
+                            <!--                    <div class="processInfo">-->
+                            <!--                        <div>-->
+                            <!--                            <img src="../../assets/DHDIList/已同意.png">-->
+                            <!--                        </div>-->
+                            <!--                        <h4>{{listData.recordReview.fReviewname}}</h4>-->
+                            <!--                        <div>-->
+                            <!--                            <p>{{listData.recordReview.fMessage}}</p>-->
+                            <!--                            <p>{{listData.recordReview.fCompanyname}}</p>-->
+                            <!--&lt;!&ndash;                            <p class="remarks">抄送3人</p>&ndash;&gt;-->
+                            <!--                        </div>-->
+                            <!--                        <p>{{listData.recordReview.fReviewdates}}</p>-->
+                            <!--                    </div>-->
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <p><span>检查单位</span>{{listData.checkTrapDaily.fCompanyname}}</p>
-                    <p><span>经度</span>{{listData.checkTrapDaily.fLatitude}}</p>
-                    <p><span>纬度</span>{{listData.checkTrapDaily.fLongitude}}</p>
-                    <p><span>发现问题描述</span>{{listData.checkTrapDaily.fProblemdesc}}</p>
-                    <p><span>整改要求</span>{{listData.checkTrapDaily.fRequiredesc}}</p>
-                    <p><span>排查对象</span>{{listData.checkTrapDaily.fTestobject}}</p>
-                    <p><span>隐患类别</span>{{listData.checkTrapDaily.fTrapclass}}</p>
-                    <p><span>隐患类型</span>{{listData.checkTrapDaily.fTraptype}}</p>
-                    <p><span>检查人</span>{{listData.checkTrapDaily.fCheckname}}</p>
-                    <p><span>状态</span>{{listData.checkTrapDaily.fStatus}}</p>
-                    <p><span>整改截止日期</span>{{listData.checkTrapDaily.fLastdates}}</p>
-                    <p><span>待签收人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
-                    <p><span>待传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
-                </div>
-<!--                <div class="moreProblemsInfoList">-->
-<!--                    <p>查看更多<span>></span></p>-->
-<!--                </div>-->
-            </div>
-            <div class="contentMId">
-                <p><span>整改记录编号</span>{{listData.checkTrapBack.fBackno}}</p>
-                <p><span>整改完成时间</span>{{listData.checkTrapBack.fFinishdates}}</p>
-                <p><span>整改详情描述</span>{{listData.checkTrapBack.fBackdetail}}</p>
-                <div>
-                    <span>整改前照片</span>
-                    <div class="photoList">
-<!--                        <img src="../../assets/DHDIList/现场监控1.png">-->
-                        <img :src="data" v-for="data in listData.backBeforePic">
+            </TabPane>
+            <TabPane label="巡查整改情况">
+                <div class="content" v-if="listData.checkTrapBack != null">
+                    <div class="contentTop">
+                        <div class="topInfo">
+                            <p><span>整改记录编号</span>{{listData.checkTrapBack.fBackno}}</p>
+                            <p><span>整改填报人</span>{{listData.checkTrapBack.fAcceptname}}</p>
+                            <p><span>整改情况综述</span>{{listData.checkTrapBack.fBackdesc}}</p>
+                            <p><span>整改详细情况</span>{{listData.checkTrapBack.fBackdetail}}</p>
+                            <p><span>整改记录及相关资料</span>{{listData.checkTrapBack.fCheckdates}}</p>
+                            <p><span>整改单位负责人</span>{{listData.checkTrapBack.fAcceptname}}</p>
+                            <p><span>整改完成时间</span>{{listData.checkTrapBack.fFinishdates}}</p>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <span>整改后照片</span>
-                    <div class="photoList">
-                        <img :src="data" v-for="data in listData.backAfterPic">
+            </TabPane>
+            <TabPane label="整改复核情况">
+                <div class="content" v-if="listData.recordReview != null">
+                    <div class="contentTop">
+                        <div class="topInfo">
+                            <p><span>复核验证人</span>{{listData.recordReview.fReviewname}}</p>
+                            <p><span>复核时间</span>{{listData.recordReview.fReviewdates}}</p>
+                            <p><span>复核意见</span>{{listData.recordReview.fMessage}}</p>
+                            <p><span>复核结果</span>{{listData.recordReview.fStatus}}</p>
+                            <p><span>复核照片及资料</span>{{listData.recordReview.fCheckdates}}</p>
+                        </div>
                     </div>
                 </div>
-                <div class="file">
-                    <p>整改记录及相关资料</p>
-                    <div class="fileContent">
-                        <i></i>
-                        <p>详情说明</p>
-                        <button>预览</button>
-                    </div>
-                </div>
-                <p><span>整改单位负责人</span>{{listData.checkTrapBack.fAcceptname}}</p>
-            </div>
-            <div class="contentBottom">
-                <h3>巡查整改人员流程</h3>
-                <div class="process">
-                    <div class="processInfo" v-for="data in listData.lrCheckTasks" :value="data.checkJob" :key="data.checkJob">
-                        <div>
-                            <img src="../../assets/DHDIList/已同意.png">
-                        </div>
-                        <h4>{{data.checkName}}</h4>
-                        <div>
-                            <p>{{data.checkJob}}</p>
-                            <p>{{data.checkCompany}}</p>
-                            <p class="remarks" v-show="data.text">{{data.text}}</p>
-                        </div>
-                        <p>{{data.checkDate}}</p>
-                    </div>
-                    <div class="processInfo">
-                        <div>
-                            <img src="../../assets/DHDIList/已同意.png">
-                        </div>
-                        <h4>{{listData.recordReview.fCreateusername}}</h4>
-                        <div>
-                            <p>{{listData.recordReview.fStatus}}</p>
-                            <p>{{listData.recordReview.fCompanyname}}</p>
-                        </div>
-                        <p>{{listData.recordReview.fReviewdates}}</p>
-                    </div>
-                    <div class="processInfo">
-                        <div>
-                            <img src="../../assets/DHDIList/已同意.png">
-                        </div>
-                        <h4>{{listData.recordReview.fReviewname}}</h4>
-                        <div>
-                            <p>{{listData.recordReview.fMessage}}</p>
-                            <p>{{listData.recordReview.fCompanyname}}</p>
-<!--                            <p class="remarks">抄送3人</p>-->
-                        </div>
-                        <p>{{listData.recordReview.fReviewdates}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </TabPane>
+        </Tabs>
     </div>
 </template>
 

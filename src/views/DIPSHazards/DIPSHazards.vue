@@ -2,7 +2,7 @@
     <div id="DIPSHazards">
         <div class="topContent">
             <div class="top">
-                <h2>安全隐患日常巡查</h2>
+                <h2>隐患日常巡查管理</h2>
                 <p @click="toIndex"><span><</span>应用</p>
                 <i @click="toAddInfo">新增</i>
             </div>

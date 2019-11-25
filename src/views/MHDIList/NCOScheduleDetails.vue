@@ -6,104 +6,116 @@
                 <p @click="toNCOSchedule"><</p>
             </div>
         </div>
-        <div class="content">
-            <div class="contentTop">
-                <div class="topInfo">
-                    <p><span>被检查单位</span>{{listData.checkTrapDaily.fPassivename}}</p>
-                    <p><span>被检查记录编号</span>{{listData.checkTrapDaily.fTrapno}}</p>
-                    <p><span>检查时间</span>{{listData.checkTrapDaily.fCheckdates}}</p>
-                </div>
-                <div class="projectName">
-                    <p><span>存在隐患工程名称</span>{{listData.checkTrapDaily.fDangername}}</p>
-                </div>
-                <div class="problems">
-                    <h3>检查发现问题</h3>
-                    <div class="problemsInfo">
-                        <div class="problemsInfoList" v-for="data in listData.checkTrapDaily.recordMessageItem" :value="data.fItemno" :key="data.fId">
-                            <div class="problemsInfoListTitle">
-                                <p>{{data.fItemno}}</p>
-                                <p>{{data.fTraplevel}}</p>
+        <Tabs>
+            <TabPane label="隐患巡查情况">
+                <div class="content">
+                    <div class="contentTop">
+                        <div class="topInfo">
+                            <p><span>被检查单位</span>{{listData.checkTrapDaily.fPassivename}}</p>
+                            <p><span>被检查记录编号</span>{{listData.checkTrapDaily.fTrapno}}</p>
+                            <p><span>检查时间</span>{{listData.checkTrapDaily.fCheckdates}}</p>
+                        </div>
+                        <div class="projectName">
+                            <p><span>存在隐患工程名称</span>{{listData.checkTrapDaily.fDangername}}</p>
+                        </div>
+                        <div class="problems">
+                            <h3>检查发现问题</h3>
+                            <div class="problemsInfo">
+                                <div class="problemsInfoList" v-for="data in listData.checkTrapDaily.recordMessageItem" :value="data.fItemno" :key="data.fId">
+                                    <div class="problemsInfoListTitle">
+                                        <p>{{data.fItemno}}</p>
+                                        <p>{{data.fTraplevel}}</p>
+                                    </div>
+                                    <div>
+                                        <p>{{data.fItemname}}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <p>{{data.fItemname}}</p>
+                        </div>
+                        <div>
+                            <p><span>检查单位</span>{{listData.checkTrapDaily.fCompanyname}}</p>
+                            <p><span>经度</span>{{listData.checkTrapDaily.fLatitude}}</p>
+                            <p><span>纬度</span>{{listData.checkTrapDaily.fLongitude}}</p>
+                            <p><span>发现问题描述</span>{{listData.checkTrapDaily.fProblemdesc}}</p>
+                            <p><span>整改要求</span>{{listData.checkTrapDaily.fRequiredesc}}</p>
+                            <p><span>排查对象</span>{{listData.checkTrapDaily.fTestobject}}</p>
+                            <p><span>隐患类别</span>{{listData.checkTrapDaily.fTrapclass}}</p>
+                            <p><span>隐患类型</span>{{listData.checkTrapDaily.fTraptype}}</p>
+                            <p><span>检查人</span>{{listData.checkTrapDaily.fCheckname}}</p>
+                            <p><span>状态</span>{{listData.checkTrapDaily.fStatus}}</p>
+                            <p><span>整改截止日期</span>{{listData.checkTrapDaily.fLastdates}}</p>
+                            <p><span>待签收人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
+                            <p><span>待传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
+                        </div>
+                        <!--                <div class="moreProblemsInfoList">-->
+                        <!--                    <p>查看更多<span>></span></p>-->
+                        <!--                </div>-->
+                    </div>
+                    <div class="contentBottom">
+                        <h3>巡查整改人员流程</h3>
+                        <div class="process">
+                            <div class="processInfo">
+                                <div>
+                                    <img src="../../assets/DHDIList/已同意.png">
+                                </div>
+                                <h4>{{listData.lrCheckTasks[0].checkName}}</h4>
+                                <div>
+                                    <p>{{listData.lrCheckTasks[0].checkJob}}</p>
+                                    <p>{{listData.lrCheckTasks[0].checkCompany}}</p>
+                                </div>
+                                <p>{{listData.lrCheckTasks[0].checkDate}}</p>
+                            </div>
+                            <div class="processInfo">
+                                <div>
+                                    <img src="../../assets/DHDIList/已同意.png">
+                                </div>
+                                <h4>{{listData.lrCheckTasks[1].checkName}}</h4>
+                                <div>
+                                    <p>{{listData.lrCheckTasks[1].checkJob}}</p>
+                                    <p>{{listData.lrCheckTasks[1].checkCompany}}</p>
+                                    <p class="remarks">{{listData.lrCheckTasks[1].text}}</p>
+                                </div>
+                                <p>{{listData.lrCheckTasks[1].checkDate}}</p>
+                            </div>
+                            <div class="processInfo NSNumber">
+                                <div>
+                                    <img src="../../assets/DHDIList/未整改.png">
+                                </div>
+                                <p>超期{{this.$route.params.difference}}天，未销号</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p><span>检查单位</span>{{listData.checkTrapDaily.fCompanyname}}</p>
-                    <p><span>经度</span>{{listData.checkTrapDaily.fLatitude}}</p>
-                    <p><span>纬度</span>{{listData.checkTrapDaily.fLongitude}}</p>
-                    <p><span>发现问题描述</span>{{listData.checkTrapDaily.fProblemdesc}}</p>
-                    <p><span>整改要求</span>{{listData.checkTrapDaily.fRequiredesc}}</p>
-                    <p><span>排查对象</span>{{listData.checkTrapDaily.fTestobject}}</p>
-                    <p><span>隐患类别</span>{{listData.checkTrapDaily.fTrapclass}}</p>
-                    <p><span>隐患类型</span>{{listData.checkTrapDaily.fTraptype}}</p>
-                    <p><span>检查人</span>{{listData.checkTrapDaily.fCheckname}}</p>
-                    <p><span>状态</span>{{listData.checkTrapDaily.fStatus}}</p>
-                    <p><span>整改截止日期</span>{{listData.checkTrapDaily.fLastdates}}</p>
-                    <p><span>待签收人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
-                    <p><span>待传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
-                </div>
-<!--                <div class="moreProblemsInfoList">-->
-<!--                    <p>查看更多<span>></span></p>-->
-<!--                </div>-->
-            </div>
-            <div class="contentBottom">
-                <h3>巡查整改人员流程</h3>
-                <div class="process">
-                    <div class="processInfo">
-                        <div>
-                            <img src="../../assets/DHDIList/已同意.png">
+            </TabPane>
+            <TabPane label="巡查整改情况">
+                <div class="content" v-if="listData.checkTrapBack != null">
+                    <div class="contentTop">
+                        <div class="topInfo">
+                            <p><span>整改记录编号</span>{{listData.checkTrapBack.fBackno}}</p>
+                            <p><span>整改填报人</span>{{listData.checkTrapBack.fAcceptname}}</p>
+                            <p><span>整改情况综述</span>{{listData.checkTrapBack.fBackdesc}}</p>
+                            <p><span>整改详细情况</span>{{listData.checkTrapBack.fBackdetail}}</p>
+                            <p><span>整改记录及相关资料</span>{{listData.checkTrapBack.fCheckdates}}</p>
+                            <p><span>整改单位负责人</span>{{listData.checkTrapBack.fAcceptname}}</p>
+                            <p><span>整改完成时间</span>{{listData.checkTrapBack.fFinishdates}}</p>
                         </div>
-                        <h4>{{listData.lrCheckTasks[0].checkName}}</h4>
-                        <div>
-                            <p>{{listData.lrCheckTasks[0].checkJob}}</p>
-                            <p>{{listData.lrCheckTasks[0].checkCompany}}</p>
-                        </div>
-                        <p>{{listData.lrCheckTasks[0].checkDate}}</p>
-                    </div>
-                    <div class="processInfo">
-                        <div>
-                            <img src="../../assets/DHDIList/已同意.png">
-                        </div>
-                        <h4>{{listData.lrCheckTasks[1].checkName}}</h4>
-                        <div>
-                            <p>{{listData.lrCheckTasks[1].checkJob}}</p>
-                            <p>{{listData.lrCheckTasks[1].checkCompany}}</p>
-                            <p class="remarks">{{listData.lrCheckTasks[1].text}}</p>
-                        </div>
-                        <p>{{listData.lrCheckTasks[1].checkDate}}</p>
-                    </div>
-                    <div class="processInfo NSNumber">
-                        <div>
-                            <img src="../../assets/DHDIList/未整改.png">
-                        </div>
-                        <p>超期{{this.$route.params.difference}}天，未销号</p>
                     </div>
                 </div>
-            </div>
-        </div>
-<!--        <div class="bottom">-->
-<!--            <div class="bottomContent">-->
-<!--                <div>-->
-<!--                    <img src="../../assets/DHDIList/路径1352.png">-->
-<!--                    <p>催办</p>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <img src="../../assets/DHDIList/路径1294.png">-->
-<!--                    <p>评论</p>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <img src="../../assets/DHDIList/组1208.png">-->
-<!--                    <p>分享</p>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <img src="../../assets/DHDIList/组1209.png">-->
-<!--                    <p>打印</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+            </TabPane>
+            <TabPane label="整改复核情况">
+                <div class="content" v-if="listData.recordReview != null">
+                    <div class="contentTop">
+                        <div class="topInfo">
+                            <p><span>复核验证人</span>{{listData.recordReview.fReviewname}}</p>
+                            <p><span>复核时间</span>{{listData.recordReview.fReviewdates}}</p>
+                            <p><span>复核意见</span>{{listData.recordReview.fMessage}}</p>
+                            <p><span>复核结果</span>{{listData.recordReview.fStatus}}</p>
+                            <p><span>复核照片及资料</span>{{listData.recordReview.fCheckdates}}</p>
+                        </div>
+                    </div>
+                </div>
+            </TabPane>
+        </Tabs>
     </div>
 </template>
 
@@ -115,7 +127,7 @@
         name: "NCOScheduleDetails",
         data(){
             return{
-                listData:''
+                listData:'',
             }
         },
         methods:{
@@ -132,6 +144,7 @@
                 NCOScheduleDetailsUrl(parameter)
                     .then(function (data) {
                         that.listData = data;
+                        console.log(data);
                     })
                     .catch(data => {
 
