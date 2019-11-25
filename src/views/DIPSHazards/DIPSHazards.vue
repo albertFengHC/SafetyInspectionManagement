@@ -8,7 +8,7 @@
             </div>
             <div class="search">
                 <div class="name">
-                    <i></i>
+                    <i @click="searchValName"></i>
                     <input type="text" placeholder="请输入名称或编号" v-model="searchNameCode">
                 </div>
                 <div class="company">
@@ -19,9 +19,7 @@
         </div>
         <div class="boxContent">
             <div class="content">
-                <keep-alive>
-                    <router-view/>
-                </keep-alive>
+                <router-view ref="details"/>
             </div>
             <div class="bottom">
                 <div>
@@ -77,15 +75,22 @@
                 this.$router.push({name: 'AlreadySign'});
                 this.activeClass = 4;
             },
+            searchValName(){
+                const param = {
+                    companyId: this.companyId,
+                    text: this.searchNameCode,
+                };
+                this.$refs.details.getListData(param);
+            },
             searchValSelF(e){
                 this.searchValSel= e[0].title;
                 this.showCompanyVal = 0;
                 this.companyId = e[0].id;
-                const parameter = {
+                const param = {
                     companyId: this.companyId,
-                    userId: this.logInfo.userId,
+                    text: this.searchNameCode,
                 };
-
+                this.$refs.details.getListData(param);
             },
             getCompanyTreeList(){
                 let newCompanyTree = this.companyTree;

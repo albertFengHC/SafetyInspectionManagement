@@ -28,18 +28,21 @@
             toNoSignDetails() {
 
             },
-            getList(param){
+            getListData(param){
+                console.log(param);
                 const that = this;
                 const logInfo = this.userInfo;
                 let parameter = {
-                    companyId: this.$route.params.companyId,
+                    companyId: param.companyId,
                     userId: logInfo.userId,
                     realId: logInfo.realId,
+                    text: param.text,
                     modelType: '5'
                 };
                 NCOScheduleUrl(parameter)
                     .then(function (data) {
                         that.listData = data.trapDailyList;
+                        console.log(that.listData);
                     })
                     .catch(data => {
 
