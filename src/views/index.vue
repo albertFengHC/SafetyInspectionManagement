@@ -14,7 +14,7 @@
                         <div>
                             <img src="../assets/index/组1813.png">
                             <p>单位技术</p>
-                            <p>人员巡查</p>
+                            <p>人员管理</p>
                         </div>
                         <div>
                             <img src="../assets/index/组1814.png">

@@ -11,13 +11,16 @@
                 <div class="content">
                     <div class="contentTop">
                         <div class="topInfo">
-                            <p><span>被检查单位</span>{{listData.checkTrapDaily.fPassivename}}</p>
-                            <p><span>被检查记录编号</span>{{listData.checkTrapDaily.fTrapno}}</p>
+                            <p><span>检查单位</span>{{listData.checkTrapDaily.fCompanyname}}</p>
+                            <p><span>检查记录编号</span>{{listData.checkTrapDaily.fTrapno}}</p>
+                            <p><span>检查人</span>{{listData.checkTrapDaily.fCheckname}}</p>
                             <p><span>检查时间</span>{{listData.checkTrapDaily.fCheckdates}}</p>
-                            <img src="../../assets/DHDIList/组1602.png" class="logoImg">
-                        </div>
-                        <div class="projectName">
+                            <p><span>被检查单位</span>{{listData.checkTrapDaily.fPassivename}}</p>
+                            <p><span>要求整改截止时间</span>{{listData.checkTrapDaily.fLastdates}}</p>
                             <p><span>存在隐患工程名称</span>{{listData.checkTrapDaily.fDangername}}</p>
+                            <p><span>经度</span>{{listData.checkTrapDaily.fLatitude}}</p>
+                            <p><span>纬度</span>{{listData.checkTrapDaily.fLongitude}}</p>
+                            <img src="../../assets/DHDIList/组1602.png" class="logoImg">
                         </div>
                         <div class="problems">
                             <h3>检查发现问题</h3>
@@ -34,17 +37,12 @@
                             </div>
                         </div>
                         <div>
-                            <p><span>检查单位</span>{{listData.checkTrapDaily.fCompanyname}}</p>
-                            <p><span>经度</span>{{listData.checkTrapDaily.fLatitude}}</p>
-                            <p><span>纬度</span>{{listData.checkTrapDaily.fLongitude}}</p>
                             <p><span>发现问题描述</span>{{listData.checkTrapDaily.fProblemdesc}}</p>
                             <p><span>整改要求</span>{{listData.checkTrapDaily.fRequiredesc}}</p>
                             <p><span>排查对象</span>{{listData.checkTrapDaily.fTestobject}}</p>
                             <p><span>隐患类别</span>{{listData.checkTrapDaily.fTrapclass}}</p>
                             <p><span>隐患类型</span>{{listData.checkTrapDaily.fTraptype}}</p>
-                            <p><span>检查人</span>{{listData.checkTrapDaily.fCheckname}}</p>
-                            <p><span>状态</span>{{listData.checkTrapDaily.fStatus}}</p>
-                            <p><span>整改截止日期</span>{{listData.checkTrapDaily.fLastdates}}</p>
+                            <p><span>整改截止时间</span>{{listData.checkTrapDaily.fLastdates}}</p>
                             <p><span>待签收人</span>{{listData.checkTrapDaily.fAcceptname}}</p>
                             <p><span>待传阅人</span>{{listData.checkTrapDaily.fReadname}}</p>
                         </div>
@@ -53,9 +51,6 @@
                         <!--                </div>-->
                     </div>
                     <div class="contentMId">
-                        <p><span>整改记录编号</span>{{listData.checkTrapBack.fBackno}}</p>
-                        <p><span>整改完成时间</span>{{listData.checkTrapBack.fFinishdates}}</p>
-                        <p><span>整改详情描述</span>{{listData.checkTrapBack.fBackdetail}}</p>
                         <div>
                             <span>整改前照片</span>
                             <div class="photoList">
@@ -77,7 +72,6 @@
                                 <button>预览</button>
                             </div>
                         </div>
-                        <p><span>整改单位负责人</span>{{listData.checkTrapBack.fAcceptname}}</p>
                     </div>
                     <div class="contentBottom">
                         <h3>巡查整改人员流程</h3>
