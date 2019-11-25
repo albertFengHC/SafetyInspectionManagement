@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </TabPane>
-            <TabPane label="巡查整改情况">
+            <TabPane label="巡查整改情况" :disabled="listData.checkTrapBack === null">
                 <div class="content" v-if="listData.checkTrapBack != null">
                     <div class="contentTop">
                         <div class="topInfo">
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </TabPane>
-            <TabPane label="整改复核情况">
+            <TabPane label="整改复核情况" :disabled="listData.recordReview === null">
                 <div class="content" v-if="listData.recordReview != null">
                     <div class="contentTop">
                         <div class="topInfo">
