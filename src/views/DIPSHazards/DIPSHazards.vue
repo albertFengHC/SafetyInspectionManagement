@@ -9,13 +9,11 @@
             <div class="search">
                 <div class="name">
                     <i></i>
-                    <input type="text" placeholder="请输入名称或编号">
-<!--                    <input type="search" placeholder="请输入姓名" @click="search($event)">-->
+                    <input type="text" placeholder="请输入名称或编号" v-model="searchNameCode">
                 </div>
                 <div class="company">
-                    <select name="" id="">
-                        <option value="请选择单位">请选择单位</option>
-                    </select>
+                    <p @click="showCompany" class="searchSel">选择公司<span>{{searchValSel}}</span></p>
+                    <Tree :data="companyTreeList" v-show="showCompanyVal === 1" @on-select-change="searchValSelF"></Tree>
                 </div>
             </div>
         </div>
@@ -38,11 +36,19 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+
     export default {
         name: "DIPSHazards",
         data(){
             return{
-                activeClass:1
+                activeClass:1,
+                companyTreeList : [],
+                showCompanyVal: 0,
+                searchValSel: '',
+                companyId:'',
+                searchNameCode:'',
+                logInfo:''
             }
         },
         methods: {
@@ -71,7 +77,76 @@
                 this.$router.push({name: 'AlreadySign'});
                 this.activeClass = 4;
             },
-        }
+            searchValSelF(e){
+                this.searchValSel= e[0].title;
+                this.showCompanyVal = 0;
+                this.companyId = e[0].id;
+                const parameter = {
+                    companyId: this.companyId,
+                    userId: this.logInfo.userId,
+                };
+
+            },
+            getCompanyTreeList(){
+                let newCompanyTree = this.companyTree;
+                // function getCompanyTreeData(data){
+                //     let CompanyTreeF = [];
+                //     data.map(val=>{
+                //         if (val.children.length) {
+                //             val.children.map(val => {
+                //                 CompanyTreeF.push(
+                //                     {
+                //                         title: val.f_FullName,
+                //                         id: val.f_CompanyId,
+                //                         children: getCompanyTreeData(data) //递归遍历
+                //                     }
+                //                 )
+                //             });
+                //         }else {
+                //             CompanyTreeF.push(
+                //                 {
+                //                     title: val.f_FullName,
+                //                     id: val.f_CompanyId,
+                //                 }
+                //             )
+                //         }
+                //     });
+                // }
+                // getCompanyTreeData(newCompanyTree);
+
+                let newCompanyTreeList = '';
+                let resetTree = (data)=> {
+                    let newTree = data.map(item => {
+                        if (item.children) {
+                            return {
+                                // ...item,
+                                title: item.f_ShortName,
+                                id: item.f_CompanyId,
+                                children: resetTree(item.children)
+                            }
+                        } else {
+                            return {
+                                // ...item,
+                                title: item.f_ShortName,
+                                id: item.f_CompanyId,
+                            }
+                        }
+                    });
+                    return newTree;
+                };
+                newCompanyTreeList = resetTree(newCompanyTree);
+                this.companyTreeList = newCompanyTreeList;
+            },
+            showCompany(){
+                this.showCompanyVal = 1;
+            },
+        },
+        mounted() {
+            this.getCompanyTreeList();
+        },
+        computed: {
+            ...mapState(['companyTree','userInfo'])
+        },
     }
 </script>
 
@@ -109,14 +184,15 @@
             font-weight bold
 
     .search
-        text-align center
         border-bottom 2px solid #EEEEEE
         border-radius 15px
         box-shadow 0 3px 0 #d6d6d6
-        .name, .company
+        padding-left 15px
+        .name
             padding 10px 0
             position relative
-            input,select
+            text-align center
+            input
                 padding 10px
                 width 70%
                 border-radius 10px
@@ -131,10 +207,14 @@
                 background-size 100% 100%
                 position absolute
                 top 40%
-        .name
-            i
                 background url('../../assets/MHDIList/组611.png') no-repeat
                 right  5%
+        .company
+            padding 10px 0
+            .searchSel
+                span
+                    display inline-block
+                    margin-left 15px
 
     .boxContent
         flex 3

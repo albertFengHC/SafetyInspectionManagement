@@ -263,14 +263,8 @@
         padding-left 15px
         .company
             padding 10px 0
-            position relative
             .searchSel
-                padding 10px
-                width 100%
-                box-shadow none
-                border none
                 span
-                    font-weight bold
                     display inline-block
                     margin-left 15px
 
