@@ -13,13 +13,47 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import {NCOScheduleUrl} from './../../urlBase';
+
     export default {
         name: "RefuseExaminationApproval",
+        data(){
+            return{
+                listData:'',
+                logInfo: ''
+            }
+        },
         methods:{
             toRefuseExaminationApprovalDetails(){
                 this.$router.push({name: 'RefuseExaminationApprovalDetails'});
-            }
-        }
+            },
+            getListData(param){
+                const that = this;
+                const logInfo = this.userInfo;
+                let parameter = {
+                    companyId: param.companyId,
+                    userId: logInfo.userId,
+                    realId: logInfo.realId,
+                    text: param.text,
+                    modelType: '8'
+                };
+                NCOScheduleUrl(parameter)
+                    .then(function (data) {
+                        that.listData = data.trapDailyList;
+                        console.log(that.listData);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+        },
+        mounted() {
+            this.logInfo = this.userInfo;
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 

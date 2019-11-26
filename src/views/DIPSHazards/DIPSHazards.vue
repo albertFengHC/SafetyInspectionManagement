@@ -94,31 +94,6 @@
             },
             getCompanyTreeList(){
                 let newCompanyTree = this.companyTree;
-                // function getCompanyTreeData(data){
-                //     let CompanyTreeF = [];
-                //     data.map(val=>{
-                //         if (val.children.length) {
-                //             val.children.map(val => {
-                //                 CompanyTreeF.push(
-                //                     {
-                //                         title: val.f_FullName,
-                //                         id: val.f_CompanyId,
-                //                         children: getCompanyTreeData(data) //递归遍历
-                //                     }
-                //                 )
-                //             });
-                //         }else {
-                //             CompanyTreeF.push(
-                //                 {
-                //                     title: val.f_FullName,
-                //                     id: val.f_CompanyId,
-                //                 }
-                //             )
-                //         }
-                //     });
-                // }
-                // getCompanyTreeData(newCompanyTree);
-
                 let newCompanyTreeList = '';
                 let resetTree = (data)=> {
                     let newTree = data.map(item => {
@@ -226,6 +201,7 @@
 
     .content
         margin-bottom 20%
+        padding-bottom 15%
 
     .bottom
         text-align center

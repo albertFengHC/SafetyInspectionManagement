@@ -7,20 +7,18 @@
             </div>
             <div class="search">
                 <div class="name">
-                    <i></i>
-                    <input type="text" placeholder="请输入姓名">
+                    <i @click="searchValName"></i>
+                    <input type="text" placeholder="请输入名称或编号" v-model="searchNameCode">
                 </div>
                 <div class="company">
-                    <i></i>
-                    <input type="text" placeholder="请选择单位">
+                    <p @click="showCompany" class="searchSel">选择公司<span>{{searchValSel}}</span></p>
+                    <Tree :data="companyTreeList" v-show="showCompanyVal === 1" @on-select-change="searchValSelF"></Tree>
                 </div>
             </div>
         </div>
         <div class="boxContent">
             <div class="content">
-                <keep-alive>
-                    <router-view/>
-                </keep-alive>
+                <router-view ref="RCRNoDetails"/>
             </div>
             <div class="bottom">
                 <div>
@@ -35,11 +33,19 @@
 </template>
 
 <script>
+    import {mapState} from "vuex";
+
     export default {
         name: "RCRNo",
         data(){
             return{
-                activeClass:1
+                activeClass:1,
+                companyTreeList : [],
+                showCompanyVal: 0,
+                searchValSel: '',
+                companyId:'',
+                searchNameCode:'',
+                logInfo:''
             }
         },
         methods: {
@@ -65,7 +71,58 @@
                 this.$router.push({name: 'CompletionExaminationApproval'});
                 this.activeClass = 4;
             },
-        }
+            searchValName(){
+                const param = {
+                    companyId: this.companyId,
+                    text: this.searchNameCode,
+                };
+                this.$refs.details.getListData(param);
+            },
+            searchValSelF(e){
+                this.searchValSel= e[0].title;
+                this.showCompanyVal = 0;
+                this.companyId = e[0].id;
+                const param = {
+                    companyId: this.companyId,
+                    text: this.searchNameCode,
+                };
+                this.$refs.RCRNoDetails.getListData(param);
+            },
+            getCompanyTreeList(){
+                let newCompanyTree = this.companyTree;
+                let newCompanyTreeList = '';
+                let resetTree = (data)=> {
+                    let newTree = data.map(item => {
+                        if (item.children) {
+                            return {
+                                // ...item,
+                                title: item.f_ShortName,
+                                id: item.f_CompanyId,
+                                children: resetTree(item.children)
+                            }
+                        } else {
+                            return {
+                                // ...item,
+                                title: item.f_ShortName,
+                                id: item.f_CompanyId,
+                            }
+                        }
+                    });
+                    return newTree;
+                };
+                newCompanyTreeList = resetTree(newCompanyTree);
+                this.companyTreeList = newCompanyTreeList;
+            },
+            showCompany(){
+                this.showCompanyVal = 1;
+            },
+        },
+        mounted() {
+            this.getCompanyTreeList();
+        },
+        computed: {
+            ...mapState(['companyTree','userInfo'])
+        },
     }
 </script>
 
@@ -107,9 +164,10 @@
         border-bottom 2px solid #EEEEEE
         border-radius 15px
         box-shadow 0 3px 0 #d6d6d6
-        .name, .company
+        .name
             padding 10px 0
             position relative
+            text-align center
             input
                 padding 10px
                 width 70%
@@ -125,16 +183,14 @@
                 background-size 100% 100%
                 position absolute
                 top 40%
-
-        .name
-            i
                 background url('../../assets/MHDIList/组611.png') no-repeat
                 right  5%
-
         .company
-            i
-                background url('../../assets/MHDIList/路径946.png') no-repeat
-                left 35%
+            padding 10px 0
+            .searchSel
+                span
+                    display inline-block
+                    margin-left 15px
 
     .boxContent
         flex 3
