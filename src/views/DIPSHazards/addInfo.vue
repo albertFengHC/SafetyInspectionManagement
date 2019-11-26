@@ -8,7 +8,7 @@
         </div>
         <div class="boxContent">
             <div class="content">
-                <div class="contentList">
+                <div class="companyTree">
                     <p><span>*</span>被检查单位</p>
                     <p @click="showCompany" class="searchSel">选择公司<span>{{searchValSel}}</span></p>
                     <Tree :data="companyTreeList" v-show="showCompanyVal === 1"
@@ -18,21 +18,33 @@
                     <p><span>*</span>检查记录编号</p>
                     <input type="text" placeholder="请输入">
                 </div>
-                <div class="contentList">
-                    <p><span>*</span>存在隐患工程名称</p>
+                <div class="dangerProjectName">
+                    <div class="dangerProjectNameVal">
+                        <p><span>*</span>存在隐患工程名称</p>
+                        <div>
+                            <input type="text" placeholder="请输入或请选择" v-model="dangerProjectName">
+                        </div>
+                    </div>
                     <div>
-                        <input type="text" placeholder="请输入或请选择">
+                        <p @click="showDangerProjectNameList" class="searchSel">选择隐患名称</p>
+                        <Tree :data="companyTreeList" v-show="showDangerProjectName === 1"
+                              @on-select-change="searchDangerProjectName"></Tree>
+                        <Select v-model="selDangerProjectNameVal" @on-change="selDangerProjectName">
+                            <Option v-for="item in dangerProjectNameList" :value="item.fDangername" :key="item.fId">{{ item.fDangername }}</Option>
+                        </Select>
                     </div>
                 </div>
                 <div class="contentList">
                     <p>经度</p>
-                    <input type="text" placeholder="请输入" v-model="lat">
+                    <p class="lat">{{lat}}</p>
                 </div>
                 <div class="contentList">
                     <p>纬度</p>
-                    <input type="text" placeholder="请输入" v-model="lng">
+                    <p class="lng">{{lng}}</p>
                 </div>
-                <div ref="map" class="map"></div>
+                <div class="mapBox">
+                    <div ref="map" class="map"></div>
+                </div>
                 <div class="contentListProblem">
                     <div class="problems">
                         <div class="problemsTitle">
@@ -156,6 +168,10 @@
                     companyDangerTree: [],
                     nodesList: []
                 },
+                showDangerProjectName: 0,
+                dangerProjectName:'',
+                selDangerProjectNameVal:'',
+                dangerProjectNameList:[]
             }
         },
         methods: {
@@ -214,14 +230,13 @@
                     .then(function (data) {
                         that.DangerTreeData.companyDangerTree = data.companyDangerTree;
                         that.DangerTreeData.nodesList = data.nodesList;
-                        console.log(that.DangerTreeData.companyDangerTree);
-                        console.log(that.DangerTreeData.nodesList);
                     })
                     .catch(data => {
 
                     });
             },
             getLocation() {
+                const that = this;
                 let mapObj = new AMap.Map(this.$refs.map);
                 mapObj.plugin('AMap.Geolocation', function () {
                     let geolocation = new AMap.Geolocation({
@@ -243,20 +258,32 @@
                     AMap.event.addListener(geolocation, 'error', onError);       // 返回定位出错信息
                 });
 
-                function onComplete(obj){
+                function onComplete (obj){
                     let res = '经纬度：' + obj.position +
                         '\n精度范围：' + obj.accuracy +
                         '米\n定位结果的来源：' + obj.location_type +
                         '\n状态信息：' + obj.info +
                         '\n地址：' + obj.formattedAddress +
                         '\n地址信息：' + JSON.stringify(obj.addressComponent, null, 4);
-                    alert(res);
+                    that.lat = obj.position.lat;
+                    that.lng = obj.position.lng;
                 }
 
-                function onError(obj) {
-                    alert(obj.info + '--' + obj.message);
-                    console.log(obj);
+                function onError (obj){
+                    // console.log(obj.info + '--' + obj.message);
                 }
+            },
+            searchDangerProjectName(e) {
+                this.showDangerProjectName = 0;
+                let company = e[0].title;
+                let result = this.DangerTreeData.companyDangerTree.filter(data => data.fCompanyname === company);
+                this.dangerProjectNameList = result;
+            },
+            showDangerProjectNameList(){
+                this.showDangerProjectName = 1;
+            },
+            selDangerProjectName(){
+                this.dangerProjectName = this.selDangerProjectNameVal;
             }
         },
         mounted() {
@@ -304,16 +331,42 @@
         padding 10px 5%
         padding-bottom 10%
 
+    .companyTree
+        span
+            display inline-block
+            color #ce0c0c
+            font-weight bold
+        .searchSel
+            span
+                margin-left  15px
+                color #757575
+
+    .dangerProjectName
+        border-bottom 1px solid #EEEEEE
+        padding 10px 0
+        .dangerProjectNameVal
+            display flex
+            justify-content space-between
+            p
+                flex 1
+                padding 3px 5px
+                span
+                    display inline-block
+                    color #ce0c0c
+                    font-weight bold
+            input
+                flex 2
+                padding 3px 5px
+                text-align right
+
     .contentList
         display flex
         justify-content space-between
         border-bottom 1px solid #EEEEEE
         padding 10px 0
-
         p
             flex 1
             padding 3px 5px
-
             span
                 display inline-block
                 color #ce0c0c
@@ -330,6 +383,9 @@
             text-align right
             appearance none
             color #757575
+
+        .lat,.lng
+            text-align right
 
     .contentListProblem
         .problems
@@ -478,8 +534,12 @@
                 flex 1
                 margin 0 5%
 
-    .map
+    .mapBox
         width 100%
         height 300px
+        padding 10px
+        .map
+            width 100%
+            height 100%
 
 </style>
