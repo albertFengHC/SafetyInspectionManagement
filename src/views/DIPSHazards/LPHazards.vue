@@ -9,14 +9,16 @@
             <div class="search">
                 <h3>{{projectName}}</h3>
                 <div class="name">
-                    <select name="" id="1">
-                        <option value="">请输入姓名</option>
-                    </select>
+                    <p>请选择二级名称</p>
+                    <Select v-model="selDangerValS" @on-change="selDangerS" class="nameSel">
+                        <Option v-for="item in resultS" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
+                    </Select>
                 </div>
                 <div class="company">
-                    <select name="" id="2">
-                        <option value="">请选择单位</option>
-                    </select>
+                    <p>请选择三级名称</p>
+                    <Select v-model="selDangerValT" class="companySel">
+                        <Option v-for="item in resultT" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
+                    </Select>
                 </div>
             </div>
         </div>
@@ -53,9 +55,9 @@
         </div>
         <div class="listInfoShadow" v-show="listInfoShow" @click="listInfoHide"></div>
         <div class="listInfo" v-show="listInfoShow">
-            <div>
-                <p v-for="(data,i) in list" :key="i" @click="getListInfo(data)">{{data}}</p>
-            </div>
+            <Select v-model="selDangerVal" @on-change="selDanger">
+                <Option v-for="item in DangerTreeData.nodesList" :value="item.text" :key="item.id">{{ item.text }}</Option>
+            </Select>
         </div>
     </div>
 </template>
@@ -68,28 +70,15 @@
         data(){
           return{
               listInfoShow: false,
-              projectName: '',
-              list:[
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-                  '101通用管理要求',
-              ],
+              projectName:'',
               DangerTreeData:{
                   nodesList:[]
-              }
+              },
+              selDangerVal:'',
+              resultS: [],
+              selDangerValS:'',
+              resultT: [],
+              selDangerValT:'',
           }
         },
         methods:{
@@ -100,11 +89,6 @@
                 this.listInfoShow = true;
             },
             listInfoHide(){
-                this.listInfoShow = false;
-            },
-            getListInfo(data){
-                console.log(data);
-                this.projectName = data;
                 this.listInfoShow = false;
             },
             getDangerTreeData(param) {
@@ -121,6 +105,17 @@
                     .catch(data => {
 
                     });
+            },
+            selDanger(){
+                this.listInfoHide();
+                this.projectName = this.selDangerVal;
+                this.resultS = this.DangerTreeData.nodesList.filter(data => data.text === this.projectName)[0].child;
+                console.log(this.resultS);
+            },
+            selDangerS(){
+                this.projectName = this.selDangerVal;
+                this.resultT = this.DangerTreeData.nodesList.filter(data => data.text === this.projectName)[0].child;
+                console.log(this.resultT);
             },
         },
         mounted() {
@@ -191,6 +186,9 @@
             font-size 1rem
         div
             padding 10px 0
+        .nameSel,.companySel
+            width 70%
+
 
     .boxContent
         flex 3
