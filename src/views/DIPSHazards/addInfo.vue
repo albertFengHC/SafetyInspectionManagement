@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="contentList">
-                    <p><span>*</span>问题描述</p>
+                    <p><span>*</span>发现问题描述</p>
                     <input type="text" placeholder="请输入">
                 </div>
                 <div class="contentList">
@@ -92,9 +92,9 @@
                 </div>
                 <div class="contentList">
                     <p><span>*</span>整改截至日期</p>
-                    <select name="" id="3">
-                        <option value="">请选择</option>
-                    </select>
+                    <Col span="12">
+                        <DatePicker type="date" placeholder="整改截止时间" :value="dateVale"></DatePicker>
+                    </Col>
                 </div>
                 <div class="contentListPhoto">
                     <p>现场照片</p>
@@ -157,7 +157,8 @@
                 showDangerProjectName: 0,
                 dangerProjectName:'',
                 selDangerProjectNameVal:'',
-                dangerProjectNameList:[]
+                dangerProjectNameList:[],
+                dateVale:''
             }
         },
         methods: {
