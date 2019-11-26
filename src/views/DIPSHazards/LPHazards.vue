@@ -61,6 +61,8 @@
 </template>
 
 <script>
+    import {NCOScheduleAddUrl} from "../../urlBase";
+
     export default {
         name: "LPHazards",
         data(){
@@ -84,7 +86,10 @@
                   '101通用管理要求',
                   '101通用管理要求',
                   '101通用管理要求',
-              ]
+              ],
+              DangerTreeData:{
+                  nodesList:[]
+              }
           }
         },
         methods:{
@@ -101,7 +106,25 @@
                 console.log(data);
                 this.projectName = data;
                 this.listInfoShow = false;
-            }
+            },
+            getDangerTreeData(param) {
+                const that = this;
+                let parameter = {
+                    fCompanyid: '',
+                    fUserid: '',
+                };
+                NCOScheduleAddUrl(parameter)
+                    .then(function (data) {
+                        that.DangerTreeData.nodesList = data.nodesList;
+                        console.log(that.DangerTreeData.nodesList);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+        },
+        mounted() {
+            this.getDangerTreeData();
         }
     }
 </script>

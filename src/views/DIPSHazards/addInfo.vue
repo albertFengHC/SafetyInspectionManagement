@@ -166,7 +166,6 @@
                 companyId: '',
                 DangerTreeData: {
                     companyDangerTree: [],
-                    nodesList: []
                 },
                 showDangerProjectName: 0,
                 dangerProjectName:'',
