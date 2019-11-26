@@ -74,3 +74,20 @@ export function NCOScheduleDetailsUrl(parameter){
             });
     })
 }
+
+//新增隐患
+export function NCOScheduleAddUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/nodes.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}

@@ -160,7 +160,6 @@
             font-weight bold
 
     .search
-        text-align center
         border-bottom 2px solid #EEEEEE
         border-radius 15px
         box-shadow 0 3px 0 #d6d6d6
@@ -187,6 +186,7 @@
                 right  5%
         .company
             padding 10px 0
+            padding-left 15px
             .searchSel
                 span
                     display inline-block

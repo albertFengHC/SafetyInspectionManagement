@@ -10,17 +10,13 @@
             <div class="content">
                 <div class="contentList">
                     <p><span>*</span>被检查单位</p>
-                    <input type="text" placeholder="请输入">
+                    <p @click="showCompany" class="searchSel">选择公司<span>{{searchValSel}}</span></p>
+                    <Tree :data="companyTreeList" v-show="showCompanyVal === 1"
+                          @on-select-change="searchValSelF"></Tree>
                 </div>
                 <div class="contentList">
                     <p><span>*</span>检查记录编号</p>
                     <input type="text" placeholder="请输入">
-                </div>
-                <div class="contentList">
-                    <p><span>*</span>检查时间</p>
-                    <select name="" id="5">
-                        <option value="">请选择</option>
-                    </select>
                 </div>
                 <div class="contentList">
                     <p><span>*</span>存在隐患工程名称</p>
@@ -30,12 +26,13 @@
                 </div>
                 <div class="contentList">
                     <p>经度</p>
-                    <input type="text" placeholder="请输入">
+                    <input type="text" placeholder="请输入" v-model="lat">
                 </div>
                 <div class="contentList">
                     <p>纬度</p>
-                    <input type="text" placeholder="请输入">
+                    <input type="text" placeholder="请输入" v-model="lng">
                 </div>
+                <div ref="map" class="map"></div>
                 <div class="contentListProblem">
                     <div class="problems">
                         <div class="problemsTitle">
@@ -139,27 +136,137 @@
 </template>
 
 <script>
+    import {mapState} from "vuex";
+    import {NCOScheduleAddUrl} from "../../urlBase";
+
     export default {
         name: "addInfo",
-        data(){
-          return{
-              value11:''
-          }
+        data() {
+            return {
+                lat: '',
+                lng: '',
+                province: '',
+                city: '',
+                district: '',
+                companyTreeList: [],
+                showCompanyVal: 0,
+                searchValSel: '',
+                companyId: '',
+                DangerTreeData: {
+                    companyDangerTree: [],
+                    nodesList: []
+                },
+            }
         },
-        methods:{
-            Submission(){
+        methods: {
+            Submission() {
 
             },
-            save(){
+            save() {
 
             },
-            toIndex(){
+            toIndex() {
                 this.$router.push({name: 'NoSign'});
             },
-            toLPHazards(){
+            toLPHazards() {
                 this.$router.push({name: 'LPHazards'});
+            },
+            searchValSelF(e) {
+                this.searchValSel = e[0].title;
+                this.showCompanyVal = 0;
+                this.companyId = e[0].id;
+            },
+            getCompanyTreeList() {
+                let newCompanyTree = this.companyTree;
+                let newCompanyTreeList = '';
+                let resetTree = (data) => {
+                    let newTree = data.map(item => {
+                        if (item.children) {
+                            return {
+                                // ...item,
+                                title: item.f_ShortName,
+                                id: item.f_CompanyId,
+                                children: resetTree(item.children)
+                            }
+                        } else {
+                            return {
+                                // ...item,
+                                title: item.f_ShortName,
+                                id: item.f_CompanyId,
+                            }
+                        }
+                    });
+                    return newTree;
+                };
+                newCompanyTreeList = resetTree(newCompanyTree);
+                this.companyTreeList = newCompanyTreeList;
+            },
+            showCompany() {
+                this.showCompanyVal = 1;
+            },
+            getDangerTreeData(param) {
+                const that = this;
+                let parameter = {
+                    fCompanyid: '',
+                    fUserid: '',
+                };
+                NCOScheduleAddUrl(parameter)
+                    .then(function (data) {
+                        that.DangerTreeData.companyDangerTree = data.companyDangerTree;
+                        that.DangerTreeData.nodesList = data.nodesList;
+                        console.log(that.DangerTreeData.companyDangerTree);
+                        console.log(that.DangerTreeData.nodesList);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+            getLocation() {
+                let mapObj = new AMap.Map(this.$refs.map);
+                mapObj.plugin('AMap.Geolocation', function () {
+                    let geolocation = new AMap.Geolocation({
+                        enableHighAccuracy: true, // 是否使用高精度定位，默认:true
+                        timeout: 10000,           // 超过10秒后停止定位，默认：无穷大
+                        maximumAge: 0,            // 定位结果缓存0毫秒，默认：0
+                        convert: true,            // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                        showButton: true,         // 显示定位按钮，默认：true
+                        buttonPosition: 'LB',     // 定位按钮停靠位置，默认：'LB'，左下角
+                        buttonOffset: new AMap.Pixel(10, 20), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                        showMarker: true,         // 定位成功后在定位到的位置显示点标记，默认：true
+                        showCircle: true,         // 定位成功后用圆圈表示定位精度范围，默认：true
+                        panToLocation: true,      // 定位成功后将定位到的位置作为地图中心点，默认：true
+                        zoomToAccuracy:true       // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                    });
+                    mapObj.addControl(geolocation);
+                    geolocation.getCurrentPosition();
+                    AMap.event.addListener(geolocation, 'complete', onComplete); // 返回定位信息
+                    AMap.event.addListener(geolocation, 'error', onError);       // 返回定位出错信息
+                });
+
+                function onComplete(obj){
+                    let res = '经纬度：' + obj.position +
+                        '\n精度范围：' + obj.accuracy +
+                        '米\n定位结果的来源：' + obj.location_type +
+                        '\n状态信息：' + obj.info +
+                        '\n地址：' + obj.formattedAddress +
+                        '\n地址信息：' + JSON.stringify(obj.addressComponent, null, 4);
+                    alert(res);
+                }
+
+                function onError(obj) {
+                    alert(obj.info + '--' + obj.message);
+                    console.log(obj);
+                }
             }
-        }
+        },
+        mounted() {
+            this.getCompanyTreeList();
+            this.getDangerTreeData();
+            this.getLocation();
+        },
+        computed: {
+            ...mapState(['companyTree', 'userInfo'])
+        },
     }
 </script>
 
@@ -170,7 +277,7 @@
         margin 0
         color #333
 
-    input,select
+    input, select
         background none
         outline none
         border none
@@ -183,6 +290,7 @@
         position relative
         text-align center
         border-bottom 2px solid #EEEEEE
+
         p
             position absolute
             color #999999
@@ -201,17 +309,21 @@
         justify-content space-between
         border-bottom 1px solid #EEEEEE
         padding 10px 0
+
         p
             flex 1
             padding 3px 5px
+
             span
                 display inline-block
                 color #ce0c0c
                 font-weight bold
+
         input
             flex 2
             padding 3px 5px
             text-align right
+
         select
             /*flex 2*/
             padding 3px 5px
@@ -226,8 +338,10 @@
                 justify-content space-between
                 border-bottom 1px solid #EEEEEE
                 padding 15px
+
                 p
                     font-weight bold
+
                 i
                     color #1752db
                     border 1px dashed #1752db
@@ -236,6 +350,7 @@
                     width 15px
                     font-weight bold
                     display inline-block
+
                     span
                         display flex
                         justify-content center
@@ -245,19 +360,23 @@
 
     .problemsInfo
         padding 10px
+
         .problemsInfoList
             padding 15px 10px
             background-color #F2F2F2
             border-radius 15px
             margin 15px 0
+
             .problemsInfoListTitle
                 display flex
                 justify-content space-between
                 text-align center
                 padding-bottom 10px
                 font-weight bold
+
                 p
                     margin 0
+
                 i
                     color #fff
                     border 1px dashed #626262
@@ -267,23 +386,27 @@
                     width 15px
                     font-weight bold
                     display inline-block
+
                     span
                         display flex
                         justify-content center
                         align-items center
                         height 15px
                         width 15px
+
             .problemsInfoListContent
                 p
                     padding 5px 0
 
-    .contentListPhoto,.contentListFile
+    .contentListPhoto, .contentListFile
         display flex
         justify-content space-between
         border-bottom 1px solid #EEEEEE
         padding 15px
+
         p
             font-weight bold
+
         i
             color #CCCCCC
             border 1px dashed #CCCCCC
@@ -291,6 +414,7 @@
             width 15px
             font-weight bold
             display inline-block
+
             span
                 display flex
                 justify-content center
@@ -300,14 +424,17 @@
 
     .ReceiptProcess
         padding 15px
+
         h3
             padding 10px 0
             padding-bottom 20px
+
         .ReceiptProcessContent
             display flex
             justify-content space-between
             padding-left 15px
             padding-bottom 30px
+
             i
                 color #1752db
                 border 1px dashed #1752db
@@ -316,12 +443,14 @@
                 width 30px
                 font-weight bold
                 display inline-block
+
                 span
                     display flex
                     justify-content center
                     align-items center
                     height 30px
                     width 30px
+
             div
                 p
                     color #CCCCCC
@@ -334,10 +463,12 @@
         width 100%
         background-color #fff
         border-top 2px solid #eee
+
         div
             padding 5% 10%
             display flex
             justify-content space-between
+
             p
                 border-radius 10px
                 border 1px solid #1752DB
@@ -347,5 +478,8 @@
                 flex 1
                 margin 0 5%
 
+    .map
+        width 100%
+        height 300px
 
 </style>
