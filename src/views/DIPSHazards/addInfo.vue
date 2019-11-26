@@ -52,26 +52,13 @@
                             <i @click="toLPHazards"><span>+</span></i>
                         </div>
                         <div class="problemsInfo">
-                            <div class="problemsInfoList">
+                            <div class="problemsInfoList" v-for="item in this.$route.params.LPHazardsList" :value="item.fId" :key="item.fId">
                                 <div class="problemsInfoListTitle">
-                                    <p>103020601</p>
-                                    <p>Ⅲ级</p>
-                                    <i><span>x</span></i>
+                                    <p>{{item.fNodeno}}</p>
+                                    <p>{{item.fTraplevel}}</p>
                                 </div>
                                 <div class="problemsInfoListContent">
-                                    <p>1.灌注前没有二次清孔。</p>
-                                    <p>1.灌注前没有二次清孔。</p>
-                                    <p>1.灌注前没有二次清孔。</p>
-                                </div>
-                            </div>
-                            <div class="problemsInfoList">
-                                <div class="problemsInfoListTitle">
-                                    <p>103020601</p>
-                                    <p>Ⅲ级</p>
-                                    <i><span>x</span></i>
-                                </div>
-                                <div class="problemsInfoListContent">
-                                    <p>1.灌注前没有二次清孔。</p>
+                                    <p>{{item.fNodename}}</p>
                                 </div>
                             </div>
                         </div>
@@ -222,8 +209,8 @@
             getDangerTreeData(param) {
                 const that = this;
                 let parameter = {
-                    fCompanyid: '',
-                    fUserid: '',
+                    fCompanyid: this.userInfo.companyId,
+                    fUserid: this.userInfo.userId,
                 };
                 NCOScheduleAddUrl(parameter)
                     .then(function (data) {

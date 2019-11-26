@@ -3,20 +3,20 @@
         <div class="topContent">
             <div class="top">
                 <h2>选择隐患清单</h2>
-                <p @click="toAddInfo"><span><</span></p>
+                <p @click="toAddInfo(0)"><span><</span></p>
                 <i @click="showList"></i>
             </div>
             <div class="search">
                 <h3>{{projectName}}</h3>
                 <div class="name">
-                    <p>请选择二级名称</p>
+                    <h4>请选择二级名称</h4>
                     <Select v-model="selDangerValS" @on-change="selDangerS" class="nameSel">
                         <Option v-for="item in resultS" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
                     </Select>
                 </div>
                 <div class="company">
-                    <p>请选择三级名称</p>
-                    <Select v-model="selDangerValT" class="companySel">
+                    <h4>请选择三级名称</h4>
+                    <Select v-model="selDangerValT" @on-change="selDangerT" class="companySel">
                         <Option v-for="item in resultT" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
                     </Select>
                 </div>
@@ -24,39 +24,30 @@
         </div>
         <div class="boxContent">
             <div class="content">
-                <div class="problemsInfoList">
+                <h4>请选择清单项</h4>
+                <Select v-model="resultTSel" multiple @on-change="selDangerList">
+                    <Option v-for="item in resultL" :value="item.fId" :key="item.fId">{{ item.fNodename }}</Option>
+                </Select>
+                <div class="problemsInfoList" v-for="item in resultNewList" :value="item.fId" :key="item.fId">
                     <div class="problemsInfoListTitle">
-                        <p>103020601</p>
-                        <p>Ⅲ级</p>
-                        <i><span>√</span></i>
+                        <p>{{item.fNodeno}}</p>
+                        <p>{{item.fTraplevel}}</p>
                     </div>
                     <div class="problemsInfoListContent">
-                        <p>1.灌注前没有二次清孔。</p>
-                        <p>1.灌注前没有二次清孔。</p>
-                        <p>1.灌注前没有二次清孔。</p>
-                    </div>
-                </div>
-                <div class="problemsInfoList">
-                    <div class="problemsInfoListTitle">
-                        <p>103020601</p>
-                        <p>Ⅲ级</p>
-                        <i><span>√</span></i>
-                    </div>
-                    <div class="problemsInfoListContent">
-                        <p>1.灌注前没有二次清孔。</p>
+                        <p>{{item.fNodename}}</p>
                     </div>
                 </div>
             </div>
             <div class="bottom">
                 <div>
-                    <p>保存</p>
+                    <p @click="toAddInfo(1)">保存</p>
                 </div>
             </div>
         </div>
         <div class="listInfoShadow" v-show="listInfoShow" @click="listInfoHide"></div>
         <div class="listInfo" v-show="listInfoShow">
             <Select v-model="selDangerVal" @on-change="selDanger">
-                <Option v-for="item in DangerTreeData.nodesList" :value="item.text" :key="item.id">{{ item.text }}</Option>
+                <Option v-for="item in DangerTreeData.nodesList" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
             </Select>
         </div>
     </div>
@@ -64,6 +55,7 @@
 
 <script>
     import {NCOScheduleAddUrl} from "../../urlBase";
+    import {mapState} from "vuex";
 
     export default {
         name: "LPHazards",
@@ -79,11 +71,19 @@
               selDangerValS:'',
               resultT: [],
               selDangerValT:'',
+              resultTSel:[],
+              resultL:[],
+              resultNewList:[]
           }
         },
         methods:{
-            toAddInfo(){
-                this.$router.push({name: 'addInfo'});
+            toAddInfo(e){
+                const that = this;
+                if(e === 0){
+                    this.$router.push({name: 'addInfo'});
+                }else {
+                    this.$router.push({name: 'addInfo',params:{LPHazardsList:that.resultNewList}});
+                }
             },
             showList(){
                 this.listInfoShow = true;
@@ -94,13 +94,12 @@
             getDangerTreeData(param) {
                 const that = this;
                 let parameter = {
-                    fCompanyid: '',
-                    fUserid: '',
+                    fCompanyid: this.userInfo.companyId,
+                    fUserid: this.userInfo.userId,
                 };
                 NCOScheduleAddUrl(parameter)
                     .then(function (data) {
-                        that.DangerTreeData.nodesList = data.nodesList;
-                        console.log(that.DangerTreeData.nodesList);
+                        that.DangerTreeData.nodesList = data.nodesList[0].child;
                     })
                     .catch(data => {
 
@@ -109,18 +108,30 @@
             selDanger(){
                 this.listInfoHide();
                 this.projectName = this.selDangerVal;
-                this.resultS = this.DangerTreeData.nodesList.filter(data => data.text === this.projectName)[0].child;
-                console.log(this.resultS);
+                this.resultS = this.DangerTreeData.nodesList.filter(data => data.fNodename === this.projectName)[0].children;
             },
             selDangerS(){
-                this.projectName = this.selDangerVal;
-                this.resultT = this.DangerTreeData.nodesList.filter(data => data.text === this.projectName)[0].child;
-                console.log(this.resultT);
+                this.resultT = this.resultS.filter(data => data.fNodename === this.selDangerValS)[0].children;
             },
+            selDangerT(){
+                this.resultL = this.resultT.filter(data => data.fNodename === this.selDangerValT)[0].children;
+            },
+            selDangerList(){
+                let resultNew = [];
+                this.resultTSel.map(data => {
+                    let arr = this.resultL.filter(value => value.fId === data)[0];
+                    resultNew.push(arr);
+                });
+                console.log(resultNew);
+                this.resultNewList = resultNew;
+            }
         },
         mounted() {
             this.getDangerTreeData();
-        }
+        },
+        computed: {
+            ...mapState(['companyTree', 'userInfo'])
+        },
     }
 </script>
 
