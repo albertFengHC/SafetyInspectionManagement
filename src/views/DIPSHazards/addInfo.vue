@@ -114,11 +114,49 @@
                 </div>
                 <div class="contentListPhoto">
                     <p>现场照片</p>
-                    <i><span>+</span></i>
+<!--                    <i><span>+</span></i>-->
+                    <div class="demo-upload-list" v-for="item in uploadList">
+                        <template v-if="item.status === 'finished'">
+                            <img :src="item.url">
+                            <div class="demo-upload-list-cover">
+                                <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+                                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+                        </template>
+                    </div>
+                    <Upload
+                            ref="upload"
+                            :show-upload-list="false"
+                            :default-file-list="defaultList"
+                            :on-success="handleSuccess"
+                            :format="['jpg','jpeg','png']"
+                            :max-size="2048"
+                            :on-format-error="handleFormatError"
+                            :on-exceeded-size="handleMaxSize"
+                            :before-upload="handleBeforeUpload"
+                            multiple
+                            type="drag"
+                            action="//jsonplaceholder.typicode.com/posts/"
+                            style="display: inline-block;width:58px;">
+                        <div style="width: 58px;height:58px;line-height: 58px;">
+                            <Icon type="ios-camera" size="20"></Icon>
+                        </div>
+                    </Upload>
+                    <Modal title="View Image" v-model="visible">
+                        <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
+                    </Modal>
                 </div>
                 <div class="contentListFile">
                     <p>资料附件</p>
-                    <i><span>+</span></i>
+                    <Upload
+                            multiple
+                            action="//jsonplaceholder.typicode.com/posts/">
+                        <Button icon="ios-cloud-upload-outline">Upload files</Button>
+                    </Upload>
+<!--                    <i><span>+</span></i>-->
                 </div>
                 <div class="ReceiptProcess">
                     <h3>签收流程</h3>
@@ -126,7 +164,7 @@
                         <div class="dangerProjectName">
                             <div>
                                 <h4>整改责任人</h4>
-                                <p @click="showPersonChargeRectificationList" class="searchSel">选择整改责任人</p>
+                                <p @click="showPersonChargeRectificationList" class="searchSel">选择整改责任人<i>{{PersonChargeRectificationName}}</i></p>
                                 <Tree :data="personChargeRectificationCirculant" v-show="showPersonChargeRectification === 1"
                                       @on-select-change="searchPersonChargeRectificationName"/>
                                 <label>
@@ -140,7 +178,7 @@
                         <div class="dangerProjectName">
                             <div>
                                 <h4>传阅人</h4>
-                                <p @click="showPersonCirculantList" class="searchSel">选择传阅人</p>
+                                <p @click="showPersonCirculantList" class="searchSel">选择传阅人<i>{{PersonCirculantName}}</i></p>
                                 <Tree :data="personChargeRectificationCirculant" v-show="showPersonCirculant === 1"
                                       @on-select-change="searchPersonCirculantName"/>
                                 <label>
@@ -207,12 +245,29 @@
                 personChargeRectificationCirculant:[],
                 personChargeRectification:'',
                 personCirculant:'',
+                newPersonChargeRectificationCirculant:[],
                 //显示整改责任人
                 showPersonChargeRectification:1,
                 PersonChargeRectificationList:[],
+                PersonChargeRectificationName:'',
                 //显示传阅人
                 showPersonCirculant:1,
                 PersonCirculantList:[],
+                PersonCirculantName:'',
+                //照片资料上传
+                defaultList: [
+                    {
+                        'name': 'a42bdcc1178e62b4694c830f028db5c0',
+                        'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
+                    },
+                    {
+                        'name': 'bc7521e033abdd1e92222d733590f104',
+                        'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
+                    }
+                ],
+                imgName: '',
+                visible: false,
+                uploadList: []
             }
         },
         methods: {
@@ -363,43 +418,95 @@
             },
             searchPersonChargeRectificationName(e) {
                 this.showPersonChargeRectification = 0;
+                this.PersonChargeRectificationName = e[0].title;
                 let personName = e[0].title;
-                let result = this.personChargeRectificationCirculantOld.filter(data => data.fFullName === personName).personList;
-                this.PersonChargeRectificationList = result;
-                console.log(this.PersonChargeRectificationList);
+                let result = this.newPersonChargeRectificationCirculant;
+                let newResult = result.find(data => data.fFullName === personName);
+                if(newResult.personList.length){
+                    this.PersonChargeRectificationList = newResult.personList;
+                }
             },
             searchPersonCirculantName(e) {
                 this.showPersonCirculant = 0;
+                this.PersonCirculantName = e[0].title;
                 let personName = e[0].title;
-                let result = this.personChargeRectificationCirculantOld.filter(data => data.fFullName === personName).personList;
-                this.PersonCirculantList = result;
-                console.log(this.PersonCirculantList);
+                let result = this.newPersonChargeRectificationCirculant;
+                let newResult = result.find(data => data.fFullName === personName);
+                if(newResult.personList.length){
+                    this.PersonCirculantList = newResult.personList;
+                }
             },
             getNewPersonList(data){
                 let newPersonTree = data;
-                let newPerson = '';
-                let resetTree = (data) => {
-                    return data.map(item => {
-                        console.log(item.fFullName);
-                        if (item.childList) {
-                            return {
-                                // ...item,
+                let newPerson = [];
+                let child = [];
+                let resetTree = (value) => {
+                    if (value.childList.length) {
+                        value.childList.map(item =>{
+                            child.push({
                                 title: item.fFullName,
                                 id: item.fDepartmentId,
-                                children: resetTree(item.childList)
+                            });
+                            if(item.personList.length){
+                                this.newPersonChargeRectificationCirculant.push(item);
                             }
-                        } else {
-                            return {
-                                // ...item,
-                                title: item.fFullName,
-                                id: item.fDepartmentId,
-                            }
+                        });
+                        if(value.personList.length){
+                            this.newPersonChargeRectificationCirculant.push(value);
                         }
-                    });
+                        return {
+                            // ...item,
+                            title: value.fFullName,
+                            id: value.fDepartmentId,
+                            children: child
+                        }
+                    } else {
+                        if(value.personList.length){
+                            this.newPersonChargeRectificationCirculant.push(value);
+                        }
+                        return {
+                            // ...item,
+                            title: value.fFullName,
+                            id: value.fDepartmentId,
+                        }
+                    }
                 };
-                newPerson = resetTree(newPersonTree);
+                newPerson.push(resetTree(newPersonTree));
                 this.personChargeRectificationCirculant = newPerson;
-                console.log(this.personChargeRectificationCirculant);
+            },
+            //照片及资料上传
+            handleView (name) {
+                this.imgName = name;
+                this.visible = true;
+            },
+            handleRemove (file) {
+                const fileList = this.$refs.upload.fileList;
+                this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+            },
+            handleSuccess (res, file) {
+                file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
+                file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+            },
+            handleFormatError (file) {
+                this.$Notice.warning({
+                    title: 'The file format is incorrect',
+                    desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+                });
+            },
+            handleMaxSize (file) {
+                this.$Notice.warning({
+                    title: 'Exceeding file size limit',
+                    desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+                });
+            },
+            handleBeforeUpload () {
+                const check = this.uploadList.length < 5;
+                if (!check) {
+                    this.$Notice.warning({
+                        title: 'Up to five pictures can be uploaded.'
+                    });
+                }
+                return check;
             }
         },
         mounted() {
@@ -485,6 +592,11 @@
                 flex 2
                 padding 3px 5px
                 text-align right
+        .searchSel
+            i
+                display inline-block
+                margin-left 15px
+                font-weight bold
 
     .contentList
         display flex
@@ -669,4 +781,42 @@
             width 100%
             height 100%
 
+
+    //照片及资料上传
+    .demo-upload-list{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        overflow: hidden;
+        background: #fff;
+        position: relative;
+        box-shadow: 0 1px 1px rgba(0,0,0,.2);
+        margin-right: 4px;
+    }
+    .demo-upload-list img{
+        width: 100%;
+        height: 100%;
+    }
+    .demo-upload-list-cover{
+        display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,.6);
+    }
+    .demo-upload-list:hover .demo-upload-list-cover{
+        display: block;
+    }
+    .demo-upload-list-cover i{
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        margin: 0 2px;
+    }
 </style>
