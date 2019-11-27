@@ -128,10 +128,10 @@
                                 <h4>整改责任人</h4>
                                 <p @click="showPersonChargeRectificationList" class="searchSel">选择整改责任人</p>
                                 <Tree :data="personChargeRectificationCirculant" v-show="showPersonChargeRectification === 1"
-                                      @on-select-change="searchDangerProjectName"/>
+                                      @on-select-change="searchPersonChargeRectificationName"/>
                                 <label>
                                     <Select v-model="personChargeRectification" @on-change="selDangerProjectName">
-                                        <Option v-for="item in personChargeRectificationCirculant" :value="item.fDangername" :key="item.fId">{{ item.fDangername }}</Option>
+                                        <Option v-for="item in PersonChargeRectificationList" :value="item.fStaffName" :key="item.fId">{{ item.fStaffName }}</Option>
                                     </Select>
                                 </label>
                             </div>
@@ -142,10 +142,10 @@
                                 <h4>传阅人</h4>
                                 <p @click="showPersonCirculantList" class="searchSel">选择传阅人</p>
                                 <Tree :data="personChargeRectificationCirculant" v-show="showPersonCirculant === 1"
-                                      @on-select-change="searchDangerProjectName"/>
+                                      @on-select-change="searchPersonCirculantName"/>
                                 <label>
                                     <Select v-model="personCirculant" @on-change="selDangerProjectName">
-                                        <Option v-for="item in personChargeRectificationCirculant" :value="item.fDangername" :key="item.fId">{{ item.fDangername }}</Option>
+                                        <Option v-for="item in PersonCirculantList" :value="item.fStaffName" :key="item.fId">{{ item.fStaffName }}</Option>
                                     </Select>
                                 </label>
                             </div>
@@ -166,7 +166,7 @@
 
 <script>
     import {mapState} from "vuex";
-    import {NCOScheduleAddUrl,CRCPersonUrl} from "../../urlBase";
+    import {CRCPersonUrl, NCOScheduleAddUrl} from "../../urlBase";
 
     export default {
         name: "addInfo",
@@ -349,29 +349,7 @@
                     .then(function (data) {
                         console.log(data);
                         that.personChargeRectificationCirculantOld = data;
-                        let newPersonChargeRectificationCirculantTree = data;
-                        let newPersonChargeRectificationCirculant = '';
-                        let resetTree = (data) => {
-                            let newTree = data.map(item => {
-                                if (item.children) {
-                                    return {
-                                        // ...item,
-                                        title: item.fFullName,
-                                        id: item.fDepartmentId,
-                                        children: resetTree(item.children)
-                                    }
-                                } else {
-                                    return {
-                                        // ...item,
-                                        title: item.fFullName,
-                                        id: item.fDepartmentId,
-                                    }
-                                }
-                            });
-                            return newTree;
-                        };
-                        newPersonChargeRectificationCirculant = resetTree(newPersonChargeRectificationCirculantTree);
-                        this.personChargeRectificationCirculant = newPersonChargeRectificationCirculant;
+                        that.getNewPersonList(data);
                     })
                     .catch(data => {
 
@@ -386,15 +364,43 @@
             searchPersonChargeRectificationName(e) {
                 this.showPersonChargeRectification = 0;
                 let personName = e[0].title;
-                let result = this.personChargeRectificationCirculantOld.filter(data => data.fFullName === personName);
+                let result = this.personChargeRectificationCirculantOld.filter(data => data.fFullName === personName).personList;
                 this.PersonChargeRectificationList = result;
+                console.log(this.PersonChargeRectificationList);
             },
             searchPersonCirculantName(e) {
                 this.showPersonCirculant = 0;
                 let personName = e[0].title;
-                let result = this.personChargeRectificationCirculantOld.filter(data => data.fFullName === personName);
+                let result = this.personChargeRectificationCirculantOld.filter(data => data.fFullName === personName).personList;
                 this.PersonCirculantList = result;
+                console.log(this.PersonCirculantList);
             },
+            getNewPersonList(data){
+                let newPersonTree = data;
+                let newPerson = '';
+                let resetTree = (data) => {
+                    return data.map(item => {
+                        console.log(item.fFullName);
+                        if (item.childList) {
+                            return {
+                                // ...item,
+                                title: item.fFullName,
+                                id: item.fDepartmentId,
+                                children: resetTree(item.childList)
+                            }
+                        } else {
+                            return {
+                                // ...item,
+                                title: item.fFullName,
+                                id: item.fDepartmentId,
+                            }
+                        }
+                    });
+                };
+                newPerson = resetTree(newPersonTree);
+                this.personChargeRectificationCirculant = newPerson;
+                console.log(this.personChargeRectificationCirculant);
+            }
         },
         mounted() {
             this.getCompanyTreeList();
