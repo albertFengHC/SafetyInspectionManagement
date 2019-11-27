@@ -121,6 +121,7 @@
         text-align center
         display flex
         justify-content space-between
+        align-items center
         .lineP
             display inline-block
             border-bottom 1px solid #27F2B2

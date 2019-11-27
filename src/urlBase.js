@@ -91,3 +91,20 @@ export function NCOScheduleAddUrl(parameter){
             });
     })
 }
+
+//新增整改责任人/传阅人
+export function CRCPersonUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/getPersonByCompanyId.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}

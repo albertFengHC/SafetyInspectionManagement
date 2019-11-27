@@ -151,6 +151,7 @@
         text-align center
         display flex
         justify-content space-between
+        align-items center
 
         .lineP
             display inline-block

@@ -4,30 +4,36 @@
             <div class="top">
                 <h2>选择隐患清单</h2>
                 <p @click="toAddInfo(0)"><span><</span></p>
-                <i @click="showList"></i>
+                <i @click="showList"/>
             </div>
             <div class="search">
                 <h3>{{projectName}}</h3>
                 <div class="name">
                     <h4>请选择二级名称</h4>
-                    <Select v-model="selDangerValS" @on-change="selDangerS" class="nameSel">
-                        <Option v-for="item in resultS" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
-                    </Select>
+                    <label>
+                        <Select v-model="selDangerValS" @on-change="selDangerS" class="nameSel">
+                            <Option v-for="item in resultS" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
+                        </Select>
+                    </label>
                 </div>
                 <div class="company">
                     <h4>请选择三级名称</h4>
-                    <Select v-model="selDangerValT" @on-change="selDangerT" class="companySel">
-                        <Option v-for="item in resultT" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
-                    </Select>
+                    <label>
+                        <Select v-model="selDangerValT" @on-change="selDangerT" class="companySel">
+                            <Option v-for="item in resultT" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
+                        </Select>
+                    </label>
                 </div>
             </div>
         </div>
         <div class="boxContent">
             <div class="content">
                 <h4>请选择清单项</h4>
-                <Select v-model="resultTSel" multiple @on-change="selDangerList">
-                    <Option v-for="item in resultL" :value="item.fId" :key="item.fId">{{ item.fNodename }}</Option>
-                </Select>
+                <label>
+                    <Select v-model="resultTSel" multiple @on-change="selDangerList">
+                        <Option v-for="item in resultL" :value="item.fId" :key="item.fId">{{ item.fNodename }}</Option>
+                    </Select>
+                </label>
                 <div class="problemsInfoList" v-for="item in resultNewList" :value="item.fId" :key="item.fId">
                     <div class="problemsInfoListTitle">
                         <p>{{item.fNodeno}}</p>
@@ -46,9 +52,11 @@
         </div>
         <div class="listInfoShadow" v-show="listInfoShow" @click="listInfoHide"></div>
         <div class="listInfo" v-show="listInfoShow">
-            <Select v-model="selDangerVal" @on-change="selDanger">
-                <Option v-for="item in DangerTreeData.nodesList" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
-            </Select>
+            <label>
+                <Select v-model="selDangerVal" @on-change="selDanger">
+                    <Option v-for="item in DangerTreeData.nodesList" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
+                </Select>
+            </label>
         </div>
     </div>
 </template>

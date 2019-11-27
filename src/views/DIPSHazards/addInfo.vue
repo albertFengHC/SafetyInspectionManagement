@@ -12,26 +12,32 @@
                     <p><span>*</span>被检查单位</p>
                     <p @click="showCompany" class="searchSel">选择公司<span>{{searchValSel}}</span></p>
                     <Tree :data="companyTreeList" v-show="showCompanyVal === 1"
-                          @on-select-change="searchValSelF"></Tree>
+                          @on-select-change="searchValSelF"/>
                 </div>
                 <div class="contentList">
                     <p><span>*</span>检查记录编号</p>
-                    <input type="text" placeholder="请输入">
+                    <label>
+                        <input type="text" placeholder="请输入">
+                    </label>
                 </div>
                 <div class="dangerProjectName">
                     <div class="dangerProjectNameVal">
                         <p><span>*</span>存在隐患工程名称</p>
                         <div>
-                            <input type="text" placeholder="请输入或请选择" v-model="dangerProjectName">
+                            <label>
+                                <input type="text" placeholder="请输入或请选择" v-model="dangerProjectName">
+                            </label>
                         </div>
                     </div>
                     <div>
                         <p @click="showDangerProjectNameList" class="searchSel">选择隐患名称</p>
                         <Tree :data="companyTreeList" v-show="showDangerProjectName === 1"
-                              @on-select-change="searchDangerProjectName"></Tree>
-                        <Select v-model="selDangerProjectNameVal" @on-change="selDangerProjectName">
-                            <Option v-for="item in dangerProjectNameList" :value="item.fDangername" :key="item.fId">{{ item.fDangername }}</Option>
-                        </Select>
+                              @on-select-change="searchDangerProjectName"/>
+                        <label>
+                            <Select v-model="selDangerProjectNameVal" @on-change="selDangerProjectName">
+                                <Option v-for="item in dangerProjectNameList" :value="item.fDangername" :key="item.fId">{{ item.fDangername }}</Option>
+                            </Select>
+                        </label>
                     </div>
                 </div>
                 <div class="contentList">
@@ -66,34 +72,44 @@
                 </div>
                 <div class="contentList">
                     <p><span>*</span>发现问题描述</p>
-                    <input type="text" placeholder="请输入">
+                    <label>
+                        <textarea placeholder="请输入" v-model="descriptionProblemsFound"/>
+                    </label>
                 </div>
                 <div class="contentList">
                     <p><span>*</span>整改要求</p>
-                    <input type="text" placeholder="请输入">
+                    <label>
+                        <textarea placeholder="请输入" v-model="rectificationRequirements"/>
+                    </label>
                 </div>
-                <div class="contentList">
+                <div class="selectBox">
                     <p><span>*</span>排查对象</p>
-                    <select name="" id="4">
-                        <option value="">请选择</option>
-                    </select>
+                    <label>
+                        <Select v-model="objectInvestigation">
+                            <Option v-for="item in objectInvestigationList" :value="item.fItemCode" :key="item.fItemValue">{{ item.fItemName }}</Option>
+                        </Select>
+                    </label>
                 </div>
-                <div class="contentList">
+                <div class="selectBox">
                     <p><span>*</span>隐患类别</p>
-                    <select name="" id="1">
-                        <option value="">请选择</option>
-                    </select>
+                    <label>
+                        <Select v-model="hiddenDangerCategory">
+                            <Option v-for="item in hiddenDangerCategoryList" :value="item.fItemCode" :key="item.fItemValue">{{ item.fItemName }}</Option>
+                        </Select>
+                    </label>
                 </div>
-                <div class="contentList">
+                <div class="selectBox">
                     <p><span>*</span>隐患类型</p>
-                    <select name="" id="2">
-                        <option value="">请选择</option>
-                    </select>
+                    <label>
+                        <Select v-model="hiddenDangerType">
+                            <Option v-for="item in hiddenDangerTypeList" :value="item.fItemCode" :key="item.fItemValue">{{ item.fItemName }}</Option>
+                        </Select>
+                    </label>
                 </div>
-                <div class="contentList">
+                <div class="selectBox">
                     <p><span>*</span>整改截至日期</p>
-                    <Col span="12">
-                        <DatePicker type="date" placeholder="整改截止时间" :value="dateVale"></DatePicker>
+                    <Col>
+                        <DatePicker type="date" placeholder="整改截止时间" :value="dateVale"/>
                     </Col>
                 </div>
                 <div class="contentListPhoto">
@@ -107,19 +123,33 @@
                 <div class="ReceiptProcess">
                     <h3>签收流程</h3>
                     <div>
-                        <div class="ReceiptProcessContent">
+                        <div class="dangerProjectName">
                             <div>
-                                <h5>整改责任人</h5>
-                                <p>请选择责任人</p>
+                                <h4>整改责任人</h4>
+                                <p @click="showPersonChargeRectificationList" class="searchSel">选择整改责任人</p>
+                                <Tree :data="personChargeRectificationCirculant" v-show="showPersonChargeRectification === 1"
+                                      @on-select-change="searchDangerProjectName"/>
+                                <label>
+                                    <Select v-model="personChargeRectification" @on-change="selDangerProjectName">
+                                        <Option v-for="item in personChargeRectificationCirculant" :value="item.fDangername" :key="item.fId">{{ item.fDangername }}</Option>
+                                    </Select>
+                                </label>
                             </div>
-                            <i><span>+</span></i>
+<!--                            <i><span>+</span></i>-->
                         </div>
-                        <div class="ReceiptProcessContent">
+                        <div class="dangerProjectName">
                             <div>
-                                <h5>传阅人</h5>
-                                <p>请选择传阅人</p>
+                                <h4>传阅人</h4>
+                                <p @click="showPersonCirculantList" class="searchSel">选择传阅人</p>
+                                <Tree :data="personChargeRectificationCirculant" v-show="showPersonCirculant === 1"
+                                      @on-select-change="searchDangerProjectName"/>
+                                <label>
+                                    <Select v-model="personCirculant" @on-change="selDangerProjectName">
+                                        <Option v-for="item in personChargeRectificationCirculant" :value="item.fDangername" :key="item.fId">{{ item.fDangername }}</Option>
+                                    </Select>
+                                </label>
                             </div>
-                            <i><span>+</span></i>
+<!--                            <i><span>+</span></i>-->
                         </div>
                     </div>
                 </div>
@@ -136,7 +166,7 @@
 
 <script>
     import {mapState} from "vuex";
-    import {NCOScheduleAddUrl} from "../../urlBase";
+    import {NCOScheduleAddUrl,CRCPersonUrl} from "../../urlBase";
 
     export default {
         name: "addInfo",
@@ -158,7 +188,31 @@
                 dangerProjectName:'',
                 selDangerProjectNameVal:'',
                 dangerProjectNameList:[],
-                dateVale:''
+                dateVale:'',
+                //发现问题描述
+                descriptionProblemsFound:'',
+                //整改要求
+                rectificationRequirements:'',
+                //排查对象
+                objectInvestigationList:[],
+                objectInvestigation: '',
+                //隐患类别
+                hiddenDangerCategoryList:[],
+                hiddenDangerCategory: '',
+                //隐患类型
+                hiddenDangerTypeList:[],
+                hiddenDangerType:'',
+                //整改责任人及传阅人
+                personChargeRectificationCirculantOld:'',
+                personChargeRectificationCirculant:[],
+                personChargeRectification:'',
+                personCirculant:'',
+                //显示整改责任人
+                showPersonChargeRectification:1,
+                PersonChargeRectificationList:[],
+                //显示传阅人
+                showPersonCirculant:1,
+                PersonCirculantList:[],
             }
         },
         methods: {
@@ -178,6 +232,7 @@
                 this.searchValSel = e[0].title;
                 this.showCompanyVal = 0;
                 this.companyId = e[0].id;
+                this.getCRCPersonData();
             },
             getCompanyTreeList() {
                 let newCompanyTree = this.companyTree;
@@ -246,12 +301,12 @@
                 });
 
                 function onComplete (obj){
-                    let res = '经纬度：' + obj.position +
-                        '\n精度范围：' + obj.accuracy +
-                        '米\n定位结果的来源：' + obj.location_type +
-                        '\n状态信息：' + obj.info +
-                        '\n地址：' + obj.formattedAddress +
-                        '\n地址信息：' + JSON.stringify(obj.addressComponent, null, 4);
+                    // let res = '经纬度：' + obj.position +
+                    //     '\n精度范围：' + obj.accuracy +
+                    //     '米\n定位结果的来源：' + obj.location_type +
+                    //     '\n状态信息：' + obj.info +
+                    //     '\n地址：' + obj.formattedAddress +
+                    //     '\n地址信息：' + JSON.stringify(obj.addressComponent, null, 4);
                     that.lat = obj.position.lat;
                     that.lng = obj.position.lng;
                 }
@@ -271,15 +326,86 @@
             },
             selDangerProjectName(){
                 this.dangerProjectName = this.selDangerProjectNameVal;
-            }
+            },
+            //排查对象
+            getObjectInvestigation(){
+                this.objectInvestigationList = this.testObject;
+            },
+            //隐患类别
+            getHiddenDangerCategory(){
+                this.hiddenDangerCategoryList = this.trapLevel;
+            },
+            //隐患类型
+            getHiddenDangerType(){
+                this.hiddenDangerTypeList = this.trapType;
+            },
+            //整改责任人及传阅人
+            getCRCPersonData(){
+                const that = this;
+                let parameter = {
+                    companyId: this.companyId
+                };
+                CRCPersonUrl(parameter)
+                    .then(function (data) {
+                        console.log(data);
+                        that.personChargeRectificationCirculantOld = data;
+                        let newPersonChargeRectificationCirculantTree = data;
+                        let newPersonChargeRectificationCirculant = '';
+                        let resetTree = (data) => {
+                            let newTree = data.map(item => {
+                                if (item.children) {
+                                    return {
+                                        // ...item,
+                                        title: item.fFullName,
+                                        id: item.fDepartmentId,
+                                        children: resetTree(item.children)
+                                    }
+                                } else {
+                                    return {
+                                        // ...item,
+                                        title: item.fFullName,
+                                        id: item.fDepartmentId,
+                                    }
+                                }
+                            });
+                            return newTree;
+                        };
+                        newPersonChargeRectificationCirculant = resetTree(newPersonChargeRectificationCirculantTree);
+                        this.personChargeRectificationCirculant = newPersonChargeRectificationCirculant;
+                    })
+                    .catch(data => {
+
+                    });
+            },
+            showPersonChargeRectificationList(){
+                this.showPersonChargeRectification = 1;
+            },
+            showPersonCirculantList(){
+                this.showPersonCirculant = 1;
+            },
+            searchPersonChargeRectificationName(e) {
+                this.showPersonChargeRectification = 0;
+                let personName = e[0].title;
+                let result = this.personChargeRectificationCirculantOld.filter(data => data.fFullName === personName);
+                this.PersonChargeRectificationList = result;
+            },
+            searchPersonCirculantName(e) {
+                this.showPersonCirculant = 0;
+                let personName = e[0].title;
+                let result = this.personChargeRectificationCirculantOld.filter(data => data.fFullName === personName);
+                this.PersonCirculantList = result;
+            },
         },
         mounted() {
             this.getCompanyTreeList();
             this.getDangerTreeData();
             this.getLocation();
+            this.getObjectInvestigation();
+            this.getHiddenDangerCategory();
+            this.getHiddenDangerType();
         },
         computed: {
-            ...mapState(['companyTree', 'userInfo'])
+            ...mapState(['companyTree', 'userInfo','testObject','trapLevel','trapType'])
         },
     }
 </script>
@@ -327,6 +453,14 @@
             span
                 margin-left  15px
                 color #757575
+
+    .selectBox
+        border-bottom 1px solid #EEEEEE
+        padding 10px 0
+        span
+            display inline-block
+            color #ce0c0c
+            font-weight bold
 
     .dangerProjectName
         border-bottom 1px solid #EEEEEE

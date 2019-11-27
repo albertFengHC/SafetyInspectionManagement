@@ -20,7 +20,7 @@
                             <p><span>存在隐患工程名称</span>{{listData.checkTrapDaily.fDangername}}</p>
                             <p><span>经度</span>{{listData.checkTrapDaily.fLatitude}}</p>
                             <p><span>纬度</span>{{listData.checkTrapDaily.fLongitude}}</p>
-                            <img src="../../assets/DHDIList/组1602.png" class="logoImg">
+                            <img src="../../assets/DHDIList/组1602.png" class="logoImg" alt="">
                         </div>
                         <div class="problems">
                             <h3>检查发现问题</h3>
