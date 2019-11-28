@@ -25,8 +25,8 @@
             }
         },
         methods: {
-            toNoSignDetails() {
-
+            toNoSignDetails(data) {
+                this.$router.push({name: 'addInfo',params:{LPHazardsList:data,fId:data.fId}});
             },
             getListData(param){
                 const that = this;

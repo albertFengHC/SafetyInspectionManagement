@@ -108,3 +108,37 @@ export function CRCPersonUrl(parameter){
             });
     })
 }
+
+//隐患新增或提交接口
+export function HDAddedUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/insertTrapDaily.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}
+
+//隐患查看保存接口
+export function HDVSiIUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/getTrapDailyByFid.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}
