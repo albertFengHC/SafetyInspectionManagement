@@ -153,17 +153,21 @@
                 const logInfo = this.userInfo;
                 let parameter = {
                     userId: logInfo.userId,
-                    fId: this.this.$route.params.fId,
+                    fId: this.$route.params.fId,
                 };
                 HDVSiIUrl(parameter)
                     .then(function (data) {
-                        that.listData = data.trapDailyList;
+                        that.listData = data.checkTrapDaily;
                         console.log(that.listData);
                     })
                     .catch(data => {
 
                     });
             },
+        },
+        mounted() {
+            this.logInfo = this.userInfo;
+            this.getListData();
         },
         computed: {
             ...mapState(['userInfo'])
