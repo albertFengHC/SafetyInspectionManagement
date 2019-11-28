@@ -26,7 +26,7 @@
         },
         methods:{
             toWaitingSignDetails(){
-                this.$router.push({name: 'WaitingSignDetails'});
+                this.$router.push({name: 'WaitingSignDetails',params:{fId:this.listData.fId}});
             },
             getListData(param){
                 const that = this;

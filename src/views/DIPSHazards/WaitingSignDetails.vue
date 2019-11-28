@@ -133,14 +133,41 @@
 </template>
 
 <script>
+    import {HDVSiIUrl} from './../../urlBase';
+    import {mapState} from "vuex";
+
     export default {
         name: "WaitingSignDetails",
+        data(){
+            return{
+                listData:'',
+                logInfo: ''
+            }
+        },
         methods:{
             toAlreadySign(){
                 this.$router.push({name: 'WaitingSign'});
             },
+            getListData(param){
+                const that = this;
+                const logInfo = this.userInfo;
+                let parameter = {
+                    userId: logInfo.userId,
+                    fId: this.this.$route.params.fId,
+                };
+                HDVSiIUrl(parameter)
+                    .then(function (data) {
+                        that.listData = data.trapDailyList;
+                        console.log(that.listData);
+                    })
+                    .catch(data => {
 
-        }
+                    });
+            },
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 
