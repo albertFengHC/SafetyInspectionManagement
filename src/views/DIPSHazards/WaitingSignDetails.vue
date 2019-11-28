@@ -3,7 +3,7 @@
         <div class="top">
             <div class="title">
                 <h2>成宜公司【安巡查】009</h2>
-                <p @click="toAlreadySign"><</p>
+                <p @click="toWaitingSign"><</p>
             </div>
         </div>
         <div class="content">
@@ -145,7 +145,7 @@
             }
         },
         methods:{
-            toAlreadySign(){
+            toWaitingSign(){
                 this.$router.push({name: 'WaitingSign'});
             },
             getListData(param){
@@ -166,7 +166,6 @@
             },
         },
         mounted() {
-            this.logInfo = this.userInfo;
             this.getListData();
         },
         computed: {
