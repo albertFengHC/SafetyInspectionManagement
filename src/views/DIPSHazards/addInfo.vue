@@ -164,11 +164,11 @@
                         <div class="dangerProjectName">
                             <div>
                                 <h4>整改责任人</h4>
-                                <p @click="showPersonChargeRectificationList" class="searchSel">选择整改责任人<i>{{PersonChargeRectificationName}}</i></p>
+                                <p @click="showPersonChargeRectificationList" class="searchSel">选择整改责任人<i>{{personChargeRectification}}</i></p>
                                 <Tree :data="personChargeRectificationCirculant" v-show="showPersonChargeRectification === 1"
                                       @on-select-change="searchPersonChargeRectificationName"/>
                                 <label>
-                                    <Select v-model="personChargeRectification" @on-change="selDangerProjectName">
+                                    <Select v-model="personChargeRectification" @on-change="selDangerProjectName" multiple :label-in-value="true">
                                         <Option v-for="item in PersonChargeRectificationList" :value="item.fStaffName" :key="item.fId">{{ item.fStaffName }}</Option>
                                     </Select>
                                 </label>
@@ -178,11 +178,11 @@
                         <div class="dangerProjectName">
                             <div>
                                 <h4>传阅人</h4>
-                                <p @click="showPersonCirculantList" class="searchSel">选择传阅人<i>{{PersonCirculantName}}</i></p>
+                                <p @click="showPersonCirculantList" class="searchSel">选择传阅人<i>{{personCirculant}}</i></p>
                                 <Tree :data="personChargeRectificationCirculant" v-show="showPersonCirculant === 1"
                                       @on-select-change="searchPersonCirculantName"/>
                                 <label>
-                                    <Select v-model="personCirculant" @on-change="selDangerProjectName">
+                                    <Select v-model="personCirculant" @on-change="selDangerProjectName" multiple :label-in-value="true">
                                         <Option v-for="item in PersonCirculantList" :value="item.fStaffName" :key="item.fId">{{ item.fStaffName }}</Option>
                                     </Select>
                                 </label>
@@ -379,7 +379,8 @@
             showDangerProjectNameList(){
                 this.showDangerProjectName = 1;
             },
-            selDangerProjectName(){
+            selDangerProjectName(e){
+                console.log(e);
                 this.dangerProjectName = this.selDangerProjectNameVal;
             },
             //排查对象
