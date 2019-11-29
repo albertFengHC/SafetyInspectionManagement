@@ -23,7 +23,7 @@
                 <div class="selectBox">
                     <p><span>*</span>检查时间</p>
                     <Col>
-                        <DatePicker type="date" placeholder="检查时间" v-model="checkdateVale"/>
+                        <DatePicker type="date" placeholder="检查时间" v-model="checkdateVale" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
                     </Col>
                 </div>
                 <div class="dangerProjectName">
@@ -92,7 +92,7 @@
                     <p><span>*</span>排查对象<i>{{objectInvestigation}}</i></p>
                     <label>
                         <Select v-model="objectInvestigation">
-                            <Option v-for="item in objectInvestigationList" :value="item.fItemCode" :key="item.fItemValue">{{ item.fItemName }}</Option>
+                            <Option v-for="item in objectInvestigationList" :value="item.fItemName" :key="item.fItemValue">{{ item.fItemName }}</Option>
                         </Select>
                     </label>
                 </div>
@@ -100,7 +100,7 @@
                     <p><span>*</span>隐患类别<i>{{hiddenDangerCategory}}</i></p>
                     <label>
                         <Select v-model="hiddenDangerCategory">
-                            <Option v-for="item in hiddenDangerCategoryList" :value="item.fItemCode" :key="item.fItemValue">{{ item.fItemName }}</Option>
+                            <Option v-for="item in hiddenDangerCategoryList" :value="item.fItemName" :key="item.fItemValue">{{ item.fItemName }}</Option>
                         </Select>
                     </label>
                 </div>
@@ -108,14 +108,14 @@
                     <p><span>*</span>隐患类型<i>{{hiddenDangerType}}</i></p>
                     <label>
                         <Select v-model="hiddenDangerType">
-                            <Option v-for="item in hiddenDangerTypeList" :value="item.fItemCode" :key="item.fItemValue">{{ item.fItemName }}</Option>
+                            <Option v-for="item in hiddenDangerTypeList" :value="item.fItemName" :key="item.fItemValue">{{ item.fItemName }}</Option>
                         </Select>
                     </label>
                 </div>
                 <div class="selectBox">
                     <p><span>*</span>整改截至日期</p>
                     <Col>
-                        <DatePicker type="date" placeholder="整改截止时间" v-model="dateVale"/>
+                        <DatePicker type="date" placeholder="整改截止时间" v-model="dateVale" @on-change='dateValeChange' format="yyyy-MM-dd HH:mm"/>
                     </Col>
                 </div>
                 <div class="contentListPhoto">
@@ -123,14 +123,14 @@
 <!--                    <i><span>+</span></i>-->
                     <div class="demo-upload-list" v-for="item in uploadList">
                         <template v-if="item.status === 'finished'">
-                            <img :src="item.url">
+                            <img :src="item.url" alt="">
                             <div class="demo-upload-list-cover">
-                                <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
-                                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+                                <Icon type="ios-eye-outline" @click.native="handleView(item.name)"/>
+                                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"/>
                             </div>
                         </template>
                         <template v-else>
-                            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+                            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info/>
                         </template>
                     </div>
                     <Upload
@@ -148,11 +148,11 @@
                             action="//jsonplaceholder.typicode.com/posts/"
                             style="display: inline-block;width:58px;">
                         <div style="width: 58px;height:58px;line-height: 58px;">
-                            <Icon type="ios-camera" size="20"></Icon>
+                            <Icon type="ios-camera" size="20"/>
                         </div>
                     </Upload>
                     <Modal title="View Image" v-model="visible">
-                        <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
+                        <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%" alt="">
                     </Modal>
                 </div>
                 <div class="contentListFile">
@@ -216,6 +216,8 @@
         name: "addInfo",
         data() {
             return {
+                //检查发现问题
+                recordMessageItem: '',
                 fCompanyid:'',
                 fCompanyname:'',
                 fCheckid:'',
@@ -374,7 +376,7 @@
                     userId:this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
                     fSourcefile: timeStr,//文件id,前端生成
-                    recordMessageItem: ''//检查发现问题
+                    recordMessageItem: this.recordMessageItem//检查发现问题
                 };
                 HDAddedUrl(parameter)
                     .then(function (data) {
@@ -530,8 +532,8 @@
                     newPersonChargeRectificationName += data.label+',';
                     newPersonChargeRectificationNameId += data.value+','
                 });
-                this.newPersonChargeRectificationNameList = newPersonChargeRectificationName;
-                this.newPersonChargeRectificationNameListId = newPersonChargeRectificationNameId;
+                this.newPersonChargeRectificationNameList = newPersonChargeRectificationName.substr(0, newPersonChargeRectificationName.length - 1);
+                this.newPersonChargeRectificationNameListId = newPersonChargeRectificationNameId.substr(0, newPersonChargeRectificationNameId.length - 1);
             },
             searchPersonChargeRectificationName(e) {
                 this.showPersonChargeRectification = 0;
@@ -550,8 +552,8 @@
                     newPersonCirculantName += data.label+',';
                     newPersonCirculantNameId += data.value+','
                 });
-                this.newPersonCirculantNameList = newPersonCirculantName;
-                this.newPersonCirculantNameListId = newPersonCirculantNameId;
+                this.newPersonCirculantNameList = newPersonCirculantName.substr(0, newPersonCirculantName.length - 1);
+                this.newPersonCirculantNameListId = newPersonCirculantNameId.substr(0, newPersonCirculantNameId.length - 1);
             },
             searchPersonCirculantName(e) {
                 this.showPersonCirculant = 0;
@@ -680,7 +682,17 @@
 
                         });
                 }
-            }
+            },
+            checkdateValeChange(data){
+                this.checkdateVale = data;
+                console.log(this.checkdateVale);
+                console.log(data);
+            },
+            dateValeChange(data){
+                this.dateVale = data;
+                console.log(this.checkdateVale);
+                console.log(data);
+            },
         },
         mounted() {
             this.getHDVSiIData();
@@ -690,6 +702,8 @@
             this.getObjectInvestigation();
             this.getHiddenDangerCategory();
             this.getHiddenDangerType();
+        },
+        activated() {
             if(this.$route.params.LPHazardsList != undefined){
                 this.recordMessageItem = this.$route.params.LPHazardsList;
             }

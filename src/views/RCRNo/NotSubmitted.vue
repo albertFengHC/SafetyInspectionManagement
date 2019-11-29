@@ -1,9 +1,9 @@
 <template>
     <div id="NotSubmitted">
-        <div class="info" @click="toNotSubmittedDetails">
+        <div class="info" @click="toNotSubmittedDetails(data)" v-for="data in listData" :value="data.fTrapno" :key="data.fId">
             <div class="infoLeft">
-                <h3>安巡查0001</h3>
-                <p>单位名称：成宜项目分公司</p>
+                <h3>{{data.fTrapno}}</h3>
+                <p>单位名称：{{data.fPassivename}}</p>
                 <p>整改人：苗争</p>
                 <p>检查时间：2019-09-11</p>
                 <p>整改记录编号：121212121212112</p>
@@ -26,8 +26,8 @@
             }
         },
         methods: {
-            toNotSubmittedDetails() {
-                this.$router.push({name: 'NotSubmittedDetails'});
+            toNotSubmittedDetails(data) {
+                this.$router.push({name: 'NotSubmittedDetails',params:{fId:data.fId}});
             },
             getListData(param){
                 const that = this;

@@ -34,15 +34,15 @@
                         <Option v-for="item in resultL" :value="item.fId" :key="item.fId">{{ item.fNodename }}</Option>
                     </Select>
                 </label>
-                <div class="problemsInfoList" v-for="item in resultNewList" :value="item.fId" :key="item.fId">
-                    <div class="problemsInfoListTitle">
-                        <p>{{item.fNodeno}}</p>
-                        <p>{{item.fTraplevel}}</p>
-                    </div>
-                    <div class="problemsInfoListContent">
-                        <p>{{item.fNodename}}</p>
-                    </div>
-                </div>
+<!--                <div class="problemsInfoList" v-for="item in resultNewList" :value="item.fId" :key="item.fId">-->
+<!--                    <div class="problemsInfoListTitle">-->
+<!--                        <p>{{item.fNodeno}}</p>-->
+<!--                        <p>{{item.fTraplevel}}</p>-->
+<!--                    </div>-->
+<!--                    <div class="problemsInfoListContent">-->
+<!--                        <p>{{item.fNodename}}</p>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <div class="bottom">
                 <div>
