@@ -142,3 +142,20 @@ export function HDVSiIUrl(parameter){
             });
     })
 }
+
+//隐患签收接口
+export function SHDUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/submitSign.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}

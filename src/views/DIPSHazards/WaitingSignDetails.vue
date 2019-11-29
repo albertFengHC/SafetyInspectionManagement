@@ -36,11 +36,11 @@
                         <div class="problemsInfo" v-if="listData.recordMessageItem">
                             <div class="problemsInfoList" v-for="item in listData.recordMessageItem" :value="item.fId" :key="item.fId">
                                 <div class="problemsInfoListTitle">
-                                    <p>{{item.fNodeno}}</p>
-                                    <p>{{item.fTraplevel}}</p>
+                                    <h4>{{item.fItemno}}</h4>
+                                    <h4>{{item.fTraplevel}}</h4>
                                 </div>
                                 <div class="problemsInfoListContent">
-                                    <p>{{item.fNodename}}</p>
+                                    <p>{{item.fItemname}}</p>
                                 </div>
                             </div>
                         </div>
@@ -59,8 +59,8 @@
                 <p><span>整改截止日期</span>{{listData.fLastdates}}</p>
                 <div>
                     <span>现场照片</span>
-                    <div class="photoList">
-                        <img src="../../assets/DHDIList/现场监控1.png">
+                    <div class="photoList" v-if="allData.checkTrapDailyFileList">
+                        <img :src="data" v-for="(data,i) in allData.checkTrapDailyFileList" :key="i">
                     </div>
                 </div>
                 <div class="file">
@@ -76,7 +76,7 @@
                 <div class="process">
                     <div class="processInfo">
                         <div>
-                            <img src="../../assets/DHDIList/已同意.png">
+                            <img src="../../assets/DHDIList/人员头像864.png">
                         </div>
                         <h4>{{listData.fAcceptname}}</h4>
                         <div>
@@ -102,32 +102,35 @@
                         </div>
                     </div>
                 </div>
-                <div class="signAdvice">
+                <div class="signAdvice" v-if="allData.isUpdate === 1">
                     <p>签收意见</p>
                     <div>
-                        <textarea name="" id="" cols="45" rows="10"></textarea>
+                        <textarea name="" id="" cols="45" rows="10" v-model="signAdvice"/>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="bottom">
+        <div class="bottom" v-if="allData.isUpdate === 1">
             <div class="agreeBtn">
-                <button>签收</button>
+                <button @click="sign">签收</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import {HDVSiIUrl} from './../../urlBase';
+    import {HDVSiIUrl,SHDUrl} from './../../urlBase';
     import {mapState} from "vuex";
 
     export default {
         name: "WaitingSignDetails",
         data(){
             return{
+                allData:'',
                 listData:'',
-                logInfo: ''
+                logInfo: '',
+                //签收意见
+                signAdvice:''
             }
         },
         methods:{
@@ -144,7 +147,26 @@
                 HDVSiIUrl(parameter)
                     .then(function (data) {
                         that.listData = data.checkTrapDaily;
+                        that.allData = data.checkTrapDailyFileList;
                         console.log(that.listData);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+            sign(){
+                const that = this;
+                const logInfo = this.userInfo;
+                let parameter = {
+                    userId: logInfo.userId,
+                    fId: this.$route.params.fId,
+                    userName: logInfo.realName,
+                    text: this.signAdvice
+                };
+                SHDUrl(parameter)
+                    .then(function (data) {
+                        console.log(data);
+                        that.$router.push({name: 'WaitingSign'});
                     })
                     .catch(data => {
 
@@ -284,6 +306,9 @@
                         margin-left 5px
                         display none
                         margin-right 0
+                    img
+                        width 35px
+                        height 35px
                     .remarks
                         color #1752DB
                         border 1px solid #1752DB
