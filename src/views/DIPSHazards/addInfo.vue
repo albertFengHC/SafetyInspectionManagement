@@ -307,7 +307,7 @@
                 }
                 let parameter = {
                     fId: this.fId,//提交或修改时传
-                    isSubmit: 1,//1提交 0保存
+                    isSubmit: '1',//1提交 0保存
                     fCompanyid: this.userInfo.companyId,//检查单位id
                     fCompanyname: this.userInfo.companyName,//检查单位
                     fPassiveid: this.inspectedCompanyId,//被检查单位id
@@ -351,9 +351,11 @@
                 if(this.searchValSel===''&&this.inspectionRecordNo===''&&this.selDangerProjectNameVal===''&&this.$route.params.LPHazardsList===''&&this.descriptionProblemsFound===''&&this.rectificationRequirements===''&&this.objectInvestigation===''&&this.hiddenDangerCategory&&this.hiddenDangerType===''&&this.checkdateVale===''&&this.dateVale===''&&this.newPersonChargeRectificationNameList===''&&this.newPersonCirculantNameList===''){
                     alert('红色星号为必填项!!!');
                 }
+                console.log(this.checkdateVale);
+                console.log(this.dateVale);
                 let parameter = {
                     fId: '',//提交或修改时传
-                    isSubmit: 0,//1提交 0保存
+                    isSubmit: '0',//1提交 0保存
                     fCompanyid: this.userInfo.companyId,//检查单位id
                     fCompanyname: this.userInfo.companyName,//检查单位
                     fPassiveid: this.inspectedCompanyId,//被检查单位id
@@ -656,6 +658,7 @@
                         .then(function (data) {
                             console.log(data);
                             let checkTrapDaily = data.checkTrapDaily;
+                            that.fId = checkTrapDaily.fId;
                             that.fCompanyid = checkTrapDaily.fCompanyid;
                             that.fCompanyname = checkTrapDaily.fCompanyname;
                             that.inspectedCompanyId = checkTrapDaily.fPassiveid;
@@ -683,6 +686,8 @@
                             that.userName = checkTrapDaily.userName;
                             that.fSourcefile = checkTrapDaily.fSourcefile;
                             that.recordMessageItem = checkTrapDaily.recordMessageItem;
+                            console.log(that.checkdateVale);
+                            console.log(that.dateVale);
                         })
                         .catch(data => {
 
@@ -704,11 +709,14 @@
             this.getObjectInvestigation();
             this.getHiddenDangerCategory();
             this.getHiddenDangerType();
-        },
-        activated() {
             if(this.$route.params.LPHazardsList != undefined){
                 this.recordMessageItem = this.$route.params.LPHazardsList;
             }
+        },
+        activated() {
+            // if(this.$route.params.LPHazardsList != undefined){
+            //     this.recordMessageItem = this.$route.params.LPHazardsList;
+            // }
         },
         computed: {
             ...mapState(['companyTree', 'userInfo','testObject','trapLevel','trapType'])

@@ -2,81 +2,109 @@
     <div id="NotSubmittedDetails">
         <div class="topContent">
             <div class="top">
-                <h2>成宜公司【安巡查】009</h2>
+                <h2>{{listData.fTrapno}}</h2>
                 <p @click="toNotSubmitted"><span><</span></p>
             </div>
         </div>
         <div class="boxContent">
             <div class="content">
                 <div class="contentTop">
-                    <p><span>检查人</span>张俞佳</p>
-                    <p><span>所在单位</span>成宜项目分公司</p>
-                    <p><span>所在部门</span>监理安治部</p>
+                    <p><span>检查人</span>{{listData.fCheckname}}</p>
+                    <p><span>所在单位</span>{{listData.fCompanyname}}</p>
                 </div>
                 <div class="contentTop">
-                    <p><span>被检查单位</span>TJ2-中铁四局</p>
-                    <p><span>检查记录编号</span>成宜公司【安巡查】009</p>
+                    <p><span>被检查单位</span>{{listData.fTrapno}}</p>
+                    <p><span>检查记录编号</span>{{listData.fTrapno}}</p>
                 </div>
                 <div class="contentTop">
-                    <p><span>存在隐患工程名称</span>深基坑施工</p>
+                    <p><span>存在隐患工程名称</span>{{listData.fDangername}}</p>
+                    <p><span>检查时间</span>{{listData.fCheckdates}}</p>
                 </div>
                 <div class="moreProblemsInfoList" @click="toAlreadySignDetailsView">
                     <p>查看更多<span>></span></p>
                 </div>
                 <h4 class="contentListTitle">整改情况说明</h4>
+<!--                <div class="contentList">-->
+<!--                    <p><span>*</span>整改单位负责人</p>-->
+<!--                    <input type="text" placeholder="请输入整改单位负责人" v-model="fAcceptname">-->
+<!--                </div>-->
                 <div class="contentList">
                     <p><span>*</span>整改记录编号</p>
-                    <input type="text" placeholder="请输入">
+                    <input type="text" placeholder="请输入整改记录编号" v-model="fBackno">
                 </div>
                 <div class="contentList">
                     <p><span>*</span>整改完成时间</p>
-                    <select name="" id="5">
-                        <option value="">请选择</option>
-                    </select>
+                    <Col>
+                        <DatePicker type="date" placeholder="整改完成时间" v-model="fFinishdates" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
+                    </Col>
                 </div>
                 <div class="contentList">
                     <p><span>*</span>整改详情描述</p>
                     <div>
-                        <input type="text" placeholder="请输入或请选择">
+                        <input type="text" placeholder="请输入整改详情描述" v-model="fBackdetail">
+                    </div>
+                </div>
+                <div class="contentList">
+                    <p><span>*</span>整改情况综述</p>
+                    <div>
+                        <input type="text" placeholder="请输入整改情况综述" v-model="fBackdesc">
                     </div>
                 </div>
                 <div class="contentListPhoto">
                     <p>整改前照片</p>
-                    <i><span>+</span></i>
+                    <div>
+                        <Upload
+                                multiple
+                                action="//jsonplaceholder.typicode.com/posts/">
+                            <Button icon="ios-cloud-upload-outline">上传整改前照片</Button>
+                        </Upload>
+                    </div>
                 </div>
                 <div class="contentListPhoto">
                     <p>整改后照片</p>
-                    <i><span>+</span></i>
+                    <div>
+                        <Upload
+                                multiple
+                                action="//jsonplaceholder.typicode.com/posts/">
+                            <Button icon="ios-cloud-upload-outline">上传整改后照片</Button>
+                        </Upload>
+                    </div>
                 </div>
                 <div class="contentListFile">
                     <p>整改记录及相关资料</p>
-                    <i><span>+</span></i>
-                </div>
-                <div class="contentList">
-                    <p><span>*</span>整改单位负责人</p>
                     <div>
-                        <input type="text" placeholder="请选择">
+                        <Upload
+                                multiple
+                                action="//jsonplaceholder.typicode.com/posts/">
+                            <Button icon="ios-cloud-upload-outline">上传整改资料</Button>
+                        </Upload>
                     </div>
                 </div>
-                <div class="ReceiptProcess">
-                    <h4>审批流程</h4>
-                    <div>
-                        <div class="ReceiptProcessContent">
-                            <div>
-                                <h5>审批人</h5>
-                                <p>请选择审批人</p>
-                            </div>
-                            <i><span>+</span></i>
-                        </div>
-                        <div class="ReceiptProcessContent">
-                            <div>
-                                <h5>抄送人</h5>
-                                <p>请选择抄送人</p>
-                            </div>
-                            <i><span>+</span></i>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="contentList">-->
+<!--                    <p><span>*</span>整改单位负责人</p>-->
+<!--                    <div>-->
+<!--                        <input type="text" placeholder="请选择">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="ReceiptProcess">-->
+<!--                    <h4>审批流程</h4>-->
+<!--                    <div>-->
+<!--                        <div class="ReceiptProcessContent">-->
+<!--                            <div>-->
+<!--                                <h5>审批人</h5>-->
+<!--                                <p>请选择审批人</p>-->
+<!--                            </div>-->
+<!--                            <i><span>+</span></i>-->
+<!--                        </div>-->
+<!--                        <div class="ReceiptProcessContent">-->
+<!--                            <div>-->
+<!--                                <h5>抄送人</h5>-->
+<!--                                <p>请选择抄送人</p>-->
+<!--                            </div>-->
+<!--                            <i><span>+</span></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <div class="bottom">
                 <div>
@@ -89,19 +117,69 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import {RRMHDDSUrl,HDRPreservationUrl,HDRSubmissionUrl} from './../../urlBase';
+
     export default {
         name: "NotSubmittedDetails",
         data(){
             return{
-                value11:''
+                listData:'',
+                allData:'',
+                //整改单位负责人
+                fAcceptname:'',
+                //整改记录编号
+                fBackno:'',
+                //整改完成时间
+                fFinishdates:'',
+                //整改详细情况
+                fBackdetail:'',
+                //整改情况综述
+                fBackdesc:'',
             }
         },
         methods:{
             Submission(){
+                const that = this;
+                let parameter = {
+                    fId: this.userInfo.userId,//隐患整改id
+                    userId: this.userInfo.realName,//当前用户id
+                    userName: this.userInfo.realName,//当前用户姓名
+                    fAcceptname: this.userInfo.companyName,//整改单位负责人
+                    fBackno: this.fBackno,//整改记录编号
+                    fFinishdates: this.fFinishdates,//整改完成时间
+                    fBackdetail: this.fBackdetail,//整改详细情况
+                    fBackdesc: this.fBackdesc,//整改情况综述
+                };
+                HDRSubmissionUrl(parameter)
+                    .then(function (data) {
+                        console.log(data);
+                        that.$router.push({name: 'NotSubmitted'});
+                    })
+                    .catch(data => {
 
+                    });
             },
             save(){
+                const that = this;
+                let parameter = {
+                    fId: this.userInfo.userId,//隐患整改id
+                    userId: this.userInfo.realName,//当前用户id
+                    userName: this.userInfo.realName,//当前用户姓名
+                    fAcceptname: this.userInfo.companyName,//整改单位负责人
+                    fBackno: this.fBackno,//整改记录编号
+                    fFinishdates: this.fFinishdates,//整改完成时间
+                    fBackdetail: this.fBackdetail,//整改详细情况
+                    fBackdesc: this.fBackdesc,//整改情况综述
+                };
+                HDRPreservationUrl(parameter)
+                    .then(function (data) {
+                        console.log(data);
+                        that.$router.push({name: 'NotSubmitted'});
+                    })
+                    .catch(data => {
 
+                    });
             },
             toNotSubmitted(){
                 this.$router.push({name: 'NotSubmitted'});
@@ -111,8 +189,34 @@
             },
             toAlreadySignDetailsView(){
                 this.$router.push({name: 'AlreadySignDetailsView'});
-            }
-        }
+            },
+            getList(){
+                const that = this;
+                const logInfo = this.userInfo;
+                const parameter = {
+                    fId: this.$route.params.fId,
+                    userId: logInfo.userId,
+                };
+                RRMHDDSUrl(parameter)
+                    .then(function (data) {
+                        that.listData = data.checkTrapDaily;
+                        that.allData = data;
+                        console.log(data);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+            checkdateValeChange(data){
+                this.fFinishdates = data;
+            },
+        },
+        mounted() {
+            this.getList();
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 
@@ -253,8 +357,6 @@
                     padding 5px 0
 
     .contentListPhoto,.contentListFile
-        display flex
-        justify-content space-between
         border-bottom 1px solid #EEEEEE
         padding 15px
         p
