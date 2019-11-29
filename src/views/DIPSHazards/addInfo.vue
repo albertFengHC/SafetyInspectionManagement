@@ -66,11 +66,11 @@
                         <div class="problemsInfo" v-if="this.recordMessageItem">
                             <div class="problemsInfoList" v-for="item in this.recordMessageItem" :value="item.fId" :key="item.fId">
                                 <div class="problemsInfoListTitle">
-                                    <p>{{item.fNodeno}}</p>
+                                    <p>{{item.fItemno}}</p>
                                     <p>{{item.fTraplevel}}</p>
                                 </div>
                                 <div class="problemsInfoListContent">
-                                    <p>{{item.fNodename}}</p>
+                                    <p>{{item.fItemname}}</p>
                                 </div>
                             </div>
                         </div>
@@ -249,6 +249,7 @@
                 dangerProjectName:'',
                 selDangerProjectNameVal:'',
                 dangerProjectNameList:[],
+                //整改截止日期
                 dateVale:'',
                 //发现问题描述
                 descriptionProblemsFound:'',
@@ -299,6 +300,7 @@
         },
         methods: {
             Submission() {
+                const that = this;
                 let timeStr = Date.parse(new Date());
                 if(this.searchValSel===''&&this.inspectionRecordNo===''&&this.selDangerProjectNameVal===''&&this.$route.params.LPHazardsList===''&&this.descriptionProblemsFound===''&&this.rectificationRequirements===''&&this.objectInvestigation===''&&this.hiddenDangerCategory&&this.hiddenDangerType===''&&this.checkdateVale===''&&this.dateVale===''&&this.newPersonChargeRectificationNameList===''&&this.newPersonCirculantNameList===''){
                     alert('红色星号为必填项!!!');
@@ -336,13 +338,15 @@
                 };
                 HDAddedUrl(parameter)
                     .then(function (data) {
-                        this.$router.push({name: 'NoSign'});
+                        console.log(data);
+                        that.$router.push({name: 'NoSign'});
                     })
                     .catch(data => {
 
                     });
             },
             save() {
+                const that = this;
                 let timeStr = Date.parse(new Date());
                 if(this.searchValSel===''&&this.inspectionRecordNo===''&&this.selDangerProjectNameVal===''&&this.$route.params.LPHazardsList===''&&this.descriptionProblemsFound===''&&this.rectificationRequirements===''&&this.objectInvestigation===''&&this.hiddenDangerCategory&&this.hiddenDangerType===''&&this.checkdateVale===''&&this.dateVale===''&&this.newPersonChargeRectificationNameList===''&&this.newPersonCirculantNameList===''){
                     alert('红色星号为必填项!!!');
@@ -380,7 +384,8 @@
                 };
                 HDAddedUrl(parameter)
                     .then(function (data) {
-                        this.$router.push({name: 'NoSign'});
+                        console.log(data);
+                        that.$router.push({name: 'NoSign'});
                     })
                     .catch(data => {
 
@@ -649,6 +654,7 @@
                     };
                     HDVSiIUrl(parameter)
                         .then(function (data) {
+                            console.log(data);
                             let checkTrapDaily = data.checkTrapDaily;
                             that.fCompanyid = checkTrapDaily.fCompanyid;
                             that.fCompanyname = checkTrapDaily.fCompanyname;
@@ -685,13 +691,9 @@
             },
             checkdateValeChange(data){
                 this.checkdateVale = data;
-                console.log(this.checkdateVale);
-                console.log(data);
             },
             dateValeChange(data){
                 this.dateVale = data;
-                console.log(this.checkdateVale);
-                console.log(data);
             },
         },
         mounted() {

@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="signAdvice" v-if="allData.isUpdate === 1">
+                <div class="signAdvice" v-if="allData.isUpdate === '1'">
                     <p>签收意见</p>
                     <div>
                         <textarea name="" id="" cols="45" rows="10" v-model="signAdvice"/>
@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom" v-if="allData.isUpdate === 1">
+        <div class="bottom" v-if="allData.isUpdate === '1'">
             <div class="agreeBtn">
                 <button @click="sign">签收</button>
             </div>
@@ -147,7 +147,7 @@
                 HDVSiIUrl(parameter)
                     .then(function (data) {
                         that.listData = data.checkTrapDaily;
-                        that.allData = data.checkTrapDailyFileList;
+                        that.allData = data;
                         console.log(that.listData);
                     })
                     .catch(data => {

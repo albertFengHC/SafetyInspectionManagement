@@ -130,8 +130,17 @@
                     let arr = this.resultL.filter(value => value.fId === data)[0];
                     resultNew.push(arr);
                 });
-                console.log(resultNew);
-                this.resultNewList = resultNew;
+                let newRecordMessageItem = [];
+                resultNew.map(item =>{
+                    newRecordMessageItem.push({
+                        // ...item,
+                        fItemno: item.fNodeno,
+                        fItemname: item.fNodename,
+                        fTraplevel: item.fTraplevel,
+                        fItemid: item.fId
+                    });
+                });
+                this.resultNewList = newRecordMessageItem;
             }
         },
         mounted() {
