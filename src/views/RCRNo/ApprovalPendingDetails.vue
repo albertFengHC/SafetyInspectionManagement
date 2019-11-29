@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="contentBottom">
+            <div class="contentBottom"  v-if="allData.isUpdate === '1'">
                 <div class="dangerProjectName">
                     <div>
                         <h4>复核验证人</h4>
@@ -84,7 +84,9 @@
                     <p><span>*</span>复核结果</p>
                     <div>
                         <label>
-                            <input type="text" placeholder="请输入复核结果" v-model="fStatus"/>
+                            <Select v-model="fStatus" :label-in-value="true">
+                                <Option v-for="item in reviewCheck" :value="item.fItemValue" :key="item.fItemValue">{{ item.fItemName }}</Option>
+                            </Select>
                         </label>
                     </div>
                 </div>
@@ -103,7 +105,7 @@
                     </Upload>
                 </div>
             </div>
-            <div class="bottom">
+            <div class="bottom"  v-if="allData.isUpdate === '1'">
                 <div>
                     <p @click="Submission">提交</p>
                 </div>
@@ -154,11 +156,12 @@
                 };
                 RRMHDDSUrl(parameter)
                     .then(function (data) {
+                        console.log(data);
                         that.checkTrapDaily = data.checkTrapDaily;
                         that.checkTrapBack = data.checkTrapBack;
-
                         that.allData = data;
                         console.log(data);
+                        that.getCRCPersonData();
                     })
                     .catch(data => {
 
@@ -167,6 +170,7 @@
             //复核验证人
             getCRCPersonData(){
                 const that = this;
+                console.log(this.checkTrapDaily.fPassiveid);
                 let parameter = {
                     companyId: this.checkTrapDaily.fPassiveid
                 };
@@ -254,7 +258,8 @@
                     fMessage: this.fMessage,//复核意见
                     fStatus: this.fStatus,//复核结果
                     fReviewdates: this.fReviewdates,//复核时间
-                    fSourcefiles: Date.parse(new Date()),//文件id,前端生成
+                    fSourcefiles: Date.parse(new Date()),//文件id,前端生成,
+                    fTrapid: this.checkTrapBack.fId
                 };
                 HDRsubmissionUrl(parameter)
                     .then(function (data) {
@@ -270,7 +275,7 @@
             this.getList();
         },
         computed: {
-            ...mapState(['userInfo'])
+            ...mapState(['userInfo','reviewCheck'])
         },
     }
 </script>

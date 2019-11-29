@@ -36,7 +36,7 @@
                     userId: logInfo.userId,
                     realId: logInfo.realId,
                     text: param.text,
-                    modelType: '5'
+                    modelType: '9'
                 };
                 NCOScheduleUrl(parameter)
                     .then(function (data) {
