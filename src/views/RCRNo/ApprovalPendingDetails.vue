@@ -2,7 +2,7 @@
     <div id="ApprovalPendingDetails">
         <div class="top">
             <div class="title">
-                <h2>成宜公司【安巡查】009</h2>
+                <h2>{{checkTrapDaily.fTrapno}}</h2>
                 <p @click="toApprovalPending"><</p>
             </div>
         </div>
@@ -13,50 +13,42 @@
                         <img src="../../assets/RCRNo/人员头像864.png">
                     </div>
                     <div class="topUserBottom">
-                        <h4>苗争</h4>
-                        <p>待审批</p>
+                        <h4>{{checkTrapDaily.fCheckname}}</h4>
+                        <p>{{checkTrapDaily.fStatus}}</p>
                     </div>
                 </div>
                 <div class="topInfo">
-                    <p><span>审批编号</span>20190905163600018409</p>
-                    <p><span>所在单位</span>TJ2-中铁四局</p>
-                    <p><span>所在部门</span>驻地办</p>
+                    <p><span>检查人</span>{{checkTrapDaily.fCheckname}}</p>
+                    <p><span>所在单位</span>{{checkTrapDaily.fCompanyname}}</p>
                 </div>
-                <div class="projectName">
-                    <p><span>监察人</span>张瑜佳</p>
-                    <p><span>所在单位</span>成宜项目分公司</p>
-                    <p><span>所在部门</span>监理安质部</p>
+                <div class="contentTop">
+                    <p><span>被检查单位</span>{{checkTrapDaily.fPassivename}}</p>
+                    <p><span>检查记录编号</span>{{checkTrapDaily.fTrapno}}</p>
                 </div>
-                <div class="projectName">
-                    <p><span>被检查单位</span>TJ2-中铁四局</p>
-                    <p><span>检查记录编号</span>成宜公司【安巡查】009</p>
-                    <p><span>存在隐患工程名称</span>深基坑施工</p>
+                <div class="contentTop">
+                    <p><span>存在隐患工程名称</span>{{checkTrapDaily.fDangername}}</p>
+                    <p><span>检查时间</span>{{checkTrapDaily.fCheckdates}}</p>
                 </div>
-                <div class="moreProblemsInfoList">
-                    <p>查看更多<span>></span></p>
-                </div>
+<!--                <div class="moreProblemsInfoList">-->
+<!--                    <p>查看更多<span>></span></p>-->
+<!--                </div>-->
             </div>
             <div class="contentMId">
-                <p><span>整改记录编号</span>TJ4【安整改】001</p>
-                <p><span>整改完成时间</span>2019-09-05</p>
-                <p><span>整改详情描述</span>按规范整改要求完成</p>
+                <p><span>整改记录编号</span>{{checkTrapBack.fBackno}}</p>
+                <p><span>整改情况综述</span>{{checkTrapBack.fBackdesc}}</p>
+                <p><span>整改详细情况</span>{{checkTrapBack.fBackdetail}}</p>
+                <p><span>整改单位负责人</span>{{checkTrapBack.fAcceptname}}</p>
+                <p><span>整改完成时间</span>{{checkTrapBack.fFinishdates}}</p>
                 <div>
                     <span>整改前照片</span>
                     <div class="photoList">
                         <img src="../../assets/RCRNo/现场监控1.png">
-                        <img src="../../assets/RCRNo/现场监控2.png">
-                        <img src="../../assets/RCRNo/现场监控3.png">
-                        <img src="../../assets/RCRNo/现场监控1.png">
-                        <img src="../../assets/RCRNo/现场监控2.png">
-                        <img src="../../assets/RCRNo/现场监控3.png">
                     </div>
                 </div>
                 <div>
                     <span>整改后照片</span>
                     <div class="photoList">
                         <img src="../../assets/RCRNo/现场监控1.png">
-                        <img src="../../assets/RCRNo/现场监控2.png">
-                        <img src="../../assets/RCRNo/现场监控3.png">
                     </div>
                 </div>
                 <div class="file">
@@ -67,46 +59,54 @@
                         <button>预览</button>
                     </div>
                 </div>
-                <p><span>整改单位负责人</span>苗争</p>
             </div>
             <div class="contentBottom">
-                <div class="process">
-                    <div class="processInfo">
-                        <div>
-                            <img src="../../assets/RCRNo/已同意.png">
-                        </div>
-                        <h4>我</h4>
-                        <div>
-                            <p>发起申请</p>
-                        </div>
-                        <p>09.03</p>
+                <div class="dangerProjectName">
+                    <div>
+                        <h4>复核验证人</h4>
+                        <p @click="showPersonCirculantList" class="searchSel"><span>*</span>选择复核验证人<i>{{newPersonCirculantNameList}}</i></p>
+                        <Tree :data="personChargeRectificationCirculant" v-show="showPersonCirculant === 1"
+                              @on-select-change="searchPersonCirculantName"/>
+                        <label>
+                            <Select v-model="personCirculant" @on-change="selPersonCirculantName" multiple :label-in-value="true">
+                                <Option v-for="item in PersonCirculantList" :value="item.fId" :key="item.fId">{{ item.fStaffName }}</Option>
+                            </Select>
+                        </label>
                     </div>
-                    <div class="processInfo waitSignPeople">
-                        <div>
-                            <img src="../../assets/RCRNo/多个待审批人.png">
-                        </div>
-                        <h4>审批人</h4>
-                        <div>
-                            <p>2人依次审批</p>
-                        </div>
-                    </div>
-                    <div class="processInfoCirculant">
-                        <div class="processInfoCirculantTop">
-                            <div>
-                                <img src="../../assets/RCRNo/抄送人.png">
-                            </div>
-                            <h4>抄送人</h4>
-                            <div>
-                                <p>抄送3人</p>
-                            </div>
-                        </div>
+                    <!--                            <i><span>+</span></i>-->
+                </div>
+                <div class="selectBox">
+                    <p><span>*</span>复核时间</p>
+                    <Col>
+                        <DatePicker type="date" placeholder="复核时间" :value="fReviewdates" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
+                    </Col>
+                </div>
+                <div class="selectBox">
+                    <p><span>*</span>复核结果</p>
+                    <div>
+                        <label>
+                            <input type="text" placeholder="请输入复核结果" v-model="fStatus"/>
+                        </label>
                     </div>
                 </div>
-                <div class="signAdvice">
-                    <p>复核意见</p>
-                    <div>
-                        <textarea name="" id="" cols="45" rows="10"></textarea>
-                    </div>
+                <div class="contentList">
+                    <p><span>*</span>复核意见</p>
+                    <label>
+                        <textarea placeholder="请输入复核意见" v-model="fMessage"/>
+                    </label>
+                </div>
+                <div class="contentListFile">
+                    <p>照片资料</p>
+                    <Upload
+                            multiple
+                            action="//jsonplaceholder.typicode.com/posts/">
+                        <Button icon="ios-cloud-upload-outline">照片资料</Button>
+                    </Upload>
+                </div>
+            </div>
+            <div class="bottom">
+                <div>
+                    <p @click="Submission">提交</p>
                 </div>
             </div>
         </div>
@@ -114,13 +114,112 @@
 </template>
 
 <script>
+    import { RRMHDDSUrl,HDRsubmissionUrl} from "../../urlBase";
+    import {mapState} from "vuex";
+
     export default {
         name: "ApprovalPendingDetails",
+        data() {
+            return {
+                allData:'',
+                checkTrapDaily:'',
+                checkTrapBack:'',
+                //复核验证人
+                personCirculant:'',
+                showPersonCirculant: 1,
+                PersonCirculantList: [],
+                PersonCirculantName: '',
+                newPersonCirculantNameList: '',
+                newPersonCirculantNameListId: '',
+                personChargeRectificationCirculantOld:'',
+                personChargeRectificationCirculant:[],
+                //复核时间
+                fReviewdates:'',
+                //复核结果
+                fStatus:'',
+                //复核意见
+                fMessage:''
+            }
+        },
         methods:{
             toApprovalPending(){
                 this.$router.push({name: 'ApprovalPending'});
-            }
-        }
+            },
+            getList(){
+                const that = this;
+                const logInfo = this.userInfo;
+                const parameter = {
+                    fId: this.$route.params.fId,
+                    userId: logInfo.userId,
+                };
+                RRMHDDSUrl(parameter)
+                    .then(function (data) {
+                        that.checkTrapDaily = data.checkTrapDaily;
+                        that.checkTrapBack = data.checkTrapBack;
+
+                        that.allData = data;
+                        console.log(data);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+            //复核验证人
+            showPersonCirculantList(){
+                this.showPersonCirculant = 1;
+            },
+            searchPersonCirculantName(e) {
+                this.showPersonCirculant = 0;
+                this.PersonCirculantName = e[0].title;
+                let personName = e[0].title;
+                let result = this.newPersonChargeRectificationCirculant;
+                let newResult = result.find(data => data.fFullName === personName);
+                if(newResult.personList.length){
+                    this.PersonCirculantList = newResult.personList;
+                }
+            },
+            selPersonCirculantName(e){
+                let newPersonCirculantName = '';
+                let newPersonCirculantNameId = '';
+                e.map(data => {
+                    newPersonCirculantName += data.label+',';
+                    newPersonCirculantNameId += data.value+','
+                });
+                this.newPersonCirculantNameList = newPersonCirculantName.substr(0, newPersonCirculantName.length - 1);
+                this.newPersonCirculantNameListId = newPersonCirculantNameId.substr(0, newPersonCirculantNameId.length - 1);
+            },
+            //复核时间
+            checkdateValeChange(data){
+                this.fReviewdates = data;
+            },
+            //提交复核
+            Submission() {
+                const that = this;
+                let parameter = {
+                    userId: this.userInfo.userId,//当前用户id
+                    userName: this.userInfo.realName,//当前用户姓名
+                    fReviewname: this.newPersonCirculantNameList,//复核验证人
+                    fMessage: this.fMessage,//复核意见
+                    fStatus: this.fStatus,//复核结果
+                    fReviewdates: this.fReviewdates,//复核时间
+                    fSourcefiles: Date.parse(new Date()),//文件id,前端生成
+                };
+                HDRsubmissionUrl(parameter)
+                    .then(function (data) {
+                        console.log(data);
+                        that.$router.push({name: 'ApprovalPending'});
+                    })
+                    .catch(data => {
+
+                    });
+            },
+        },
+        mounted() {
+            this.getList();
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 
@@ -227,48 +326,66 @@
                         right 5px
                         top 5px
                         outline none
-        .contentBottom
-            .signAdvice
-                text-align center
-                div
-                    margin-top 10px
-            .process
-                /*padding 15px 0*/
-                .processInfo
-                    display flex
-                    justify-content space-between
-                    align-items center
-                    padding 10px 0
-                    border-bottom  1px solid #eee
-                    div
-                        flex 1
-                    h4
-                        padding 10px 0
-                        flex 1
-                    p
-                        color #999
-                        flex 1
-                    .remarks
-                        color #1752DB
-                        border 1px solid #1752DB
-                        border-radius 10px
-                        text-align center
-                .waitSignPeople
-                    div
-                        flex 1
-                    h4
-                        flex 2
-                        padding-left 1
 
+    //复核验证人
+    .dangerProjectName
+        border-bottom 1px solid #EEEEEE
+        padding 10px 0
+        .dangerProjectNameVal
+            display flex
+            justify-content space-between
+            p
+                flex 1
+                padding 3px 5px
+                span
+                    display inline-block
+                    color #ce0c0c
+                    font-weight bold
+            input
+                flex 2
+                padding 3px 5px
+                text-align right
 
-                .processInfoCirculantTop
-                    display flex
-                    justify-content space-between
-                    align-items center
-                    div
-                        flex 1
-                        p
-                            color #999
-                    h4
-                        flex 2
+    //复核时间
+    .selectBox
+        border-bottom 1px solid #EEEEEE
+        padding 10px 0
+        span
+            display inline-block
+            color #ce0c0c
+            font-weight bold
+        i
+            display inline-block
+            margin-left 15px
+            font-weight bold
+
+    //复核意见
+    .contentList
+        border-bottom 1px solid #EEEEEE
+        padding 10px 0
+        p
+            padding 3px 5px
+            span
+                display inline-block
+                color #ce0c0c
+                font-weight bold
+
+    //提交按钮
+    .bottom
+        text-align center
+        position fixed
+        bottom 0
+        width 100%
+        background-color #fff
+        border-top 2px solid #eee
+        div
+            padding 5% 10%
+            p
+                border-radius 10px
+                border 1px solid #1752DB
+                padding 2px 10px
+                background-color #1752db
+                color #fff
+                flex 1
+                margin 0 5%
 </style>

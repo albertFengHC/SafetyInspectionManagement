@@ -210,3 +210,20 @@ export function HDRSubmissionUrl(parameter){
             });
     })
 }
+
+//隐患复核提交
+export function HDRsubmissionUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            url: baseUrl+'CheckTrap/submitTrapDailyReview.do',
+            data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}

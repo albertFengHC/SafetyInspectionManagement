@@ -160,7 +160,7 @@
                     <Upload
                             multiple
                             action="//jsonplaceholder.typicode.com/posts/">
-                        <Button icon="ios-cloud-upload-outline">Upload files</Button>
+                        <Button icon="ios-cloud-upload-outline">资料附件</Button>
                     </Upload>
 <!--                    <i><span>+</span></i>-->
                 </div>

@@ -26,6 +26,7 @@
         },
         methods:{
             toCompletionExaminationApprovalDetails(data){
+                console.log(data);
                 this.$router.push({name: 'CompletionExaminationApprovalDetails',params:{fId:data.fId}});
             },
             getListData(param){
