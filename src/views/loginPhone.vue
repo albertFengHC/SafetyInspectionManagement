@@ -1,23 +1,27 @@
 <template>
     <div id="login">
         <div class="box">
-            <img src="../assets/login/组1814.png" class="logo">
+            <img src="../assets/login/组1814.png" class="logo" alt="">
             <h1>工程项目安全管理信息系统</h1>
             <div class="userName">
-                <i></i>
-                <input type="text" placeholder="请输入手机号">
+                <i/>
+                <label>
+                    <input type="text" placeholder="请输入手机号">
+                </label>
             </div>
             <div class="passWord">
-                <i></i>
-                <input type="text" placeholder="请输入动态码">
-                <span></span>
+                <i/>
+                <label>
+                    <input type="text" placeholder="请输入动态码">
+                </label>
+                <span/>
             </div>
             <p class="forgetPW">获取验证码</p>
-            <img src="../assets/login/组1813.png" class="loginBtn" @click="toIndex">
+            <img src="../assets/login/组1813.png" class="loginBtn" @click="toIndex" alt="">
             <div class="line">
-                <p class="lineP"></p>
+                <p class="lineP"/>
                 <p>or</p>
-                <p class="lineP"></p>
+                <p class="lineP"/>
             </div>
             <p class="jumpA"><router-link to="/">使用账号密码登录</router-link></p>
             <p class="boxBottom">由四川云检科技发展有限公司提供计算服务</p>

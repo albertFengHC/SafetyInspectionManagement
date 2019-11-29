@@ -2,7 +2,7 @@
     <div id="AlreadySignDetails">
         <div class="top">
             <div class="title">
-                <h2>成宜公司【安巡查】009</h2>
+                <h2>{{listData.fTrapno}}</h2>
                 <p @click="toAlreadySign"><</p>
             </div>
         </div>
@@ -13,69 +13,55 @@
                         <img src="../../assets/DHDIList/已同意.png">
                     </div>
                     <div class="topUserBottom">
-                        <h4>张瑜佳</h4>
-                        <p>已签收</p>
+                        <h4>{{listData.fCheckname}}</h4>
+                        <p>{{listData.fStatus}}</p>
                     </div>
                     <img src="../../assets/DHDIList/已签收.png" class="logoImg">
                 </div>
                 <div class="topInfo">
-                    <p><span>签收编号</span>20190905163600018409</p>
-                    <p><span>所在单位</span>成宜项目分公司</p>
-                    <p><span>所在部门</span>监理安治部</p>
+                    <p><span>检查编号</span>{{listData.fTrapno}}</p>
+                    <p><span>所在单位</span>{{listData.fCompanyname}}</p>
                 </div>
                 <div class="projectName">
-                    <p><span>被检查单位</span>TJ2-中铁四局</p>
-                    <p><span>存在隐患工程名称</span>成宜公司【安巡查】009</p>
-                    <p><span>检查时间</span>2019-09-02</p>
+                    <p><span>被检查单位</span>{{listData.fTrapno}}</p>
+                    <p><span>存在隐患工程名称</span>{{listData.fDangername}}</p>
+                    <p><span>检查时间</span>{{listData.fCheckdates}}</p>
                 </div>
                 <div class="projectName">
-                    <p><span>存在隐患工程名称</span>深基坑施工</p>
-                    <p><span>经度</span>105.5566666</p>
-                    <p><span>纬度</span>30.4988899</p>
+                    <p><span>经度</span>{{listData.fLatitude}}</p>
+                    <p><span>纬度</span>{{listData.fLongitude}}</p>
                 </div>
                 <div class="problems">
                     <h3>检查发现问题</h3>
                     <div class="problemsInfo">
-                        <div class="problemsInfoList">
-                            <div class="problemsInfoListTitle">
-                                <p>103020601</p>
-                                <p>Ⅲ级</p>
-                            </div>
-                            <div>
-                                <p>1.灌注前没有二次清孔。</p>
-                            </div>
-                        </div>
-                        <div class="problemsInfoList">
-                            <div class="problemsInfoListTitle">
-                                <p>103020601</p>
-                                <p>Ⅲ级</p>
-                            </div>
-                            <div>
-                                <p>1.灌注前没有二次清孔。</p>
+                        <div class="problemsInfo" v-if="listData.recordMessageItem">
+                            <div class="problemsInfoList" v-for="item in listData.recordMessageItem" :value="item.fId" :key="item.fId">
+                                <div class="problemsInfoListTitle">
+                                    <h4>{{item.fItemno}}</h4>
+                                    <h4>{{item.fTraplevel}}</h4>
+                                </div>
+                                <div class="problemsInfoListContent">
+                                    <p>{{item.fItemname}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="moreProblemsInfoList">
-                    <p>查看更多<span>></span></p>
-                </div>
+<!--                <div class="moreProblemsInfoList">-->
+<!--                    <p>查看更多<span>></span></p>-->
+<!--                </div>-->
             </div>
             <div class="contentMId">
-                <p><span>问题描述</span>深基坑施工安全</p>
-                <p><span>整改要求</span>按规范整改</p>
-                <p><span>排查对象</span>主体工程结构部位</p>
-                <p><span>隐患类别</span>重大隐患</p>
-                <p><span>隐患类型</span>安全隐患</p>
-                <p><span>整改截止日期</span>2019-09-03</p>
+                <p><span>发现问题描述</span>{{listData.fProblemdesc}}</p>
+                <p><span>整改要求</span>{{listData.fRequiredesc}}</p>
+                <p><span>排查对象</span>{{listData.fTestobject}}</p>
+                <p><span>隐患类别</span>{{listData.fTrapclass}}</p>
+                <p><span>隐患类型</span>{{listData.fTraptype}}</p>
+                <p><span>整改截止日期</span>{{listData.fLastdates}}</p>
                 <div>
                     <span>现场照片</span>
-                    <div class="photoList">
-                        <img src="../../assets/DHDIList/现场监控1.png">
-                        <img src="../../assets/DHDIList/现场监控2.png">
-                        <img src="../../assets/DHDIList/现场监控3.png">
-                        <img src="../../assets/DHDIList/现场监控1.png">
-                        <img src="../../assets/DHDIList/现场监控2.png">
-                        <img src="../../assets/DHDIList/现场监控3.png">
+                    <div class="photoList" v-if="allData.checkTrapDailyFileList">
+                        <img :src="data" v-for="(data,i) in allData.checkTrapDailyFileList" :key="i">
                     </div>
                 </div>
                 <div class="file">
@@ -93,42 +79,43 @@
                         <div>
                             <img src="../../assets/DHDIList/已同意.png">
                         </div>
-                        <h4>张瑜佳</h4>
+                        <h4>{{listData.fCheckname}}</h4>
                         <div>
                             <p>检查人</p>
                         </div>
-                        <p>09.03<span>16:36</span></p>
+<!--                        <p>{{listData.fCheckdates}}</p>-->
                     </div>
                     <div class="processInfo">
                         <div>
                             <img src="../../assets/DHDIList/已同意.png">
                         </div>
-                        <h4>苗争</h4>
+                        <h4>{{listData.fAcceptname}}</h4>
                         <div>
-                            <p class="signedWord">已签收</p>
+                            <p class="signedWord">{{listData.fStatus}}</p>
                         </div>
-                        <p>09.03<span>16:36</span></p>
+<!--                        <p>09.03<span>16:36</span></p>-->
                     </div>
                     <div class="processInfoCirculant">
                         <div class="processInfoCirculantTop">
                             <div>
                                 <img src="../../assets/DHDIList/传阅人.png">
                             </div>
-                            <h4>2人</h4>
+                            <h4>{{listData.fReadname}}</h4>
                             <div>
-                                <p>已传送(签收通过后，通知传阅人)</p>
+                                <p>已传送</p>
+<!--                                <p>已传送(签收通过后，通知传阅人)</p>-->
                             </div>
                         </div>
-                        <div class="processInfoCirculantBottom">
-                            <div>
-                                <img src="../../assets/DHDIList/人员头像864.png">
-                                <p>罗云</p>
-                            </div>
-                            <div class="rightPerson">
-                                <img src="../../assets/DHDIList/人员头像864.png">
-                                <p>卫凤</p>
-                            </div>
-                        </div>
+<!--                        <div class="processInfoCirculantBottom">-->
+<!--                            <div>-->
+<!--                                <img src="../../assets/DHDIList/人员头像864.png">-->
+<!--                                <p>罗云</p>-->
+<!--                            </div>-->
+<!--                            <div class="rightPerson">-->
+<!--                                <img src="../../assets/DHDIList/人员头像864.png">-->
+<!--                                <p>卫凤</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -137,13 +124,49 @@
 </template>
 
 <script>
+    import {HDVSiIUrl} from "../../urlBase";
+    import {mapState} from "vuex";
+
     export default {
         name: "AlreadySignDetails",
+        data(){
+            return{
+                allData:'',
+                listData:'',
+                logInfo: '',
+                //签收意见
+                signAdvice:''
+            }
+        },
         methods:{
             toAlreadySign(){
                 this.$router.push({name: 'AlreadySign'});
-            }
-        }
+            },
+            getListData(param){
+                const that = this;
+                const logInfo = this.userInfo;
+                let parameter = {
+                    userId: logInfo.userId,
+                    fId: this.$route.params.fId,
+                };
+                HDVSiIUrl(parameter)
+                    .then(function (data) {
+                        that.listData = data.checkTrapDaily;
+                        that.allData = data.checkTrapDailyFileList;
+                        console.log(that.listData);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+
+        },
+        mounted() {
+            this.getListData();
+        },
+        computed: {
+            ...mapState(['userInfo'])
+        },
     }
 </script>
 
@@ -264,8 +287,11 @@
                     align-items center
                     padding 10px 0
                     border-bottom  1px solid #eee
+                    div
+                        flex 1
                     h4
                         padding 10px 0
+                        flex 2
                     p
                         color #999
                     span
@@ -281,8 +307,13 @@
                     display flex
                     justify-content space-between
                     align-items center
+                    div
+                        flex 1
+                    h4
+                        flex 2
                     p
                         color #999
+                        flex 1
                 .processInfoCirculantBottom
                     color #999
                     padding-left 20%

@@ -1,23 +1,27 @@
 <template>
     <div id="login">
         <div class="box">
-            <img src="../assets/login/组1814.png" class="logo">
+            <img src="../assets/login/组1814.png" class="logo" alt="">
             <h1>工程项目安全管理信息系统</h1>
             <div class="userName">
-                <i></i>
-                <input type="text" placeholder="请输入账号" v-model="userName">
+                <i/>
+                <label>
+                    <input type="text" placeholder="请输入账号" v-model="userName">
+                </label>
             </div>
             <div class="passWord">
-                <i></i>
-                <input type="text" placeholder="请输入密码" v-model="passWord">
-                <span></span>
+                <i/>
+                <label>
+                    <input type="text" placeholder="请输入密码" v-model="passWord">
+                </label>
+                <span/>
             </div>
             <p class="forgetPW">忘记密码？</p>
-            <img src="../assets/login/组1813.png" class="loginBtn" @click="toIndex">
+            <img src="../assets/login/组1813.png" class="loginBtn" @click="toIndex" alt="">
             <div class="line">
-                <p class="lineP"></p>
+                <p class="lineP"/>
                 <p>or</p>
-                <p class="lineP"></p>
+                <p class="lineP"/>
             </div>
             <p class="jumpA">
                 <router-link to="loginPhone">使用手机动态码登录</router-link>

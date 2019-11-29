@@ -25,8 +25,8 @@
             }
         },
         methods:{
-            toAlreadySignDetails(){
-                this.$router.push({name: 'AlreadySignDetails'});
+            toAlreadySignDetails(data){
+                this.$router.push({name: 'AlreadySignDetails',params:{fId:data.fId}});
             },
             getListData(param){
                 const that = this;
