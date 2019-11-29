@@ -709,14 +709,14 @@
             this.getObjectInvestigation();
             this.getHiddenDangerCategory();
             this.getHiddenDangerType();
-            if(this.$route.params.LPHazardsList != undefined){
-                this.recordMessageItem = this.$route.params.LPHazardsList;
-            }
-        },
-        activated() {
             // if(this.$route.params.LPHazardsList != undefined){
             //     this.recordMessageItem = this.$route.params.LPHazardsList;
             // }
+        },
+        activated() {
+            if(this.$route.params.LPHazardsList != undefined){
+                this.recordMessageItem = this.$route.params.LPHazardsList;
+            }
         },
         computed: {
             ...mapState(['companyTree', 'userInfo','testObject','trapLevel','trapType'])

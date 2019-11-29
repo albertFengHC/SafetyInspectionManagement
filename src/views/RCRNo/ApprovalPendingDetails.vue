@@ -73,7 +73,6 @@
                             </Select>
                         </label>
                     </div>
-                    <!--                            <i><span>+</span></i>-->
                 </div>
                 <div class="selectBox">
                     <p><span>*</span>复核时间</p>
@@ -114,7 +113,7 @@
 </template>
 
 <script>
-    import { RRMHDDSUrl,HDRsubmissionUrl} from "../../urlBase";
+    import {RRMHDDSUrl, HDRsubmissionUrl, CRCPersonUrl} from "../../urlBase";
     import {mapState} from "vuex";
 
     export default {
@@ -133,6 +132,7 @@
                 newPersonCirculantNameListId: '',
                 personChargeRectificationCirculantOld:'',
                 personChargeRectificationCirculant:[],
+                newPersonChargeRectificationCirculant: [],
                 //复核时间
                 fReviewdates:'',
                 //复核结果
@@ -165,6 +165,58 @@
                     });
             },
             //复核验证人
+            getCRCPersonData(){
+                const that = this;
+                let parameter = {
+                    companyId: this.checkTrapDaily.fPassiveid
+                };
+                CRCPersonUrl(parameter)
+                    .then(function (data) {
+                        that.personChargeRectificationCirculantOld = data;
+                        that.getNewPersonList(data);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+            getNewPersonList(data){
+                let newPersonTree = data;
+                let newPerson = [];
+                let child = [];
+                let resetTree = (value) => {
+                    if (value.childList.length) {
+                        value.childList.map(item =>{
+                            child.push({
+                                title: item.fFullName,
+                                id: item.fDepartmentId,
+                            });
+                            if(item.personList.length){
+                                this.newPersonChargeRectificationCirculant.push(item);
+                            }
+                        });
+                        if(value.personList.length){
+                            this.newPersonChargeRectificationCirculant.push(value);
+                        }
+                        return {
+                            // ...item,
+                            title: value.fFullName,
+                            id: value.fDepartmentId,
+                            children: child
+                        }
+                    } else {
+                        if(value.personList.length){
+                            this.newPersonChargeRectificationCirculant.push(value);
+                        }
+                        return {
+                            // ...item,
+                            title: value.fFullName,
+                            id: value.fDepartmentId,
+                        }
+                    }
+                };
+                newPerson.push(resetTree(newPersonTree));
+                this.personChargeRectificationCirculant = newPerson;
+            },
             showPersonCirculantList(){
                 this.showPersonCirculant = 1;
             },
