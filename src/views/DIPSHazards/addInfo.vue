@@ -23,7 +23,7 @@
                 <div class="selectBox">
                     <p><span>*</span>检查时间</p>
                     <Col>
-                        <DatePicker type="date" placeholder="检查时间" v-model="checkdateVale" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
+                        <DatePicker type="date" placeholder="检查时间" :value="checkdateVale" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
                     </Col>
                 </div>
                 <div class="dangerProjectName">
@@ -115,7 +115,7 @@
                 <div class="selectBox">
                     <p><span>*</span>整改截至日期</p>
                     <Col>
-                        <DatePicker type="date" placeholder="整改截止时间" v-model="dateVale" @on-change='dateValeChange' format="yyyy-MM-dd HH:mm"/>
+                        <DatePicker type="date" placeholder="整改截止时间" :value="dateVale" @on-change='dateValeChange' format="yyyy-MM-dd HH:mm"/>
                     </Col>
                 </div>
                 <div class="contentListPhoto">

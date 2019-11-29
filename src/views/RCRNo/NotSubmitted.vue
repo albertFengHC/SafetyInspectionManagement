@@ -4,9 +4,8 @@
             <div class="infoLeft">
                 <h3>{{data.fTrapno}}</h3>
                 <p>单位名称：{{data.fPassivename}}</p>
-                <p>整改人：苗争</p>
-                <p>检查时间：2019-09-11</p>
-                <p>整改记录编号：121212121212112</p>
+                <p>检查人：{{data.fCheckname}}</p>
+                <p>存在隐患工程名称：{{data.fDangername}}</p>
             </div>
             <div class="infoRight">未提交<span>></span></div>
         </div>
@@ -22,7 +21,7 @@
         data(){
             return{
                 listData:'',
-                logInfo: ''
+                logInfo: '',
             }
         },
         methods: {
@@ -42,7 +41,7 @@
                 NCOScheduleUrl(parameter)
                     .then(function (data) {
                         that.listData = data.trapDailyList;
-                        console.log(that.listData);
+                        console.log(data);
                     })
                     .catch(data => {
 

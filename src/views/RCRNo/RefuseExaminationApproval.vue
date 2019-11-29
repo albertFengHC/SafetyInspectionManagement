@@ -1,11 +1,11 @@
 <template>
     <div id="RefuseExaminationApproval">
-        <div class="info" @click="toRefuseExaminationApprovalDetails">
+        <div class="info" @click="toRefuseExaminationApprovalDetails(data)" v-for="data in listData" :value="data.fTrapno" :key="data.fId">
             <div class="infoLeft">
-                <h3>安巡查0001</h3>
-                <p>单位名称：成宜项目分公司</p>
-                <p>整改人：苗争</p>
-                <p>检查时间：2019-09-11</p>
+                <h3>{{data.fTrapno}}</h3>
+                <p>单位名称：{{data.fPassivename}}</p>
+                <p>检查人：{{data.fCheckname}}</p>
+                <p>存在隐患工程名称：{{data.fDangername}}</p>
             </div>
             <div class="infoRight">复核不通过<span>></span></div>
         </div>
@@ -25,8 +25,8 @@
             }
         },
         methods:{
-            toRefuseExaminationApprovalDetails(){
-                this.$router.push({name: 'RefuseExaminationApprovalDetails'});
+            toRefuseExaminationApprovalDetails(data){
+                this.$router.push({name: 'RefuseExaminationApprovalDetails',params:{fId:data.fId}});
             },
             getListData(param){
                 const that = this;

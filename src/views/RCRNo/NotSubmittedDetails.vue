@@ -13,7 +13,7 @@
                     <p><span>所在单位</span>{{listData.fCompanyname}}</p>
                 </div>
                 <div class="contentTop">
-                    <p><span>被检查单位</span>{{listData.fTrapno}}</p>
+                    <p><span>被检查单位</span>{{listData.fPassivename}}</p>
                     <p><span>检查记录编号</span>{{listData.fTrapno}}</p>
                 </div>
                 <div class="contentTop">
@@ -35,7 +35,7 @@
                 <div class="contentList">
                     <p><span>*</span>整改完成时间</p>
                     <Col>
-                        <DatePicker type="date" placeholder="整改完成时间" v-model="fFinishdates" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
+                        <DatePicker type="date" placeholder="整改完成时间" :value="fFinishdates" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
                     </Col>
                 </div>
                 <div class="contentList">
@@ -142,10 +142,10 @@
             Submission(){
                 const that = this;
                 let parameter = {
-                    fId: this.userInfo.userId,//隐患整改id
-                    userId: this.userInfo.realName,//当前用户id
+                    fId: this.listData.fId,//隐患整改id
+                    userId: this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
-                    fAcceptname: this.userInfo.companyName,//整改单位负责人
+                    fAcceptname: this.listData.fAcceptname,//整改单位负责人
                     fBackno: this.fBackno,//整改记录编号
                     fFinishdates: this.fFinishdates,//整改完成时间
                     fBackdetail: this.fBackdetail,//整改详细情况
@@ -163,10 +163,10 @@
             save(){
                 const that = this;
                 let parameter = {
-                    fId: this.userInfo.userId,//隐患整改id
-                    userId: this.userInfo.realName,//当前用户id
+                    fId: this.listData.fId,//隐患整改id
+                    userId: this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
-                    fAcceptname: this.userInfo.companyName,//整改单位负责人
+                    fAcceptname: this.listData.fAcceptname,//整改单位负责人
                     fBackno: this.fBackno,//整改记录编号
                     fFinishdates: this.fFinishdates,//整改完成时间
                     fBackdetail: this.fBackdetail,//整改详细情况
@@ -188,7 +188,7 @@
                 this.$router.push({name: 'LPHazards'});
             },
             toAlreadySignDetailsView(){
-                this.$router.push({name: 'AlreadySignDetailsView'});
+                // this.$router.push({name: 'AlreadySignDetailsView'});
             },
             getList(){
                 const that = this;
@@ -199,9 +199,14 @@
                 };
                 RRMHDDSUrl(parameter)
                     .then(function (data) {
-                        that.listData = data.checkTrapDaily;
+                        that.listData = data.checkTrapBack;
                         that.allData = data;
                         console.log(data);
+                        that.fAcceptname = data.checkTrapBack.fAcceptname;
+                        that.fBackno = data.checkTrapBack.fBackno;
+                        that.fFinishdates = data.checkTrapBack.fFinishdates;
+                        that.fBackdetail = data.checkTrapBack.fBackdetail;
+                        that.fBackdesc = data.checkTrapBack.fBackdesc;
                     })
                     .catch(data => {
 
