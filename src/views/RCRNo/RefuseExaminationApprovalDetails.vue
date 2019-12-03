@@ -209,7 +209,6 @@
             color #999
             top 27%
             left 10%
-            font-size 1.5rem
             font-weight bold
 
     .content

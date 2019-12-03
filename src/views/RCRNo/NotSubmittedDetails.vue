@@ -250,7 +250,6 @@
             color #999999
             top 25%
             left 10%
-            font-size 1.5rem
             font-weight bold
 
     .content

@@ -254,7 +254,6 @@
             color #999999
             top 32%
             left 10%
-            font-size 1rem
 
     .search
         border-bottom 2px solid #EEEEEE

@@ -149,12 +149,10 @@
             color #999999
             top 32%
             left 10%
-            font-size 1rem
         i
             position absolute
             top 32%
             right 10%
-            font-size 1rem
             font-style normal
             color #1752db
             font-weight bold

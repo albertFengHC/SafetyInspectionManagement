@@ -183,7 +183,6 @@
             color #999999
             top 37%
             left 10%
-            font-size 1rem
             font-weight bold
         i
             background url('../../assets/DHDIList/组1016.png') no-repeat
@@ -192,7 +191,6 @@
             position absolute
             top 32%
             right 5%
-            font-size 1rem
             font-style normal
             color #1752db
             font-weight bold
@@ -211,7 +209,6 @@
         h3
             text-align left
             padding 10px 15px
-            font-size 1rem
         div
             padding 10px 0
         .nameSel,.companySel
@@ -295,6 +292,5 @@
             padding: 20px;
             p
                 padding 10px 0
-                font-size 1rem
 
 </style>

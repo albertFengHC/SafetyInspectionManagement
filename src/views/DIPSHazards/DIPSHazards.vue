@@ -13,7 +13,7 @@
                 </div>
                 <div class="company">
                     <p @click="showCompany" class="searchSel">选择公司<span>{{searchValSel}}</span></p>
-                    <Tree :data="companyTreeList" v-show="showCompanyVal === 1" @on-select-change="searchValSelF"></Tree>
+                    <Tree :data="companyTreeList" v-show="showCompanyVal === 1" @on-check-change="searchValSelF"></Tree>
                 </div>
             </div>
         </div>
@@ -83,6 +83,7 @@
                 this.$refs.details.getListData(param);
             },
             searchValSelF(e){
+                console.log(e);
                 this.searchValSel= e[0].title;
                 this.showCompanyVal = 0;
                 this.companyId = e[0].id;
@@ -153,12 +154,10 @@
             color #999999
             top 32%
             left 10%
-            font-size 1rem
         i
             position absolute
             top 32%
             right 10%
-            font-size 1rem
             font-style normal
             color #1752db
             font-weight bold

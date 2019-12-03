@@ -50,6 +50,12 @@
         },
         mounted() {
             this.logInfo = this.userInfo;
+            const logInfo = this.userInfo;
+            let parameter = {
+                companyId: logInfo.companyId,
+                text: '',
+            };
+            this.getListData(parameter);
         },
         computed: {
             ...mapState(['userInfo'])
@@ -75,6 +81,5 @@
                 display inline-block
                 color #9E9E9E
                 margin-left 15px
-                font-size 1rem
                 font-weight bold
 </style>

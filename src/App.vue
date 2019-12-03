@@ -1,8 +1,6 @@
 <template>
     <div id="app">
-        <keep-alive>
-            <router-view/>
-        </keep-alive>
+        <router-view/>
     </div>
 </template>
 
@@ -14,7 +12,6 @@
         width 100%
         height 100%
         margin 0
-        font-size 0.9rem
         /*overflow scroll*/
         /*-webkit-overflow-scrolling: touch;*/
         -webkit-overflow-scrolling auto

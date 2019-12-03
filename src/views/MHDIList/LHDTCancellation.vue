@@ -94,7 +94,6 @@
         justify-content space-between
         align-items center
         p
-            font-size 1.5rem
             font-weight bold
         .num
             border 1px solid #fff
@@ -127,7 +126,6 @@
                     display inline-block
                     color #9E9E9E
                     margin-left 15px
-                    font-size 1rem
                     font-weight bold
 
     .bottom

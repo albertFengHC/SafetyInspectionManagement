@@ -9,8 +9,8 @@
         <div class="boxContent">
             <div class="content">
                 <div class="companyTree">
-                    <p><span>*</span>被检查单位</p>
-                    <p @click="showCompany" class="searchSel">选择公司<span>{{searchValSel}}</span></p>
+                    <p class="searchSel"><span>*</span>被检查单位<i>{{searchValSel}}</i></p>
+                    <p @click="showCompany">选择公司</p>
                     <Tree :data="companyTreeList" v-show="showCompanyVal === 1"
                           @on-select-change="searchValSelF"/>
                 </div>
@@ -20,7 +20,7 @@
                         <input type="text" placeholder="请输入" v-model="inspectionRecordNo">
                     </label>
                 </div>
-                <div class="selectBox">
+                <div class="contentList">
                     <p><span>*</span>检查时间</p>
                     <Col>
                         <DatePicker type="date" placeholder="检查时间" :value="checkdateVale" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
@@ -165,7 +165,6 @@
 <!--                    <i><span>+</span></i>-->
                 </div>
                 <div class="ReceiptProcess">
-                    <h3>签收流程</h3>
                     <div>
                         <div class="dangerProjectName">
                             <div>
@@ -744,13 +743,14 @@
         position relative
         text-align center
         border-bottom 2px solid #EEEEEE
+        display flex
+        justify-content center
+        align-items center
 
         p
             position absolute
             color #999999
-            top 25%
             left 10%
-            font-size 1.5rem
             font-weight bold
 
     .content
@@ -764,9 +764,10 @@
             color #ce0c0c
             font-weight bold
         .searchSel
-            span
-                margin-left  15px
+            i
                 color #757575
+                position absolute
+                right 15px
 
     .selectBox
         border-bottom 1px solid #EEEEEE
