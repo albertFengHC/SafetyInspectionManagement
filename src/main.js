@@ -10,6 +10,8 @@ import 'vant/lib/index.css';
 
 Vue.config.productionTip = false;
 
+
+
 Vue.use(ViewUI);
 Vue.use(Vant);
 

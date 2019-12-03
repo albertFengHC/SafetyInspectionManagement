@@ -28,7 +28,6 @@
             </p>
             <p class="boxBottom">由四川云检科技发展有限公司提供计算服务</p>
         </div>
-        <Alert type="error" v-show="this.loginState === '-1'" class="logInfo">账号或密码错误</Alert>
     </div>
 </template>
 
@@ -64,7 +63,11 @@
         },
         watch:{
             loginState:function (o) {
+                const that = this;
                 console.log(o);
+                if(o === '-1'){
+                    that.$toast.fail('用户名或密码错误');
+                }
             }
         }
     }

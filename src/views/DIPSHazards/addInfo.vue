@@ -1,25 +1,52 @@
 <template>
     <div id="addInfo">
-        <div class="topContent">
-            <div class="top">
-                <h2>新增安全隐患日常巡查</h2>
-                <p @click="toIndex"><span><</span></p>
+        <van-nav-bar
+                title="新增安全隐患日常巡查"
+                left-text=""
+                left-arrow
+                @click-left="toIndex"
+        />
+        <van-card>
+            <div slot="tags">
+                <van-cell-group>
+                    <van-field
+                            v-model="searchValSel"
+                            required
+                            clearable
+                            label="被检查单位"
+                            placeholder="被检查单位"
+                            input-align="right"
+                    />
+                    <Tree :data="companyTreeList" @on-select-change="searchValSelF"/>
+                    <van-field
+                            v-model="inspectionRecordNo"
+                            required
+                            clearable
+                            label="检查记录编号"
+                            placeholder="检查记录编号"
+                            input-align="right"
+                    />
+                    <van-cell is-link @click="showPopup">检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span></van-cell>
+                    <van-popup
+                        v-model="checkDatePop.show"
+                        :style="{ width: '80%' }"
+                    >
+                        <van-datetime-picker
+                                v-model="checkDate.currentDate"
+                                type="datetime"
+                                :min-date="checkDate.minDate"
+                                :formatter="dateFormatter"
+                                @confirm="hidePopup"
+                                @cancel="hidePopup"
+                                @change="dateChange"
+                        />
+                    </van-popup>
+
+                </van-cell-group>
             </div>
-        </div>
+        </van-card>
         <div class="boxContent">
             <div class="content">
-                <div class="companyTree">
-                    <p class="searchSel"><span>*</span>被检查单位<i>{{searchValSel}}</i></p>
-                    <p @click="showCompany">选择公司</p>
-                    <Tree :data="companyTreeList" v-show="showCompanyVal === 1"
-                          @on-select-change="searchValSelF"/>
-                </div>
-                <div class="contentList">
-                    <p><span>*</span>检查记录编号</p>
-                    <label>
-                        <input type="text" placeholder="请输入" v-model="inspectionRecordNo">
-                    </label>
-                </div>
                 <div class="contentList">
                     <p><span>*</span>检查时间</p>
                     <Col>
@@ -215,6 +242,17 @@
         name: "addInfo",
         data() {
             return {
+                //检查时间
+                checkDate:{
+                    minDate: new Date(),
+                    // maxDate: new Date(2019, 10, 1),
+                    currentDate: new Date(),
+                    timeValue:''
+                },
+                //检查时间弹出层
+                checkDatePop:{
+                    show: false,
+                },
                 //检查发现问题
                 recordMessageItem: '',
                 fCompanyid:'',
@@ -238,7 +276,6 @@
                 city: '',
                 district: '',
                 companyTreeList: [],
-                showCompanyVal: 0,
                 searchValSel: '',
                 inspectedCompanyId: '',
                 DangerTreeData: {
@@ -400,7 +437,6 @@
             },
             searchValSelF(e) {
                 this.searchValSel = e[0].title;
-                this.showCompanyVal = 0;
                 this.inspectedCompanyId = e[0].id;
                 this.getCRCPersonData();
             },
@@ -428,9 +464,6 @@
                 };
                 newCompanyTreeList = resetTree(newCompanyTree);
                 this.companyTreeList = newCompanyTreeList;
-            },
-            showCompany() {
-                this.showCompanyVal = 1;
             },
             getDangerTreeData(param) {
                 const that = this;
@@ -699,6 +732,74 @@
             dateValeChange(data){
                 this.dateVale = data;
             },
+            //检查时间弹出层
+            showPopup() {
+                this.checkDatePop.show = true;
+                console.log(Date.parse(this.checkDate.currentDate));
+            },
+            hidePopup(val) {
+                this.checkDatePop.show = false;
+                let date = this.checkDate.currentDate;
+                let seperator1 = "-";
+                let seperator2 = ":";
+                let month = date.getMonth() + 1;
+                let strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                this.checkDate.timeValue =
+                    date.getFullYear() +
+                    seperator1 +
+                    month +
+                    seperator1 +
+                    strDate +
+                    " " +
+                    "00" +
+                    seperator2 +
+                    "00";
+            },
+            dateChange(e){
+                console.log(e.getValues());
+                let date = this.checkDate.currentDate;
+                let seperator1 = "-";
+                let seperator2 = ":";
+                let month = date.getMonth() + 1;
+                let strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                this.checkDate.timeValue =
+                    date.getFullYear() +
+                    seperator1 +
+                    month +
+                    seperator1 +
+                    strDate +
+                    " " +
+                    "00" +
+                    seperator2 +
+                    "00";
+                console.log(this.checkDate.timeValue);
+            },
+            //检查时间格式
+            dateFormatter(type, value){
+                if (type === 'year') {
+                    return `${value}年`;
+                } else if (type === 'month') {
+                    return `${value}月`
+                } else if (type === 'day') {
+                    return `${value}日`
+                } else if (type === 'hour') {
+                    return `${value}时`
+                } else {
+                    return `${value}分`
+                }
+            },
         },
         mounted() {
             this.getHDVSiIData();
@@ -730,305 +831,7 @@
         margin 0
         color #333
 
-    input, select
-        background none
-        outline none
-        border none
-
-    i
-        font-style normal
-
-    .top
-        padding 15px
-        position relative
-        text-align center
-        border-bottom 2px solid #EEEEEE
-        display flex
-        justify-content center
-        align-items center
-
-        p
-            position absolute
-            color #999999
-            left 10%
-            font-weight bold
-
-    .content
-        margin-bottom 20%
-        padding 10px 5%
-        padding-bottom 10%
-
-    .companyTree
-        span
-            display inline-block
-            color #ce0c0c
-            font-weight bold
-        .searchSel
-            i
-                color #757575
-                position absolute
-                right 15px
-
-    .selectBox
-        border-bottom 1px solid #EEEEEE
-        padding 10px 0
-        span
-            display inline-block
-            color #ce0c0c
-            font-weight bold
-        i
-            display inline-block
-            margin-left 15px
-            font-weight bold
-
-    .dangerProjectName
-        border-bottom 1px solid #EEEEEE
-        padding 10px 0
-        .dangerProjectNameVal
-            display flex
-            justify-content space-between
-            p
-                flex 1
-                padding 3px 5px
-                span
-                    display inline-block
-                    color #ce0c0c
-                    font-weight bold
-            input
-                flex 2
-                padding 3px 5px
-                text-align right
-        .searchSel
-            i
-                display inline-block
-                margin-left 15px
-                font-weight bold
-            span
-                display inline-block
-                color #ce0c0c
-                font-weight bold
-
-    .contentList
-        display flex
-        justify-content space-between
-        border-bottom 1px solid #EEEEEE
-        padding 10px 0
-        p
-            flex 1
-            padding 3px 5px
-            span
-                display inline-block
-                color #ce0c0c
-                font-weight bold
-
-        input
-            flex 2
-            padding 3px 5px
-            text-align right
-
-        select
-            /*flex 2*/
-            padding 3px 5px
-            text-align right
-            appearance none
-            color #757575
-
-        .lat,.lng
-            text-align right
-
-    .contentListProblem
-        .problems
-            .problemsTitle
-                display flex
-                justify-content space-between
-                border-bottom 1px solid #EEEEEE
-                padding 15px
-                .problemsTitleS
-                    color #ce0c0c
-                    font-weight bold
-                p
-                    font-weight bold
-
-                i
-                    color #1752db
-                    border 1px dashed #1752db
-                    border-radius 50%
-                    height 15px
-                    width 15px
-                    font-weight bold
-                    display inline-block
-
-                    span
-                        display flex
-                        justify-content center
-                        align-items center
-                        height 15px
-                        width 15px
-
-    .problemsInfo
-        padding 10px
-
-        .problemsInfoList
-            padding 15px 10px
-            background-color #F2F2F2
-            border-radius 15px
-            margin 15px 0
-
-            .problemsInfoListTitle
-                display flex
-                justify-content space-between
-                text-align center
-                padding-bottom 10px
-                font-weight bold
-
-                p
-                    margin 0
-
-                i
-                    color #fff
-                    border 1px dashed #626262
-                    background-color #626262
-                    border-radius 50%
-                    height 15px
-                    width 15px
-                    font-weight bold
-                    display inline-block
-
-                    span
-                        display flex
-                        justify-content center
-                        align-items center
-                        height 15px
-                        width 15px
-
-            .problemsInfoListContent
-                p
-                    padding 5px 0
-
-    .contentListPhoto, .contentListFile
-        display flex
-        justify-content space-between
-        border-bottom 1px solid #EEEEEE
-        padding 15px
-
-        p
-            font-weight bold
-
-        i
-            color #CCCCCC
-            border 1px dashed #CCCCCC
-            height 15px
-            width 15px
-            font-weight bold
-            display inline-block
-
-            span
-                display flex
-                justify-content center
-                align-items center
-                height 15px
-                width 15px
-
-    .ReceiptProcess
-        padding 15px
-
-        h3
-            padding 10px 0
-            padding-bottom 20px
-
-        .ReceiptProcessContent
-            display flex
-            justify-content space-between
-            padding-left 15px
-            padding-bottom 30px
-
-            i
-                color #1752db
-                border 1px dashed #1752db
-                border-radius 50%
-                height 30px
-                width 30px
-                font-weight bold
-                display inline-block
-
-                span
-                    display flex
-                    justify-content center
-                    align-items center
-                    height 30px
-                    width 30px
-
-            div
-                p
-                    color #CCCCCC
-
-
-    .bottom
-        text-align center
-        position fixed
-        bottom 0
-        width 100%
-        background-color #fff
-        border-top 2px solid #eee
-
-        div
-            padding 5% 10%
-            display flex
-            justify-content space-between
-
-            p
-                border-radius 10px
-                border 1px solid #1752DB
-                padding 2px 10px
-                background-color #1752db
-                color #fff
-                flex 1
-                margin 0 5%
-
-    .mapBox
-        width 100%
-        height 300px
-        padding 10px
-        .map
-            width 100%
-            height 100%
-
-
-    //照片及资料上传
-    .demo-upload-list{
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        text-align: center;
-        line-height: 60px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        overflow: hidden;
-        background: #fff;
-        position: relative;
-        box-shadow: 0 1px 1px rgba(0,0,0,.2);
-        margin-right: 4px;
-    }
-    .demo-upload-list img{
-        width: 100%;
-        height: 100%;
-    }
-    .demo-upload-list-cover{
-        display: none;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0,0,0,.6);
-    }
-    .demo-upload-list:hover .demo-upload-list-cover{
-        display: block;
-    }
-    .demo-upload-list-cover i{
-        color: #fff;
-        font-size: 20px;
-        cursor: pointer;
-        margin: 0 2px;
-    }
+    .van-nav-bar__title
+        font-weight bold
+        font-size 2rem
 </style>
