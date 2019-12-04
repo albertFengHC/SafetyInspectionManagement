@@ -36,32 +36,32 @@
                                 type="datetime"
                                 :min-date="checkDate.minDate"
                                 :formatter="dateFormatter"
-                                @confirm="hidePopup"
+                                @confirm="confirmDate"
                                 @cancel="hidePopup"
-                                @change="dateChange"
+                                @change="getChangeValue"
                         />
                     </van-popup>
-
+                </van-cell-group>
+            </div>
+        </van-card>
+        <van-card>
+            <div slot="tags">
+                <van-cell-group>
+                    <van-field
+                            v-model="dangerProjectName"
+                            required
+                            clearable
+                            label="存在隐患工程名称"
+                            placeholder="存在隐患工程名称"
+                            input-align="right"
+                            label-width="120px"
+                    />
                 </van-cell-group>
             </div>
         </van-card>
         <div class="boxContent">
             <div class="content">
-                <div class="contentList">
-                    <p><span>*</span>检查时间</p>
-                    <Col>
-                        <DatePicker type="date" placeholder="检查时间" :value="checkdateVale" @on-change='checkdateValeChange' format="yyyy-MM-dd HH:mm"/>
-                    </Col>
-                </div>
                 <div class="dangerProjectName">
-                    <div class="dangerProjectNameVal">
-                        <p><span>*</span>存在隐患工程名称</p>
-                        <div>
-                            <label>
-                                <input type="text" placeholder="请输入或请选择" v-model="dangerProjectName"/>
-                            </label>
-                        </div>
-                    </div>
                     <div>
                         <p @click="showDangerProjectNameList" class="searchSel">选择隐患名称</p>
                         <Tree :data="companyTreeList" v-show="showDangerProjectName === 1"
@@ -519,6 +519,8 @@
                 }
             },
             searchDangerProjectName(e) {
+                console.log(this.companyTreeList);
+                console.log(this.DangerTreeData.companyDangerTree);
                 this.showDangerProjectName = 0;
                 let company = e[0].title;
                 let result = this.DangerTreeData.companyDangerTree.filter(data => data.fCompanyname === company);
@@ -726,53 +728,35 @@
                         });
                 }
             },
-            checkdateValeChange(data){
-                this.checkdateVale = data;
-            },
             dateValeChange(data){
                 this.dateVale = data;
             },
             //检查时间弹出层
             showPopup() {
                 this.checkDatePop.show = true;
-                console.log(Date.parse(this.checkDate.currentDate));
             },
             hidePopup(val) {
                 this.checkDatePop.show = false;
-                let date = this.checkDate.currentDate;
-                let seperator1 = "-";
-                let seperator2 = ":";
-                let month = date.getMonth() + 1;
-                let strDate = date.getDate();
-                if (month >= 1 && month <= 9) {
-                    month = "0" + month;
-                }
-                if (strDate >= 0 && strDate <= 9) {
-                    strDate = "0" + strDate;
-                }
-                this.checkDate.timeValue =
-                    date.getFullYear() +
-                    seperator1 +
-                    month +
-                    seperator1 +
-                    strDate +
-                    " " +
-                    "00" +
-                    seperator2 +
-                    "00";
             },
-            dateChange(e){
-                console.log(e.getValues());
+            getNewDate(){
                 let date = this.checkDate.currentDate;
                 let seperator1 = "-";
                 let seperator2 = ":";
                 let month = date.getMonth() + 1;
+                let hours = date.getHours();
+                let minutes = date.getMinutes();
                 let strDate = date.getDate();
                 if (month >= 1 && month <= 9) {
                     month = "0" + month;
                 }
                 if (strDate >= 0 && strDate <= 9) {
                     strDate = "0" + strDate;
+                }
+                if (hours >= 0 && hours <= 9) {
+                    hours = "0" + hours;
+                }
+                if (minutes >= 0 && minutes <= 9) {
+                    minutes = "0" + minutes;
                 }
                 this.checkDate.timeValue =
                     date.getFullYear() +
@@ -781,10 +765,23 @@
                     seperator1 +
                     strDate +
                     " " +
-                    "00" +
+                    hours +
                     seperator2 +
-                    "00";
+                    minutes;
                 console.log(this.checkDate.timeValue);
+            },
+            confirmDate(){
+                this.getNewDate();
+                this.checkDatePop.show = false;
+            },
+            getChangeValue(e){
+                let endTimeArr = e.getValues();//["2019", "03", "22", "17", "28"]
+                let newDate = [];
+                endTimeArr.map(data => {
+                    let newData = data.substr(0, data.length - 1);
+                    newDate.push(newData);
+                });
+                let end_time = `${newDate[0]}-${newDate[1]}-${newDate[2]}  ${newDate[3]}:${newDate[4]}`;
             },
             //检查时间格式
             dateFormatter(type, value){
