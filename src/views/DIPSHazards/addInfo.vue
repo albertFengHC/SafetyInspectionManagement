@@ -10,14 +10,14 @@
             <div slot="tags">
                 <van-cell-group>
                     <van-field
-                            v-model="searchValSel"
+                            v-model="inspectedCompany.searchValSel"
                             required
                             clearable
                             label="被检查单位"
                             placeholder="被检查单位"
                             input-align="right"
                     />
-                    <Tree :data="companyTreeList" @on-select-change="searchValSelF"/>
+                    <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>
                     <van-field
                             v-model="inspectionRecordNo"
                             required
@@ -60,33 +60,23 @@
                     />
                 </van-cell-group>
                 <van-action-sheet v-model="dangerProject.show" :actions="dangerProject.dangerProjectList" @select="dangerProjectSel" />
+                <van-cell-group>
+                    <van-field
+                            v-model= 'coordinate.cot'
+                            required
+                            clearable
+                            label="经度/纬度"
+                            disabled
+                            input-align="right"
+                    />
+                <div class="mapBox">
+                    <div ref="map" class="map"></div>
+                </div>
+                </van-cell-group>
             </div>
         </van-card>
         <div class="boxContent">
             <div class="content">
-                <div class="dangerProjectName">
-                    <div>
-                        <p @click="showDangerProjectNameList" class="searchSel">选择隐患名称</p>
-                        <Tree :data="companyTreeList" v-show="showDangerProjectName === 1"
-                              @on-select-change="searchDangerProjectName"/>
-                        <label>
-                            <Select v-model="selDangerProjectNameVal" @on-change="selDangerProjectName" :label-in-value="true">
-                                <Option v-for="item in dangerProjectNameList" :value="item.fId" :key="item.fId">{{ item.fDangername }}</Option>
-                            </Select>
-                        </label>
-                    </div>
-                </div>
-                <div class="contentList">
-                    <p>经度</p>
-                    <p class="lat">{{lat}}</p>
-                </div>
-                <div class="contentList">
-                    <p>纬度</p>
-                    <p class="lng">{{lng}}</p>
-                </div>
-                <div class="mapBox">
-                    <div ref="map" class="map"></div>
-                </div>
                 <div class="contentListProblem">
                     <div class="problems">
                         <div class="problemsTitle">
@@ -245,14 +235,26 @@
         name: "addInfo",
         data() {
             return {
+                //检查记录编号
+                inspectionRecordNo: '',
+                inspectionRecordNoId:'',
+                //经纬度
+                coordinate:{
+                    lat: '',
+                    lng: '',
+                    cot:''
+                },
                 //被检查单位
-                searchValSel:'',
-                inspectedCompanyId:'',
-                companyDangerTree: [],
+                inspectedCompany:{
+                    searchValSel:'',
+                    inspectedCompanyId:'',
+                    companyDangerTree: [],
+                },
                 //存在隐患工程名称
                 dangerProject:{
                     dangerProjectList:[],
                     dangerProjectName:'',
+                    dangerProjectId:'',
                     show: false,
                 },
                 //检查时间
@@ -266,6 +268,10 @@
                 checkDatePop:{
                     show: false,
                 },
+
+
+
+
                 //检查发现问题
                 recordMessageItem: '',
                 fCompanyid:'',
@@ -277,14 +283,9 @@
                 fSourcefile:'',
                 //状态
                 fStatus:'',
-                //检查记录编号
-                inspectionRecordNo: '',
-                inspectionRecordNoId:'',
+
                 //检查时间
                 checkdateVale: '',
-                //经纬度
-                lat: '',
-                lng: '',
                 province: '',
                 city: '',
                 district: '',
@@ -470,7 +471,7 @@
                     return newTree;
                 };
                 newCompanyTreeList = resetTree(newCompanyTree);
-                this.companyTreeList = newCompanyTreeList;
+                this.inspectedCompany.companyTreeList = newCompanyTreeList;
             },
             getDangerTreeData(param) {
                 const that = this;
@@ -483,51 +484,14 @@
                         console.log(that.userInfo);
                         console.log(data);
                         that.DangerTreeData.companyDangerTree = data.companyDangerTree;
-                        that.companyDangerTree = data.companyDangerTree;
+                        that.inspectedCompany.companyDangerTree = data.companyDangerTree;
                         that.DangerTreeData.nodesList = data.nodesList;
                     })
                     .catch(data => {
 
                     });
             },
-            getLocation() {
-                const that = this;
-                let mapObj = new AMap.Map(this.$refs.map);
-                mapObj.plugin('AMap.Geolocation', function () {
-                    let geolocation = new AMap.Geolocation({
-                        enableHighAccuracy: true, // 是否使用高精度定位，默认:true
-                        timeout: 10000,           // 超过10秒后停止定位，默认：无穷大
-                        maximumAge: 0,            // 定位结果缓存0毫秒，默认：0
-                        convert: true,            // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-                        showButton: true,         // 显示定位按钮，默认：true
-                        buttonPosition: 'LB',     // 定位按钮停靠位置，默认：'LB'，左下角
-                        buttonOffset: new AMap.Pixel(10, 20), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                        showMarker: true,         // 定位成功后在定位到的位置显示点标记，默认：true
-                        showCircle: true,         // 定位成功后用圆圈表示定位精度范围，默认：true
-                        panToLocation: true,      // 定位成功后将定位到的位置作为地图中心点，默认：true
-                        zoomToAccuracy:true       // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                    });
-                    mapObj.addControl(geolocation);
-                    geolocation.getCurrentPosition();
-                    AMap.event.addListener(geolocation, 'complete', onComplete); // 返回定位信息
-                    AMap.event.addListener(geolocation, 'error', onError);       // 返回定位出错信息
-                });
 
-                function onComplete (obj){
-                    // let res = '经纬度：' + obj.position +
-                    //     '\n精度范围：' + obj.accuracy +
-                    //     '米\n定位结果的来源：' + obj.location_type +
-                    //     '\n状态信息：' + obj.info +
-                    //     '\n地址：' + obj.formattedAddress +
-                    //     '\n地址信息：' + JSON.stringify(obj.addressComponent, null, 4);
-                    that.lat = obj.position.lat;
-                    that.lng = obj.position.lng;
-                }
-
-                function onError (obj){
-                    // console.log(obj.info + '--' + obj.message);
-                }
-            },
             searchDangerProjectName(e) {
                 this.showDangerProjectName = 0;
                 let company = e[0].title;
@@ -743,14 +707,13 @@
 
             //选择被检查单位
             searchValSelF(e) {
-                this.searchValSel = e[0].title;
-                this.inspectedCompanyId = e[0].id;
+                this.inspectedCompany.searchValSel = e[0].title;
+                this.inspectedCompany.inspectedCompanyId = e[0].id;
                 let newList = [];
-                this.companyDangerTree.filter(data => data.fCompanyname === e[0].title).map(data => {
+                this.inspectedCompany.companyDangerTree.filter(data => data.fCompanyname === e[0].title).map(data => {
                     newList.push({
                         ...data,
                         name:data.fDangername,
-                        id:data.fId
                     });
                 });
                 this.dangerProject.dangerProjectList = newList;
@@ -826,10 +789,51 @@
             dangerProjectSel(value){
                 this.dangerProject.show = false;
                 this.dangerProject.dangerProjectName = value.name;
+                this.dangerProject.dangerProjectId = value.fId;
             },
             showDangerProjectList(){
                 this.dangerProject.show = true;
-            }
+            },
+            //获取当前坐标
+            getLocation() {
+                const that = this;
+                let mapObj = new AMap.Map(this.$refs.map);
+                mapObj.plugin('AMap.Geolocation', function () {
+                    let geolocation = new AMap.Geolocation({
+                        enableHighAccuracy: true, // 是否使用高精度定位，默认:true
+                        timeout: 10000,           // 超过10秒后停止定位，默认：无穷大
+                        maximumAge: 0,            // 定位结果缓存0毫秒，默认：0
+                        convert: true,            // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                        showButton: true,         // 显示定位按钮，默认：true
+                        buttonPosition: 'LB',     // 定位按钮停靠位置，默认：'LB'，左下角
+                        buttonOffset: new AMap.Pixel(10, 20), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                        showMarker: true,         // 定位成功后在定位到的位置显示点标记，默认：true
+                        showCircle: true,         // 定位成功后用圆圈表示定位精度范围，默认：true
+                        panToLocation: true,      // 定位成功后将定位到的位置作为地图中心点，默认：true
+                        zoomToAccuracy:true       // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                    });
+                    mapObj.addControl(geolocation);
+                    geolocation.getCurrentPosition();
+                    AMap.event.addListener(geolocation, 'complete', onComplete); // 返回定位信息
+                    AMap.event.addListener(geolocation, 'error', onError);       // 返回定位出错信息
+                });
+
+                function onComplete (obj){
+                    // let res = '经纬度：' + obj.position +
+                    //     '\n精度范围：' + obj.accuracy +
+                    //     '米\n定位结果的来源：' + obj.location_type +
+                    //     '\n状态信息：' + obj.info +
+                    //     '\n地址：' + obj.formattedAddress +
+                    //     '\n地址信息：' + JSON.stringify(obj.addressComponent, null, 4);
+                    that.coordinate.lat = obj.position.lat;
+                    that.coordinate.lng = obj.position.lng;
+                    that.coordinate.cot = `${obj.position.lat}/${obj.position.lng}`;
+                }
+
+                function onError (obj){
+                    // console.log(obj.info + '--' + obj.message);
+                }
+            },
         },
         mounted() {
             this.getHDVSiIData();
@@ -864,4 +868,7 @@
     .van-nav-bar__title
         font-weight bold
         font-size 2rem
+
+    .mapBox
+        display none
 </style>

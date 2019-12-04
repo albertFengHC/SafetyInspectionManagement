@@ -1,55 +1,19 @@
 <template>
     <div id="LPHazards">
-        <div class="topContent">
-            <div class="top">
-                <h2>选择隐患清单</h2>
-                <p @click="toAddInfo(0)"><span><</span></p>
-                <i @click="showList"/>
-            </div>
-            <div class="search">
-                <h3>{{projectName}}</h3>
-                <div class="name">
-                    <h4>请选择二级名称</h4>
-                    <label>
-                        <Select v-model="selDangerValS" @on-change="selDangerS" class="nameSel">
-                            <Option v-for="item in resultS" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
-                        </Select>
-                    </label>
-                </div>
-                <div class="company">
-                    <h4>请选择三级名称</h4>
-                    <label>
-                        <Select v-model="selDangerValT" @on-change="selDangerT" class="companySel">
-                            <Option v-for="item in resultT" :value="item.fNodename" :key="item.fId">{{ item.fNodename }}</Option>
-                        </Select>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="boxContent">
-            <div class="content">
-                <h4>请选择清单项</h4>
-                <label>
-                    <Select v-model="resultTSel" multiple @on-change="selDangerList">
-                        <Option v-for="item in resultL" :value="item.fId" :key="item.fId">{{ item.fNodename }}</Option>
-                    </Select>
-                </label>
-<!--                <div class="problemsInfoList" v-for="item in resultNewList" :value="item.fId" :key="item.fId">-->
-<!--                    <div class="problemsInfoListTitle">-->
-<!--                        <p>{{item.fNodeno}}</p>-->
-<!--                        <p>{{item.fTraplevel}}</p>-->
-<!--                    </div>-->
-<!--                    <div class="problemsInfoListContent">-->
-<!--                        <p>{{item.fNodename}}</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-            </div>
-            <div class="bottom">
-                <div>
-                    <p @click="toAddInfo(1)">保存</p>
-                </div>
-            </div>
-        </div>
+        <Cascader :data="treeList" v-model="treeValue"/>
+        <van-cell is-link @click="showPopup">选择清单工程名称</van-cell>
+        <van-popup v-model="show"
+                   closeable
+                   position="bottom"
+        >
+            <el-tree
+                    :data="treeList"
+                    :props="treeValue"
+                    accordion
+                    @node-click="handleChange">
+            </el-tree>
+        </van-popup>
+
         <div class="listInfoShadow" v-show="listInfoShow" @click="listInfoHide"></div>
         <div class="listInfo" v-show="listInfoShow">
             <label>
@@ -69,6 +33,11 @@
         name: "LPHazards",
         data(){
           return{
+              //树形列表
+              treeList:[],
+              treeValue:'',
+              show:'',
+
               listInfoShow: false,
               projectName:'',
               DangerTreeData:{
@@ -107,7 +76,9 @@
                 };
                 NCOScheduleAddUrl(parameter)
                     .then(function (data) {
+                        console.log(data);
                         that.DangerTreeData.nodesList = data.nodesList[0].child;
+                        that.getNewList(data.nodesList[0].child);
                     })
                     .catch(data => {
 
@@ -117,9 +88,6 @@
                 this.listInfoHide();
                 this.projectName = this.selDangerVal;
                 this.resultS = this.DangerTreeData.nodesList.filter(data => data.fNodename === this.projectName)[0].children;
-            },
-            selDangerS(){
-                this.resultT = this.resultS.filter(data => data.fNodename === this.selDangerValS)[0].children;
             },
             selDangerT(){
                 this.resultL = this.resultT.filter(data => data.fNodename === this.selDangerValT)[0].children;
@@ -141,7 +109,56 @@
                     });
                 });
                 this.resultNewList = newRecordMessageItem;
-            }
+            },
+
+            getNewList(list){
+                const that = this;
+                let newCompanyTreeList = '';
+                let resetTree = (data) => {
+                    let newTree = data.map(item => {
+                        if (item.children.length) {
+                            return {
+                                // ...item,
+                                fItemno: item.fNodeno,
+                                fItemname: item.fNodename,
+                                fTraplevel: item.fTraplevel,
+                                fItemid: item.fId,
+                                label: item.fNodename,
+                                value: item.fId,
+                                children: resetTree(item.children)
+                            }
+                        } else {
+                            return {
+                                // ...item,
+                                fItemno: item.fNodeno,
+                                fItemname: item.fNodename,
+                                fTraplevel: item.fTraplevel,
+                                fItemid: item.fId,
+                                label: item.fNodename,
+                                value: item.fId,
+                                fParentid:item.fParentid
+                            }
+                        }
+                    });
+                    return newTree;
+                };
+                newCompanyTreeList = resetTree(list);
+                console.log(newCompanyTreeList);
+                this.treeList = newCompanyTreeList;
+            },
+            handleChange(value) {
+                console.log(value);
+                console.log(this.treeList);
+                // this.show = false;
+            },
+            showPopup() {
+                this.show = true;
+            },
+            dangerProjectSel(value){
+                this.dangerProject.show = false;
+                this.dangerProject.dangerProjectName = value.name;
+                this.dangerProject.dangerProjectId = value.fId;
+            },
         },
         mounted() {
             this.getDangerTreeData();
@@ -293,4 +310,9 @@
             p
                 padding 10px 0
 
+    /deep/.el-tree-node__label
+        font-size 2rem
+
+    /deep/ .el-tree-node
+        margin  3px 0
 </style>
