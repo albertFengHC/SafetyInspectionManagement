@@ -2,7 +2,7 @@
     <div id="addInfo">
         <van-nav-bar
                 title="新增安全隐患日常巡查"
-                left-text=""
+                left-text="返回"
                 left-arrow
                 @click-left="toIndex"
         />
@@ -26,7 +26,7 @@
                             placeholder="检查记录编号"
                             input-align="right"
                     />
-                    <van-cell is-link @click="showPopup">检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span></van-cell>
+                    <van-cell is-link @click="showDatePopup">检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span></van-cell>
                     <van-popup
                         v-model="checkDatePop.show"
                         :style="{ width: '80%' }"
@@ -37,7 +37,7 @@
                                 :min-date="checkDate.minDate"
                                 :formatter="dateFormatter"
                                 @confirm="confirmDate"
-                                @cancel="hidePopup"
+                                @cancel="hideDatePopup"
                                 @change="getChangeValue"
                         />
                     </van-popup>
@@ -48,15 +48,18 @@
             <div slot="tags">
                 <van-cell-group>
                     <van-field
-                            v-model="dangerProjectName"
+                            v-model="dangerProject.dangerProjectName"
                             required
                             clearable
                             label="存在隐患工程名称"
-                            placeholder="存在隐患工程名称"
+                            placeholder="选择或填写"
                             input-align="right"
                             label-width="120px"
+                            right-icon="plus"
+                            @click-right-icon="showDangerProjectList"
                     />
                 </van-cell-group>
+                <van-action-sheet v-model="dangerProject.show" :actions="dangerProject.dangerProjectList" @select="dangerProjectSel" />
             </div>
         </van-card>
         <div class="boxContent">
@@ -242,6 +245,16 @@
         name: "addInfo",
         data() {
             return {
+                //被检查单位
+                searchValSel:'',
+                inspectedCompanyId:'',
+                companyDangerTree: [],
+                //存在隐患工程名称
+                dangerProject:{
+                    dangerProjectList:[],
+                    dangerProjectName:'',
+                    show: false,
+                },
                 //检查时间
                 checkDate:{
                     minDate: new Date(),
@@ -276,8 +289,6 @@
                 city: '',
                 district: '',
                 companyTreeList: [],
-                searchValSel: '',
-                inspectedCompanyId: '',
                 DangerTreeData: {
                     companyDangerTree: [],
                 },
@@ -435,11 +446,7 @@
             toLPHazards() {
                 this.$router.push({name: 'LPHazards'});
             },
-            searchValSelF(e) {
-                this.searchValSel = e[0].title;
-                this.inspectedCompanyId = e[0].id;
-                this.getCRCPersonData();
-            },
+
             getCompanyTreeList() {
                 let newCompanyTree = this.companyTree;
                 let newCompanyTreeList = '';
@@ -473,7 +480,10 @@
                 };
                 NCOScheduleAddUrl(parameter)
                     .then(function (data) {
+                        console.log(that.userInfo);
+                        console.log(data);
                         that.DangerTreeData.companyDangerTree = data.companyDangerTree;
+                        that.companyDangerTree = data.companyDangerTree;
                         that.DangerTreeData.nodesList = data.nodesList;
                     })
                     .catch(data => {
@@ -519,8 +529,6 @@
                 }
             },
             searchDangerProjectName(e) {
-                console.log(this.companyTreeList);
-                console.log(this.DangerTreeData.companyDangerTree);
                 this.showDangerProjectName = 0;
                 let company = e[0].title;
                 let result = this.DangerTreeData.companyDangerTree.filter(data => data.fCompanyname === company);
@@ -731,11 +739,28 @@
             dateValeChange(data){
                 this.dateVale = data;
             },
+
+
+            //选择被检查单位
+            searchValSelF(e) {
+                this.searchValSel = e[0].title;
+                this.inspectedCompanyId = e[0].id;
+                let newList = [];
+                this.companyDangerTree.filter(data => data.fCompanyname === e[0].title).map(data => {
+                    newList.push({
+                        ...data,
+                        name:data.fDangername,
+                        id:data.fId
+                    });
+                });
+                this.dangerProject.dangerProjectList = newList;
+                this.getCRCPersonData();
+            },
             //检查时间弹出层
-            showPopup() {
+            showDatePopup() {
                 this.checkDatePop.show = true;
             },
-            hidePopup(val) {
+            hideDatePopup(val) {
                 this.checkDatePop.show = false;
             },
             getNewDate(){
@@ -797,6 +822,14 @@
                     return `${value}分`
                 }
             },
+            //选择存在隐患工程名称
+            dangerProjectSel(value){
+                this.dangerProject.show = false;
+                this.dangerProject.dangerProjectName = value.name;
+            },
+            showDangerProjectList(){
+                this.dangerProject.show = true;
+            }
         },
         mounted() {
             this.getHDVSiIData();
