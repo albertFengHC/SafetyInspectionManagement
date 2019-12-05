@@ -18,8 +18,18 @@
                             input-align="right"
                             right-icon="plus"
                             disabled
+                            @click-right-icon="showCompanyList"
                     />
-                    <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>
+<!--                    <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>-->
+<!--                    <van-popup v-model="inspectedCompany.show" :lock-scroll="false">-->
+                        <el-cascader-panel
+                                :options="inspectedCompany.companyTreeList"
+                                v-model="inspectedCompany.searchValSel"
+                                :props="{ expandTrigger: 'hover'}"
+                                @change="searchValSelF"
+                                ref="companyTree"
+                        />
+<!--                    </van-popup>-->
                     <van-field
                             v-model="inspectionRecordNo"
                             required
@@ -118,6 +128,7 @@
                     searchValSel:'',
                     inspectedCompanyId:'',
                     companyDangerTree: [],
+                    show: false
                 },
                 //存在隐患工程名称
                 dangerProject:{
@@ -243,18 +254,18 @@
                 let newCompanyTreeList = '';
                 let resetTree = (data) => {
                     let newTree = data.map(item => {
-                        if (item.children) {
+                        if (item.children.length) {
                             return {
                                 // ...item,
-                                title: item.f_ShortName,
-                                id: item.f_CompanyId,
+                                label: item.f_ShortName,
+                                value: item.f_CompanyId,
                                 children: resetTree(item.children)
                             }
                         } else {
                             return {
                                 // ...item,
-                                title: item.f_ShortName,
-                                id: item.f_CompanyId,
+                                label: item.f_ShortName,
+                                value: item.f_CompanyId,
                             }
                         }
                     });
@@ -262,6 +273,7 @@
                 };
                 newCompanyTreeList = resetTree(newCompanyTree);
                 this.inspectedCompany.companyTreeList = newCompanyTreeList;
+                console.log(this.inspectedCompany.companyTreeList);
             },
             getDangerTreeData(param) {
                 const that = this;
@@ -271,7 +283,8 @@
                 };
                 NCOScheduleAddUrl(parameter)
                     .then(function (data) {
-                        that.DangerTreeData.companyDangerTree = data.companyDangerTree;
+                        console.log(data);
+                        that.dangerProject.companyDangerTree = data.companyDangerTree;
                         that.inspectedCompany.companyDangerTree = data.companyDangerTree;
                         that.DangerTreeData.nodesList = data.nodesList;
                     })
@@ -335,6 +348,10 @@
                 this.personChargeRectificationCirculant = newPerson;
             },
 
+            //展示被检查公司树形列表
+            showCompanyList(){
+                this.inspectedCompany.show = true;
+            },
             //获取未提交数据
             getHDVSiIData(){
                 const that = this;
@@ -382,28 +399,16 @@
                         });
                 }
             },
-            dateValeChange(data){
-                this.dateVale = data;
-            },
 
 
             //选择被检查单位
             searchValSelF(e) {
-                this.inspectedCompany.searchValSel = e[0].title;
-                this.inspectedCompany.inspectedCompanyId = e[0].id;
-                let newList = [];
-                console.log(e[0].title);
-                this.inspectedCompany.companyDangerTree.filter(data => {
-                    data.fCompanyname === e[0].title;
-                    console.log(data.fCompanyname);
-                }).map(data => {
-                    newList.push({
-                        ...data,
-                        name:data.fDangername,
-                    });
-                });
-                this.dangerProject.dangerProjectList = newList;
+                const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
+                this.inspectedCompany.searchValSel = this.$refs.companyTree.getCheckedNodes()[0].label;
+                let list = this.dangerProject.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
+
                 console.log(this.dangerProject.dangerProjectList);
+
                 this.getCRCPersonData();
             },
             //检查时间弹出层
@@ -550,8 +555,10 @@
 
     .van-nav-bar__title
         font-weight bold
-        font-size 2rem
 
     .mapBox
         display none
+
+    .el-cascader-panel.is-bordered
+        overflow-x auto
 </style>

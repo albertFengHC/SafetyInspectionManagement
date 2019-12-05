@@ -212,6 +212,9 @@
         padding-bottom 10px
         background-color #fff
 
+    .van-nav-bar__title
+        font-weight bold
+
     /deep/.el-tree-node__label
         font-size 2rem
 
