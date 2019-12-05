@@ -17,14 +17,23 @@
                 v-model="DangerTreeData.show"
                 closeable
                 position="top"
-                style="padding-top: 50px"
+                style="padding-top: 50px;height: 80%"
         >
             <label v-if="DangerTreeData.list">
                 <Select v-model="DangerTreeData.selDangerVal" multiple @on-change="selDangerList">
-                    <Option v-for="item in DangerTreeData.list" :value="item.fId" :key="item.fId">{{ item.fNodename }}</Option>
+                    <Option v-for="item in DangerTreeData.list" :value="item.fId" :key="item.fId" style="position: initial;left: 0">{{ item.fNodename }}</Option>
                 </Select>
             </label>
         </van-popup>
+        <!--                <div class="problemsInfoList" v-for="item in resultNewList" :value="item.fId" :key="item.fId">-->
+        <!--                    <div class="problemsInfoListTitle">-->
+        <!--                        <p>{{item.fNodeno}}</p>-->
+        <!--                        <p>{{item.fTraplevel}}</p>-->
+        <!--                    </div>-->
+        <!--                    <div class="problemsInfoListContent">-->
+        <!--                        <p>{{item.fNodename}}</p>-->
+        <!--                    </div>-->
+        <!--                </div>-->
         <div class="bottom">
             <van-button type="primary" round  size="small" style='width: 70%' @click="toAddInfo(1)">保存</van-button>
         </div>
@@ -177,4 +186,14 @@
 
     /deep/ .el-cascader-panel.is-bordered
         overflow-x auto
+
+    /deep/ .ivu-select-dropdown
+        position absolute
+        left 0 !important
+
+    /deep/ .ivu-select .ivu-select-dropdown
+        width 100%
+
+    /deep/ .ivu-select-multiple .ivu-select-item-selected:after
+        display none
 </style>
