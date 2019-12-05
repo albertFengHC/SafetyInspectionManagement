@@ -25,15 +25,19 @@
                 </Select>
             </label>
         </van-popup>
-        <!--                <div class="problemsInfoList" v-for="item in resultNewList" :value="item.fId" :key="item.fId">-->
-        <!--                    <div class="problemsInfoListTitle">-->
-        <!--                        <p>{{item.fNodeno}}</p>-->
-        <!--                        <p>{{item.fTraplevel}}</p>-->
-        <!--                    </div>-->
-        <!--                    <div class="problemsInfoListContent">-->
-        <!--                        <p>{{item.fNodename}}</p>-->
-        <!--                    </div>-->
-        <!--                </div>-->
+        <van-card title="已选隐患清单">
+            <div slot="tags">
+                <div class="problemsInfoList" v-for="item in newDangerList" :value="item.fId" :key="item.fId">
+                    <div class="problemsInfoListTitle">
+                        <p>{{item.fItemno}}</p>
+                        <p>{{item.fTraplevel}}</p>
+                    </div>
+                    <div class="problemsInfoListContent">
+                        <p>{{item.fItemname}}</p>
+                    </div>
+                </div>
+            </div>
+        </van-card>
         <div class="bottom">
             <van-button type="primary" round  size="small" style='width: 70%' @click="toAddInfo(1)">保存</van-button>
         </div>
@@ -128,30 +132,29 @@
             },
             //获取选中隐患工程名称
             handleChange(){
-                console.log(this.$refs.DangerTree.getCheckedNodes()[0]);
                 this.DangerTreeData.show = true;
                 const pId = this.$refs.DangerTree.getCheckedNodes()[0].data.fItemid;
                 this.DangerTreeData.list = this.DangerTreeDataList.filter(data => data.fParentid === pId);
-                console.log(this.DangerTreeData.list);
             },
             //清单选择
             selDangerList(){
-                // let resultNew = [];
-                // this.resultTSel.map(data => {
-                //     let arr = this.resultL.filter(value => value.fId === data)[0];
-                //     resultNew.push(arr);
-                // });
-                // let newRecordMessageItem = [];
-                // resultNew.map(item =>{
-                //     newRecordMessageItem.push({
-                //         // ...item,
-                //         fItemno: item.fNodeno,
-                //         fItemname: item.fNodename,
-                //         fTraplevel: item.fTraplevel,
-                //         fItemid: item.fId
-                //     });
-                // });
-                // this.newDangerList = newRecordMessageItem;
+                const that = this;
+                let resultNew = [];
+                this.DangerTreeData.selDangerVal.map(data => {
+                    let arr = that.DangerTreeData.list.filter(value => value.fId === data)[0];
+                    resultNew.push(arr);
+                });
+                let newRecordMessageItem = [];
+                resultNew.map(item =>{
+                    newRecordMessageItem.push({
+                        // ...item,
+                        fItemno: item.fNodeno,
+                        fItemname: item.fNodename,
+                        fTraplevel: item.fTraplevel,
+                        fItemid: item.fId
+                    });
+                });
+                this.newDangerList = newRecordMessageItem;
             },
         },
         mounted() {
@@ -169,6 +172,38 @@
         height 100%
         margin 0
         color #333
+
+    .problemsInfoList
+        padding 10px
+        background-color #F2F2F2
+        border-radius 15px
+        margin 10px
+        .problemsInfoListTitle
+            display flex
+            justify-content space-between
+            text-align center
+            padding-bottom 10px
+            font-weight bold
+            p
+                margin 0
+            i
+                color #fff
+                border 1px dashed #4DBB95
+                background-color #4DBB95
+                border-radius 50%
+                height 15px
+                width 15px
+                font-weight bold
+                display inline-block
+                span
+                    display flex
+                    justify-content center
+                    align-items center
+                    height 15px
+                    width 15px
+        .problemsInfoListContent
+            p
+                padding 5px 0
 
     .bottom
         text-align center
