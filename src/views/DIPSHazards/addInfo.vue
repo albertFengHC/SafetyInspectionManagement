@@ -16,6 +16,8 @@
                             label="被检查单位"
                             placeholder="被检查单位"
                             input-align="right"
+                            right-icon="plus"
+                            disabled
                     />
                     <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>
                     <van-field
@@ -75,155 +77,23 @@
                 </van-cell-group>
             </div>
         </van-card>
-        <div class="boxContent">
-            <div class="content">
-                <div class="contentListProblem">
-                    <div class="problems">
-                        <div class="problemsTitle">
-                           <h3><span class="problemsTitleS">*</span>检查发现问题</h3>
-                            <i @click="toLPHazards"><span>+</span></i>
-                        </div>
-                        <div class="problemsInfo" v-if="this.recordMessageItem">
-                            <div class="problemsInfoList" v-for="item in this.recordMessageItem" :value="item.fId" :key="item.fId">
-                                <div class="problemsInfoListTitle">
-                                    <p>{{item.fItemno}}</p>
-                                    <p>{{item.fTraplevel}}</p>
-                                </div>
-                                <div class="problemsInfoListContent">
-                                    <p>{{item.fItemname}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="contentList">
-                    <p><span>*</span>发现问题描述</p>
-                    <label>
-                        <textarea placeholder="请输入" v-model="descriptionProblemsFound"/>
-                    </label>
-                </div>
-                <div class="contentList">
-                    <p><span>*</span>整改要求</p>
-                    <label>
-                        <textarea placeholder="请输入" v-model="rectificationRequirements"/>
-                    </label>
-                </div>
-                <div class="selectBox">
-                    <p><span>*</span>排查对象<i>{{objectInvestigation}}</i></p>
-                    <label>
-                        <Select v-model="objectInvestigation">
-                            <Option v-for="item in objectInvestigationList" :value="item.fItemName" :key="item.fItemValue">{{ item.fItemName }}</Option>
-                        </Select>
-                    </label>
-                </div>
-                <div class="selectBox">
-                    <p><span>*</span>隐患类别<i>{{hiddenDangerCategory}}</i></p>
-                    <label>
-                        <Select v-model="hiddenDangerCategory">
-                            <Option v-for="item in hiddenDangerCategoryList" :value="item.fItemName" :key="item.fItemValue">{{ item.fItemName }}</Option>
-                        </Select>
-                    </label>
-                </div>
-                <div class="selectBox">
-                    <p><span>*</span>隐患类型<i>{{hiddenDangerType}}</i></p>
-                    <label>
-                        <Select v-model="hiddenDangerType">
-                            <Option v-for="item in hiddenDangerTypeList" :value="item.fItemName" :key="item.fItemValue">{{ item.fItemName }}</Option>
-                        </Select>
-                    </label>
-                </div>
-                <div class="selectBox">
-                    <p><span>*</span>整改截至日期</p>
-                    <Col>
-                        <DatePicker type="date" placeholder="整改截止时间" :value="dateVale" @on-change='dateValeChange' format="yyyy-MM-dd HH:mm"/>
-                    </Col>
-                </div>
-                <div class="contentListPhoto">
-                    <p>现场照片</p>
-<!--                    <i><span>+</span></i>-->
-                    <div class="demo-upload-list" v-for="item in uploadList">
-                        <template v-if="item.status === 'finished'">
-                            <img :src="item.url" alt="">
-                            <div class="demo-upload-list-cover">
-                                <Icon type="ios-eye-outline" @click.native="handleView(item.name)"/>
-                                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"/>
-                            </div>
-                        </template>
-                        <template v-else>
-                            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info/>
-                        </template>
-                    </div>
-                    <Upload
-                            ref="upload"
-                            :show-upload-list="false"
-                            :default-file-list="defaultList"
-                            :on-success="handleSuccess"
-                            :format="['jpg','jpeg','png']"
-                            :max-size="2048"
-                            :on-format-error="handleFormatError"
-                            :on-exceeded-size="handleMaxSize"
-                            :before-upload="handleBeforeUpload"
-                            multiple
-                            type="drag"
-                            action="//jsonplaceholder.typicode.com/posts/"
-                            style="display: inline-block;width:58px;">
-                        <div style="width: 58px;height:58px;line-height: 58px;">
-                            <Icon type="ios-camera" size="20"/>
-                        </div>
-                    </Upload>
-                    <Modal title="View Image" v-model="visible">
-                        <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%" alt="">
-                    </Modal>
-                </div>
-                <div class="contentListFile">
-                    <p>资料附件</p>
-                    <Upload
-                            multiple
-                            action="//jsonplaceholder.typicode.com/posts/">
-                        <Button icon="ios-cloud-upload-outline">资料附件</Button>
-                    </Upload>
-<!--                    <i><span>+</span></i>-->
-                </div>
-                <div class="ReceiptProcess">
-                    <div>
-                        <div class="dangerProjectName">
-                            <div>
-                                <h4>整改责任人</h4>
-                                <p @click="showPersonChargeRectificationList" class="searchSel"><span>*</span>选择整改责任人<i>{{newPersonChargeRectificationNameList}}</i></p>
-                                <Tree :data="personChargeRectificationCirculant" v-show="showPersonChargeRectification === 1"
-                                      @on-select-change="searchPersonChargeRectificationName"/>
-                                <label>
-                                    <Select v-model="personChargeRectification" @on-change="selPersonChargeRectificationName" multiple :label-in-value="true">
-                                        <Option v-for="item in PersonChargeRectificationList" :value="item.fId" :key="item.fId">{{ item.fStaffName }}</Option>
-                                    </Select>
-                                </label>
-                            </div>
-<!--                            <i><span>+</span></i>-->
-                        </div>
-                        <div class="dangerProjectName">
-                            <div>
-                                <h4>传阅人</h4>
-                                <p @click="showPersonCirculantList" class="searchSel"><span>*</span>选择传阅人<i>{{newPersonCirculantNameList}}</i></p>
-                                <Tree :data="personChargeRectificationCirculant" v-show="showPersonCirculant === 1"
-                                      @on-select-change="searchPersonCirculantName"/>
-                                <label>
-                                    <Select v-model="personCirculant" @on-change="selPersonCirculantName" multiple :label-in-value="true">
-                                        <Option v-for="item in PersonCirculantList" :value="item.fId" :key="item.fId">{{ item.fStaffName }}</Option>
-                                    </Select>
-                                </label>
-                            </div>
-<!--                            <i><span>+</span></i>-->
-                        </div>
-                    </div>
-                </div>
+        <van-card>
+            <div slot="tags">
+                <van-cell-group>
+                    <van-field
+                            v-model="dangerProject.dangerProjectName"
+                            required
+                            clearable
+                            label="检查发现问题"
+                            placeholder=""
+                            input-align="right"
+                            right-icon="plus"
+                            disabled
+                            @click-right-icon="toLPHazards"
+                    />
+                </van-cell-group>
             </div>
-            <div class="bottom">
-                <div>
-                    <p @click="Submission">提交</p>
-                    <p @click="save">保存</p>
-                </div>
-            </div>
-        </div>
+        </van-card>
     </div>
 </template>
 
@@ -269,81 +139,6 @@
                     show: false,
                 },
 
-
-
-
-                //检查发现问题
-                recordMessageItem: '',
-                fCompanyid:'',
-                fCompanyname:'',
-                fCheckid:'',
-                fCheckname:'',
-                userId:'',
-                userName:'',
-                fSourcefile:'',
-                //状态
-                fStatus:'',
-
-                //检查时间
-                checkdateVale: '',
-                province: '',
-                city: '',
-                district: '',
-                companyTreeList: [],
-                DangerTreeData: {
-                    companyDangerTree: [],
-                },
-                showDangerProjectName: 0,
-                dangerProjectName:'',
-                selDangerProjectNameVal:'',
-                dangerProjectNameList:[],
-                //整改截止日期
-                dateVale:'',
-                //发现问题描述
-                descriptionProblemsFound:'',
-                //整改要求
-                rectificationRequirements:'',
-                //排查对象
-                objectInvestigationList:[],
-                objectInvestigation: '',
-                //隐患类别
-                hiddenDangerCategoryList:[],
-                hiddenDangerCategory: '',
-                //隐患类型
-                hiddenDangerTypeList:[],
-                hiddenDangerType:'',
-                //整改责任人及传阅人
-                personChargeRectificationCirculantOld:'',
-                personChargeRectificationCirculant:[],
-                personChargeRectification:'',
-                personCirculant:'',
-                newPersonChargeRectificationCirculant: [],
-                //显示整改责任人
-                showPersonChargeRectification: 1,
-                PersonChargeRectificationList: [],
-                PersonChargeRectificationName: '',
-                newPersonChargeRectificationNameList: '',
-                newPersonChargeRectificationNameListId: '',
-                //显示传阅人
-                showPersonCirculant: 1,
-                PersonCirculantList: [],
-                PersonCirculantName: '',
-                newPersonCirculantNameList: '',
-                newPersonCirculantNameListId: '',
-                //照片资料上传
-                defaultList: [
-                    {
-                        'name': 'a42bdcc1178e62b4694c830f028db5c0',
-                        'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
-                    },
-                    {
-                        'name': 'bc7521e033abdd1e92222d733590f104',
-                        'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
-                    }
-                ],
-                imgName: '',
-                visible: false,
-                uploadList: []
             }
         },
         methods: {
@@ -486,31 +281,7 @@
                     });
             },
 
-            searchDangerProjectName(e) {
-                this.showDangerProjectName = 0;
-                let company = e[0].title;
-                let result = this.DangerTreeData.companyDangerTree.filter(data => data.fCompanyname === company);
-                this.dangerProjectNameList = result;
-            },
-            showDangerProjectNameList(){
-                this.showDangerProjectName = 1;
-            },
-            selDangerProjectName(e){
-                this.dangerProjectName = e.label;
-                this.inspectionRecordNoId = e.value;
-            },
-            //排查对象
-            getObjectInvestigation(){
-                this.objectInvestigationList = this.testObject;
-            },
-            //隐患类别
-            getHiddenDangerCategory(){
-                this.hiddenDangerCategoryList = this.trapLevel;
-            },
-            //隐患类型
-            getHiddenDangerType(){
-                this.hiddenDangerTypeList = this.trapType;
-            },
+
             //整改责任人及传阅人
             getCRCPersonData(){
                 const that = this;
@@ -525,52 +296,6 @@
                     .catch(data => {
 
                     });
-            },
-            showPersonChargeRectificationList(){
-                this.showPersonChargeRectification = 1;
-            },
-            showPersonCirculantList(){
-                this.showPersonCirculant = 1;
-            },
-            selPersonChargeRectificationName(e){
-                let newPersonChargeRectificationName = '';
-                let newPersonChargeRectificationNameId = '';
-                e.map(data => {
-                    newPersonChargeRectificationName += data.label+',';
-                    newPersonChargeRectificationNameId += data.value+','
-                });
-                this.newPersonChargeRectificationNameList = newPersonChargeRectificationName.substr(0, newPersonChargeRectificationName.length - 1);
-                this.newPersonChargeRectificationNameListId = newPersonChargeRectificationNameId.substr(0, newPersonChargeRectificationNameId.length - 1);
-            },
-            searchPersonChargeRectificationName(e) {
-                this.showPersonChargeRectification = 0;
-                this.PersonChargeRectificationName = e[0].title;
-                let personName = e[0].title;
-                let result = this.newPersonChargeRectificationCirculant;
-                let newResult = result.find(data => data.fFullName === personName);
-                if(newResult.personList.length){
-                    this.PersonChargeRectificationList = newResult.personList;
-                }
-            },
-            selPersonCirculantName(e){
-                let newPersonCirculantName = '';
-                let newPersonCirculantNameId = '';
-                e.map(data => {
-                    newPersonCirculantName += data.label+',';
-                    newPersonCirculantNameId += data.value+','
-                });
-                this.newPersonCirculantNameList = newPersonCirculantName.substr(0, newPersonCirculantName.length - 1);
-                this.newPersonCirculantNameListId = newPersonCirculantNameId.substr(0, newPersonCirculantNameId.length - 1);
-            },
-            searchPersonCirculantName(e) {
-                this.showPersonCirculant = 0;
-                this.PersonCirculantName = e[0].title;
-                let personName = e[0].title;
-                let result = this.newPersonChargeRectificationCirculant;
-                let newResult = result.find(data => data.fFullName === personName);
-                if(newResult.personList.length){
-                    this.PersonCirculantList = newResult.personList;
-                }
             },
             getNewPersonList(data){
                 let newPersonTree = data;
@@ -610,40 +335,7 @@
                 newPerson.push(resetTree(newPersonTree));
                 this.personChargeRectificationCirculant = newPerson;
             },
-            //照片及资料上传
-            handleView (name) {
-                this.imgName = name;
-                this.visible = true;
-            },
-            handleRemove (file) {
-                const fileList = this.$refs.upload.fileList;
-                this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-            },
-            handleSuccess (res, file) {
-                file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-                file.name = '7eb99afb9d5f317c912f08b5212fd69a';
-            },
-            handleFormatError (file) {
-                this.$Notice.warning({
-                    title: 'The file format is incorrect',
-                    desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-                });
-            },
-            handleMaxSize (file) {
-                this.$Notice.warning({
-                    title: 'Exceeding file size limit',
-                    desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-                });
-            },
-            handleBeforeUpload () {
-                const check = this.uploadList.length < 5;
-                if (!check) {
-                    this.$Notice.warning({
-                        title: 'Up to five pictures can be uploaded.'
-                    });
-                }
-                return check;
-            },
+
             //获取未提交数据
             getHDVSiIData(){
                 const that = this;
@@ -701,13 +393,18 @@
                 this.inspectedCompany.searchValSel = e[0].title;
                 this.inspectedCompany.inspectedCompanyId = e[0].id;
                 let newList = [];
-                this.inspectedCompany.companyDangerTree.filter(data => data.fCompanyname === e[0].title).map(data => {
+                console.log(e[0].title);
+                this.inspectedCompany.companyDangerTree.filter(data => {
+                    data.fCompanyname === e[0].title;
+                    console.log(data.fCompanyname);
+                }).map(data => {
                     newList.push({
                         ...data,
                         name:data.fDangername,
                     });
                 });
                 this.dangerProject.dangerProjectList = newList;
+                console.log(this.dangerProject.dangerProjectList);
                 this.getCRCPersonData();
             },
             //检查时间弹出层
@@ -830,9 +527,6 @@
             this.getCompanyTreeList();
             this.getDangerTreeData();
             this.getLocation();
-            this.getObjectInvestigation();
-            this.getHiddenDangerCategory();
-            this.getHiddenDangerType();
             // if(this.$route.params.LPHazardsList != undefined){
             //     this.recordMessageItem = this.$route.params.LPHazardsList;
             // }
