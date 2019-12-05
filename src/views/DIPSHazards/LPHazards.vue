@@ -3,14 +3,11 @@
         <el-cascader-panel
                 :options="treeList"
                 v-model="treeValue"
-                :props="{ expandTrigger: 'hover' ,multiple:'true'}"
+                :props="{ expandTrigger: 'hover'}"
                 @change="handleChangeEl"
+                ref="myCascader"
         />
-<!--        <el-cascader-->
-<!--            :data="treeList"-->
-<!--            v-model="treeValue"-->
-<!--            :props="{ expandTrigger: 'hover' }"-->
-<!--            @change="handleChangeEl"></el-cascader>-->
+
         <van-cell is-link @click="showPopup">选择清单工程名称</van-cell>
         <van-popup v-model="show"
             closeable
@@ -46,6 +43,8 @@
               treeList:[],
               treeValue:'',
               show:'',
+              dataValue:'',
+              list:'',
 
               listInfoShow: false,
               projectName:'',
@@ -163,7 +162,8 @@
                 this.listInfoShow = false;
             },
             handleChangeEl(value){
-                console.log(value);
+                console.log(this.$refs['myCascader']);
+                console.log(this.$refs.myCascader.getCheckedNodes());
             },
 
 
@@ -175,6 +175,10 @@
                 this.dangerProject.dangerProjectName = value.name;
                 this.dangerProject.dangerProjectId = value.fId;
             },
+
+            focusF(e){
+                console.log(e);
+            }
         },
         mounted() {
             this.getDangerTreeData();
@@ -331,4 +335,7 @@
 
     /deep/ .el-tree-node
         margin  10px 0
+
+    /deep/ .el-cascader-panel.is-bordered
+        overflow-x auto
 </style>
