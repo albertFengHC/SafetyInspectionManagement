@@ -386,7 +386,6 @@
                 };
                 HDAddedUrl(parameter)
                     .then(function (data) {
-                        console.log(data);
                         that.$router.push({name: 'NoSign'});
                     })
                     .catch(data => {
@@ -399,8 +398,6 @@
                 if(this.searchValSel===''&&this.inspectionRecordNo===''&&this.selDangerProjectNameVal===''&&this.$route.params.LPHazardsList===''&&this.descriptionProblemsFound===''&&this.rectificationRequirements===''&&this.objectInvestigation===''&&this.hiddenDangerCategory&&this.hiddenDangerType===''&&this.checkdateVale===''&&this.dateVale===''&&this.newPersonChargeRectificationNameList===''&&this.newPersonCirculantNameList===''){
                     alert('红色星号为必填项!!!');
                 }
-                console.log(this.checkdateVale);
-                console.log(this.dateVale);
                 let parameter = {
                     fId: '',//提交或修改时传
                     isSubmit: '0',//1提交 0保存
@@ -434,7 +431,6 @@
                 };
                 HDAddedUrl(parameter)
                     .then(function (data) {
-                        console.log(data);
                         that.$router.push({name: 'NoSign'});
                     })
                     .catch(data => {
@@ -481,8 +477,6 @@
                 };
                 NCOScheduleAddUrl(parameter)
                     .then(function (data) {
-                        console.log(that.userInfo);
-                        console.log(data);
                         that.DangerTreeData.companyDangerTree = data.companyDangerTree;
                         that.inspectedCompany.companyDangerTree = data.companyDangerTree;
                         that.DangerTreeData.nodesList = data.nodesList;
@@ -662,7 +656,6 @@
                     };
                     HDVSiIUrl(parameter)
                         .then(function (data) {
-                            console.log(data);
                             let checkTrapDaily = data.checkTrapDaily;
                             that.fId = checkTrapDaily.fId;
                             that.fCompanyid = checkTrapDaily.fCompanyid;
@@ -692,8 +685,6 @@
                             that.userName = checkTrapDaily.userName;
                             that.fSourcefile = checkTrapDaily.fSourcefile;
                             that.recordMessageItem = checkTrapDaily.recordMessageItem;
-                            console.log(that.checkdateVale);
-                            console.log(that.dateVale);
                         })
                         .catch(data => {
 
@@ -756,7 +747,6 @@
                     hours +
                     seperator2 +
                     minutes;
-                console.log(this.checkDate.timeValue);
             },
             confirmDate(){
                 this.getNewDate();

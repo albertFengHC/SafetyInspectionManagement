@@ -1,19 +1,28 @@
 <template>
     <div id="LPHazards">
-        <Cascader :data="treeList" v-model="treeValue"/>
+        <el-cascader-panel
+                :options="treeList"
+                v-model="treeValue"
+                :props="{ expandTrigger: 'hover' ,multiple:'true'}"
+                @change="handleChangeEl"
+        />
+<!--        <el-cascader-->
+<!--            :data="treeList"-->
+<!--            v-model="treeValue"-->
+<!--            :props="{ expandTrigger: 'hover' }"-->
+<!--            @change="handleChangeEl"></el-cascader>-->
         <van-cell is-link @click="showPopup">选择清单工程名称</van-cell>
         <van-popup v-model="show"
-                   closeable
-                   position="bottom"
+            closeable
+            position="bottom"
         >
             <el-tree
-                    :data="treeList"
-                    :props="treeValue"
-                    accordion
-                    @node-click="handleChange">
+                :data="treeList"
+                :props="treeValue"
+                accordion
+                @node-click="handleChange">
             </el-tree>
         </van-popup>
-
         <div class="listInfoShadow" v-show="listInfoShow" @click="listInfoHide"></div>
         <div class="listInfo" v-show="listInfoShow">
             <label>
@@ -111,6 +120,8 @@
                 this.resultNewList = newRecordMessageItem;
             },
 
+
+            //获取TreeData
             getNewList(list){
                 const that = this;
                 let newCompanyTreeList = '';
@@ -146,11 +157,16 @@
                 console.log(newCompanyTreeList);
                 this.treeList = newCompanyTreeList;
             },
+            //隐患清单显示
             handleChange(value) {
                 console.log(value);
-                console.log(this.treeList);
-                // this.show = false;
+                this.listInfoShow = false;
             },
+            handleChangeEl(value){
+                console.log(value);
+            },
+
+
             showPopup() {
                 this.show = true;
             },
@@ -314,5 +330,5 @@
         font-size 2rem
 
     /deep/ .el-tree-node
-        margin  3px 0
+        margin  10px 0
 </style>
