@@ -81,7 +81,6 @@
             <div slot="tags">
                 <van-cell-group>
                     <van-field
-                            v-model="dangerProject.dangerProjectName"
                             required
                             clearable
                             label="检查发现问题"

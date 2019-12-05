@@ -30,10 +30,10 @@
                 <div class="problemsInfoList" v-for="item in newDangerList" :value="item.fId" :key="item.fId">
                     <div class="problemsInfoListTitle">
                         <p>{{item.fItemno}}</p>
-                        <p>{{item.fTraplevel}}</p>
+                        <p style="color: #ce0c0c">{{item.fTraplevel}}</p>
                     </div>
                     <div class="problemsInfoListContent">
-                        <p>{{item.fItemname}}</p>
+                        <p style="color: #606266">{{item.fItemname}}</p>
                     </div>
                 </div>
             </div>
@@ -182,7 +182,6 @@
             display flex
             justify-content space-between
             text-align center
-            padding-bottom 10px
             font-weight bold
             p
                 margin 0
