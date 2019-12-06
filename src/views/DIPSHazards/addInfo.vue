@@ -572,5 +572,5 @@
         overflow-x auto
 
     /deep/ .van-popup--center
-        padding 15%
+        padding 10px
 </style>

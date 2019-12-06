@@ -15,8 +15,8 @@
         height 100%
         margin 0
         /*overflow scroll*/
-        /*-webkit-overflow-scrolling: touch;*/
-        -webkit-overflow-scrolling auto
+        -webkit-overflow-scrolling: touch;
+        /*-webkit-overflow-scrolling auto*/
     select
         box-sizing content-box
 </style>
