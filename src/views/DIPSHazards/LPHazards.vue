@@ -9,6 +9,8 @@
         <el-cascader-panel
                 :options="DangerTreeProject.list"
                 v-model="DangerTreeProject.value"
+                :props="{ expandTrigger: 'hover' }"
+                :show-all-levels="true"
                 @change="handleChange"
                 ref="DangerTree"
         />
