@@ -20,16 +20,24 @@
                             disabled
                             @click-right-icon="showCompanyList"
                     />
-<!--                    <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>-->
-<!--                    <van-popup v-model="inspectedCompany.show" :lock-scroll="false">-->
-                        <el-cascader-panel
-                                :options="inspectedCompany.companyTreeList"
-                                v-model="inspectedCompany.searchValSel"
-                                :props="{ expandTrigger: 'hover'}"
-                                @change="searchValSelF"
-                                ref="companyTree"
-                        />
-<!--                    </van-popup>-->
+                    <van-popup v-model="inspectedCompany.show" :lock-scroll="false">
+                        <el-tree
+                                :data="inspectedCompany.companyTreeList"
+                                accordion
+                                :default-expand-all="true"
+                                :highlight-current="true"
+                                @node-click="searchValSelF">
+                        </el-tree>
+
+                        <!--                        <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>-->
+<!--                        <el-cascader-panel-->
+<!--                                :options="inspectedCompany.companyTreeList"-->
+<!--                                v-model="inspectedCompany.searchValSel"-->
+<!--                                :props="{ expandTrigger: 'hover'}"-->
+<!--                                @change="searchValSelF"-->
+<!--                                ref="companyTree"-->
+<!--                        />-->
+                    </van-popup>
                     <van-field
                             v-model="inspectionRecordNo"
                             required
@@ -400,14 +408,16 @@
                 }
             },
 
-
             //选择被检查单位
             searchValSelF(e) {
-                const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
-                this.inspectedCompany.searchValSel = this.$refs.companyTree.getCheckedNodes()[0].label;
+                // const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
+                this.inspectedCompany.searchValSel = e.label;
                 let list = this.dangerProject.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
-
-                console.log(this.dangerProject.dangerProjectList);
+                let dangerProjectList = [];
+                list.map(data=>{
+                    dangerProjectList.push({name:data.fDangername});
+                });
+                this.dangerProject.dangerProjectList = dangerProjectList;
 
                 this.getCRCPersonData();
             },
@@ -561,4 +571,7 @@
 
     .el-cascader-panel.is-bordered
         overflow-x auto
+
+    /deep/ .van-popup--center
+        padding 15%
 </style>
