@@ -19,11 +19,29 @@
                 position="top"
                 style="padding-top: 50px;height: 80%"
         >
-            <label v-if="DangerTreeData.list">
-                <Select v-model="DangerTreeData.selDangerVal" multiple @on-change="selDangerList">
-                    <Option v-for="item in DangerTreeData.list" :value="item.fId" :key="item.fId" style="position: initial;left: 0">{{ item.fNodename }}</Option>
-                </Select>
-            </label>
+<!--            <label v-if="DangerTreeData.list">-->
+<!--                <Select v-model="DangerTreeData.selDangerVal" multiple @on-change="selDangerList">-->
+<!--                    <Option v-for="item in DangerTreeData.list" :value="item.fId" :key="item.fId" style="position: initial;left: 0">{{ item.fNodename }}</Option>-->
+<!--                </Select>-->
+<!--            </label>-->
+
+            <van-checkbox-group v-model="checkBoxDangerList" @change="checkToggle">
+                <van-cell-group>
+                    <van-cell
+                            v-for="(item, index) in DangerTreeData.list"
+                            clickable
+                            :key="item.fId"
+                            :title="`${item.fNodeno}/${item.fTraplevel}/${item.fNodename}`"
+                    >
+                        <van-checkbox
+                                :name="item.fId"
+                                ref="checkboxes"
+                                slot="right-icon"
+                        />
+                    </van-cell>
+                </van-cell-group>
+            </van-checkbox-group>
+
         </van-popup>
         <van-card title="已选隐患清单">
             <div slot="tags">
@@ -56,6 +74,7 @@
               DangerTreeProject:{
                   list:[],
                   value:'',
+                  id:''
               },
               //清单列表
               DangerTreeData:{
@@ -65,8 +84,10 @@
               },
               //原始清单列表
               DangerTreeDataList:[],
-              //选中清单列表
-              newDangerList:[]
+              //select选中清单列表
+              newDangerList:[],
+              //复选框选中清单列表
+              checkBoxDangerList:[],
           }
         },
         methods:{
@@ -136,7 +157,8 @@
                 const pId = this.$refs.DangerTree.getCheckedNodes()[0].data.fItemid;
                 this.DangerTreeData.list = this.DangerTreeDataList.filter(data => data.fParentid === pId);
             },
-            //清单选择
+
+            //select清单选择
             selDangerList(){
                 const that = this;
                 let resultNew = [];
@@ -155,6 +177,29 @@
                     });
                 });
                 this.newDangerList = newRecordMessageItem;
+            },
+
+            //复选框清单选择
+            checkToggle(index) {
+                const that = this;
+                let resultNew = [];
+                this.checkBoxDangerList.map(data => {
+                    let arr = that.DangerTreeDataList.filter(value => value.fId === data)[0];
+                    resultNew.push(arr);
+                });
+
+                let newRecordMessageItem = [];
+                resultNew.map(item =>{
+                    newRecordMessageItem.push({
+                        // ...item,
+                        fItemno: item.fNodeno,
+                        fItemname: item.fNodename,
+                        fTraplevel: item.fTraplevel,
+                        fItemid: item.fId
+                    });
+                });
+                this.newDangerList = newRecordMessageItem;
+                console.log(this.newDangerList);
             },
         },
         mounted() {
