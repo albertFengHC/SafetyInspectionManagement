@@ -418,7 +418,6 @@
                     dangerProjectList.push({name:data.fDangername});
                 });
                 this.dangerProject.dangerProjectList = dangerProjectList;
-
                 this.getCRCPersonData();
             },
             //检查时间弹出层
