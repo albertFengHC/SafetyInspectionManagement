@@ -20,7 +20,7 @@
                             disabled
                             @click-right-icon="showCompanyList"
                     />
-                    <van-popup v-model="inspectedCompany.show" :lock-scroll="false">
+                    <van-popup v-model="inspectedCompany.show" :lock-scroll="false"  :style="{ width: '100%',height:'50%' }">
                         <el-tree
                                 :data="inspectedCompany.companyTreeList"
                                 accordion
@@ -49,7 +49,7 @@
                     <van-cell is-link @click="showDatePopup">检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span></van-cell>
                     <van-popup
                         v-model="checkDatePop.show"
-                        :style="{ width: '80%' }"
+                        :style="{ width: '100%' }"
                     >
                         <van-datetime-picker
                                 v-model="checkDate.currentDate"
@@ -109,6 +109,64 @@
                             @click-right-icon="toLPHazards"
                     />
                 </van-cell-group>
+                <van-collapse v-model="problemsFoundInspection.activeNames">
+                    <van-collapse-item title="查看更多" name="1">
+                        <van-cell-group>
+                            <van-cell
+                                    v-for="(item, index) in problemsFoundInspection.recordMessageItem"
+                                    clickable
+                                    size="large"
+                                    :key="item.fId"
+                                    :title="`${item.fItemno}`"
+                                    :value="`${item.fTraplevel}`"
+                                    :label="`${item.fItemname}`"
+                                    class="ProblemsFoundInspectionList"
+                            >
+                            </van-cell>
+                        </van-cell-group>
+                    </van-collapse-item>
+                </van-collapse>
+            </div>
+        </van-card>
+        <van-card>
+            <div slot="tags">
+                <van-cell-group>
+                    <van-field
+                            v-model="descriptionProblemsFound"
+                            rows="2"
+                            autosize
+                            required
+                            label="发现问题描述"
+                            type="textarea"
+                            maxlength="50"
+                            placeholder="请输入"
+                            show-word-limit
+                    />
+                    <van-field
+                            v-model="rectificationRequirements"
+                            rows="2"
+                            autosize
+                            required
+                            label="整改要求"
+                            type="textarea"
+                            maxlength="50"
+                            placeholder="请输入"
+                            show-word-limit
+                    />
+                    <van-field
+                            v-model="objectInvestigation.objectInvestigationName"
+                            required
+                            clearable
+                            label="排查对象"
+                            placeholder="选择"
+                            disabled
+                            input-align="right"
+                            label-width="120px"
+                            right-icon="plus"
+                            @click-right-icon="showObjectInvestigationList"
+                    />
+                    <van-action-sheet v-model="objectInvestigation.show" :actions="objectInvestigation.objectInvestigationList" @select="objectInvestigationSel" />
+                </van-cell-group>
             </div>
         </van-card>
     </div>
@@ -145,27 +203,39 @@
                     dangerProjectId:'',
                     show: false,
                 },
+                //排查对象
+                objectInvestigation:{
+                    objectInvestigationList:[],
+                    objectInvestigationName:'',
+                    objectInvestigationId:'',
+                    show: false,
+                },
                 //检查时间
                 checkDate:{
                     minDate: new Date(),
                     // maxDate: new Date(2019, 10, 1),
                     currentDate: new Date(),
-                    timeValue:''
+                    timeValue:'',
                 },
                 //检查时间弹出层
                 checkDatePop:{
                     show: false,
                 },
-
+                //检查发现问题
+                problemsFoundInspection:{
+                    activeNames:['0'],
+                    recordMessageItem:'',
+                },
+                //发现问题描述
+                descriptionProblemsFound:'',
+                //整改要求
+                rectificationRequirements:'',
             }
         },
         methods: {
             Submission() {
                 const that = this;
                 let timeStr = Date.parse(new Date());
-                if(this.searchValSel===''&&this.inspectionRecordNo===''&&this.selDangerProjectNameVal===''&&this.$route.params.LPHazardsList===''&&this.descriptionProblemsFound===''&&this.rectificationRequirements===''&&this.objectInvestigation===''&&this.hiddenDangerCategory&&this.hiddenDangerType===''&&this.checkdateVale===''&&this.dateVale===''&&this.newPersonChargeRectificationNameList===''&&this.newPersonCirculantNameList===''){
-                    alert('红色星号为必填项!!!');
-                }
                 let parameter = {
                     fId: this.fId,//提交或修改时传
                     isSubmit: '1',//1提交 0保存
@@ -195,7 +265,7 @@
                     userId:this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
                     fSourcefile: timeStr,//文件id,前端生成
-                    recordMessageItem: this.recordMessageItem//检查发现问题
+                    recordMessageItem: this.problemsFoundInspection.recordMessageItem//检查发现问题
                 };
                 HDAddedUrl(parameter)
                     .then(function (data) {
@@ -208,9 +278,6 @@
             save() {
                 const that = this;
                 let timeStr = Date.parse(new Date());
-                if(this.searchValSel===''&&this.inspectionRecordNo===''&&this.selDangerProjectNameVal===''&&this.$route.params.LPHazardsList===''&&this.descriptionProblemsFound===''&&this.rectificationRequirements===''&&this.objectInvestigation===''&&this.hiddenDangerCategory&&this.hiddenDangerType===''&&this.checkdateVale===''&&this.dateVale===''&&this.newPersonChargeRectificationNameList===''&&this.newPersonCirculantNameList===''){
-                    alert('红色星号为必填项!!!');
-                }
                 let parameter = {
                     fId: '',//提交或修改时传
                     isSubmit: '0',//1提交 0保存
@@ -240,7 +307,7 @@
                     userId:this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
                     fSourcefile: timeStr,//文件id,前端生成
-                    recordMessageItem: this.recordMessageItem//检查发现问题
+                    recordMessageItem: this.problemsFoundInspection.recordMessageItem//检查发现问题
                 };
                 HDAddedUrl(parameter)
                     .then(function (data) {
@@ -255,8 +322,8 @@
             },
             toLPHazards() {
                 const that = this;
-                if(this.recordMessageItem){
-                    this.$router.push({name: 'LPHazards',params:{LPHazardsList:that.recordMessageItem}});
+                if(this.problemsFoundInspection.recordMessageItem){
+                    this.$router.push({name: 'LPHazards',params:{LPHazardsList:that.problemsFoundInspection.recordMessageItem}});
                 }else {
                     this.$router.push({name: 'LPHazards'});
                 }
@@ -500,6 +567,15 @@
             showDangerProjectList(){
                 this.dangerProject.show = true;
             },
+            //选择排查对象
+            objectInvestigationSel(value){
+                this.objectInvestigation.show = false;
+                this.objectInvestigation.objectInvestigationName = value.name;
+                this.objectInvestigation.objectInvestigationId = value.fId;
+            },
+            showObjectInvestigationList(){
+                this.objectInvestigation.show = true;
+            },
             //获取当前坐标
             getLocation() {
                 const that = this;
@@ -551,9 +627,8 @@
             // }
         },
         activated() {
-            if(this.$route.params.LPHazardsList != undefined){
-                this.recordMessageItem = this.$route.params.LPHazardsList;
-                console.log(this.recordMessageItem);
+            if(this.$route.params.LPHazardsList !== undefined){
+                this.problemsFoundInspection.recordMessageItem = this.$route.params.LPHazardsList;
             }
         },
         computed: {
@@ -578,6 +653,7 @@
     .el-cascader-panel.is-bordered
         overflow-x auto
 
-    /deep/ .van-popup--center
-        padding 10px
+    .ProblemsFoundInspectionList
+        /deep/ .van-cell__title
+            flex 6
 </style>
