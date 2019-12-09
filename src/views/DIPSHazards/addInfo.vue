@@ -254,7 +254,13 @@
                 this.$router.push({name: 'NoSign'});
             },
             toLPHazards() {
-                this.$router.push({name: 'LPHazards'});
+                const that = this;
+                if(this.recordMessageItem){
+                    this.$router.push({name: 'LPHazards',params:{LPHazardsList:that.recordMessageItem}});
+                }else {
+                    this.$router.push({name: 'LPHazards'});
+                }
+
             },
 
             getCompanyTreeList() {
@@ -547,6 +553,7 @@
         activated() {
             if(this.$route.params.LPHazardsList != undefined){
                 this.recordMessageItem = this.$route.params.LPHazardsList;
+                console.log(this.recordMessageItem);
             }
         },
         computed: {

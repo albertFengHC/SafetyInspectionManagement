@@ -116,6 +116,7 @@
                 if(e === 0){
                     this.$router.push({name: 'addInfo'});
                 }else {
+                    console.log(that.newDangerList);
                     this.$router.push({name: 'addInfo',params:{LPHazardsList:that.newDangerList}});
                 }
             },
@@ -223,12 +224,16 @@
             listDel(id){
                 this.newDangerList = this.newDangerList.filter(data => data.fItemid !== id);
                 this.checkBoxDangerList = this.checkBoxDangerList.filter(data => data !== id);
-                console.log(this.newDangerList);
-                console.log(this.checkBoxDangerList);
             }
         },
         mounted() {
             this.getDangerTreeData();
+        },
+        activated() {
+            if(this.$route.params.LPHazardsList != undefined){
+                this.newDangerList = this.$route.params.LPHazardsList;
+                console.log(this.newDangerList);
+            }
         },
         computed: {
             ...mapState(['companyTree', 'userInfo'])
