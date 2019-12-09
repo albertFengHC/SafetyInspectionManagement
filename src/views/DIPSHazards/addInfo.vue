@@ -46,7 +46,7 @@
                             placeholder="检查记录编号"
                             input-align="right"
                     />
-                    <van-cell is-link @click="showDatePopup">检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span></van-cell>
+                    <van-cell is-link @click="showDatePopup" required>检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span></van-cell>
                     <van-popup
                         v-model="checkDatePop.show"
                         :style="{ width: '100%' }"
@@ -166,6 +166,47 @@
                             @click-right-icon="showObjectInvestigationList"
                     />
                     <van-action-sheet v-model="objectInvestigation.show" :actions="objectInvestigation.objectInvestigationList" @select="objectInvestigationSel" />
+                    <van-field
+                            v-model="hiddenDangerCategory.hiddenDangerCategoryName"
+                            required
+                            clearable
+                            label="隐患类别"
+                            placeholder="选择"
+                            disabled
+                            input-align="right"
+                            label-width="120px"
+                            right-icon="plus"
+                            @click-right-icon="showHiddenDangerCategoryList"
+                    />
+                    <van-action-sheet v-model="hiddenDangerCategory.show" :actions="hiddenDangerCategory.hiddenDangerCategoryList" @select="hiddenDangerCategorySel" />
+                    <van-field
+                            v-model="hiddenDangerType.hiddenDangerTypeName"
+                            required
+                            clearable
+                            label="隐患类型"
+                            placeholder="选择"
+                            disabled
+                            input-align="right"
+                            label-width="120px"
+                            right-icon="plus"
+                            @click-right-icon="showHiddenDangerTypeList"
+                    />
+                    <van-action-sheet v-model="hiddenDangerType.show" :actions="hiddenDangerType.hiddenDangerTypeList" @select="hiddenDangerTypeSel" />
+                    <van-cell is-link @click="showDeadlineRectificationPop" required>整改截止时间<span style="position: absolute;right: 10px">{{deadlineRectification.timeValue}}</span></van-cell>
+                    <van-popup
+                            v-model="deadlineRectificationPop.show"
+                            :style="{ width: '100%' }"
+                    >
+                        <van-datetime-picker
+                                v-model="deadlineRectification.currentDate"
+                                type="datetime"
+                                :min-date="deadlineRectification.minDate"
+                                :formatter="dateFormatter"
+                                @confirm="confirmDeadlineRectification"
+                                @cancel="hideDeadlineRectificationPop"
+                                @change="getChangeValue"
+                        />
+                    </van-popup>
                 </van-cell-group>
             </div>
         </van-card>
@@ -207,7 +248,18 @@
                 objectInvestigation:{
                     objectInvestigationList:[],
                     objectInvestigationName:'',
-                    objectInvestigationId:'',
+                    show: false,
+                },
+                //隐患类别
+                hiddenDangerCategory:{
+                    hiddenDangerCategoryList:[],
+                    hiddenDangerCategoryName:'',
+                    show: false,
+                },
+                //隐患类型
+                hiddenDangerType:{
+                    hiddenDangerTypeList:[],
+                    hiddenDangerTypeName:'',
                     show: false,
                 },
                 //检查时间
@@ -219,6 +271,17 @@
                 },
                 //检查时间弹出层
                 checkDatePop:{
+                    show: false,
+                },
+                //整改截止时间
+                deadlineRectification:{
+                    minDate: new Date(),
+                    // maxDate: new Date(2019, 10, 1),
+                    currentDate: new Date(),
+                    timeValue:'',
+                },
+                //整改截止时间弹出层
+                deadlineRectificationPop:{
                     show: false,
                 },
                 //检查发现问题
@@ -480,7 +543,6 @@
                         });
                 }
             },
-
             //选择被检查单位
             searchValSelF(e) {
                 // const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
@@ -558,6 +620,48 @@
                     return `${value}分`
                 }
             },
+            //整改截止时间弹出层
+            showDeadlineRectificationPop() {
+                this.deadlineRectificationPop.show = true;
+            },
+            hideDeadlineRectificationPop(val) {
+                this.deadlineRectificationPop.show = false;
+            },
+            getNewDeadlineRectification(){
+                let date = this.deadlineRectification.currentDate;
+                let seperator1 = "-";
+                let seperator2 = ":";
+                let month = date.getMonth() + 1;
+                let hours = date.getHours();
+                let minutes = date.getMinutes();
+                let strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                if (hours >= 0 && hours <= 9) {
+                    hours = "0" + hours;
+                }
+                if (minutes >= 0 && minutes <= 9) {
+                    minutes = "0" + minutes;
+                }
+                this.deadlineRectification.timeValue =
+                    date.getFullYear() +
+                    seperator1 +
+                    month +
+                    seperator1 +
+                    strDate +
+                    " " +
+                    hours +
+                    seperator2 +
+                    minutes;
+            },
+            confirmDeadlineRectification(){
+                this.getNewDeadlineRectification();
+                this.deadlineRectificationPop.show = false;
+            },
             //选择存在隐患工程名称
             dangerProjectSel(value){
                 this.dangerProject.show = false;
@@ -571,10 +675,40 @@
             objectInvestigationSel(value){
                 this.objectInvestigation.show = false;
                 this.objectInvestigation.objectInvestigationName = value.name;
-                this.objectInvestigation.objectInvestigationId = value.fId;
             },
             showObjectInvestigationList(){
                 this.objectInvestigation.show = true;
+            },
+            getObjectInvestigationList(){
+                this.testObject.map(data=>{
+                    this.objectInvestigation.objectInvestigationList.push({name:data.fItemName});
+                });
+            },
+            //选择隐患类别
+            hiddenDangerCategorySel(value){
+                this.hiddenDangerCategory.show = false;
+                this.hiddenDangerCategory.hiddenDangerCategoryName = value.name;
+            },
+            showHiddenDangerCategoryList(){
+                this.hiddenDangerCategory.show = true;
+            },
+            getHiddenDangerCategoryList(){
+                this.trapLevel.map(data=>{
+                    this.hiddenDangerCategory.hiddenDangerCategoryList.push({name:data.fItemName});
+                });
+            },
+            //选择隐患类型
+            hiddenDangerTypeSel(value){
+                this.hiddenDangerType.show = false;
+                this.hiddenDangerType.hiddenDangerTypeName = value.name;
+            },
+            showHiddenDangerTypeList(){
+                this.hiddenDangerType.show = true;
+            },
+            getHiddenDangerTypeList(){
+                this.trapType.map(data=>{
+                    this.hiddenDangerType.hiddenDangerTypeList.push({name:data.fItemName});
+                });
             },
             //获取当前坐标
             getLocation() {
@@ -622,9 +756,9 @@
             this.getCompanyTreeList();
             this.getDangerTreeData();
             this.getLocation();
-            // if(this.$route.params.LPHazardsList != undefined){
-            //     this.recordMessageItem = this.$route.params.LPHazardsList;
-            // }
+            this.getObjectInvestigationList();
+            this.getHiddenDangerCategoryList();
+            this.getHiddenDangerTypeList();
         },
         activated() {
             if(this.$route.params.LPHazardsList !== undefined){
