@@ -207,11 +207,11 @@
                                 @change="getChangeValue"
                         />
                     </van-popup>
-
+                    <van-uploader v-model="fileList" multiple  upload-text="照片资料附件" :after-read="afterReadFile"/>
                 </van-cell-group>
             </div>
         </van-card>
-        <van-uploader v-model="fileList" multiple  upload-text="照片资料附件" :after-read="afterReadFile"/>
+
 <!--        <van-card>-->
 <!--            <div slot="tags">-->
 <!--                <van-cell-group>-->
