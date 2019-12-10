@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// const baseUrl = 'http://192.168.1.4:8080/safeScreen/App/';
+// const baseUrl = 'http://192.168.1.2:8080/safeScreen/App/';
 const baseUrl = 'http://129.28.66.56:8044/safeScreen/App/';
 
 //登录
@@ -218,6 +218,25 @@ export function HDRsubmissionUrl(parameter){
             method: 'post',
             url: baseUrl+'CheckTrap/submitTrapDailyReview.do',
             data: parameter,
+        })
+            .then(response => {
+                resolve(response.data.data);
+            })
+            .catch(function (error) {
+                // console.log(error);
+            });
+    })
+}
+
+//图片上传
+export function ImgUploadUrl(parameter){
+    return new Promise((resolve,reject) => {
+        axios({
+            method: 'post',
+            // url: baseUrl+'upload/uploadFile.do',
+            url: baseUrl+'upload/springUpload.do',
+            data: parameter,
+            // headers: {'Content-Type': 'multipart/form-data'}
         })
             .then(response => {
                 resolve(response.data.data);

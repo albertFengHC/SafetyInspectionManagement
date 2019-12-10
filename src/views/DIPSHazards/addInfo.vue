@@ -207,24 +207,47 @@
                                 @change="getChangeValue"
                         />
                     </van-popup>
-                    <van-uploader v-model="fileList" multiple  upload-text="照片资料附件" :after-read="afterReadFile"/>
+                    <van-uploader v-model="fileList" multiple  upload-text="照片附件" :after-read="afterReadFile"/>
                 </van-cell-group>
             </div>
         </van-card>
-
-<!--        <van-card>-->
-<!--            <div slot="tags">-->
-<!--                <van-cell-group>-->
-
-<!--                </van-cell-group>-->
-<!--            </div>-->
-<!--        </van-card>-->
+        <van-card>
+            <div slot="tags">
+                <van-cell-group>
+                    <van-steps direction="vertical" :active="2">
+                        <van-step>
+                            <van-row>
+                                <van-col span="19">
+                                    <h4>整改责任人</h4>
+                                    <p>2016-07-12 12:40</p>
+                                </van-col>
+                                <van-col span="5">
+                                    <van-button plain type="default" size="small">请选择</van-button>
+                                </van-col>
+                            </van-row>
+                        </van-step>
+                        <van-step>
+                            <van-row>
+                                <van-col span="19">
+                                    <h4>传阅人</h4>
+                                    <p>2016-07-12 12:40</p>
+                                </van-col>
+                                <van-col span="5">
+                                    <van-button plain type="default" size="small">请选择</van-button>
+                                </van-col>
+                            </van-row>
+                        </van-step>
+                    </van-steps>
+                </van-cell-group>
+            </div>
+        </van-card>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
     import {mapState} from "vuex";
-    import {CRCPersonUrl, NCOScheduleAddUrl,HDAddedUrl,HDVSiIUrl} from "../../urlBase";
+    import {CRCPersonUrl, NCOScheduleAddUrl,HDAddedUrl,HDVSiIUrl,ImgUploadUrl} from "../../urlBase";
 
     export default {
         name: "addInfo",
@@ -764,7 +787,37 @@
             //图片资料上传
             afterReadFile(file){
                 console.log(file);
+                const that = this;
+                // let img = file.file;
+                // let params = new FormData();
+                // console.log(params);
+                // params.append('file', img);
+                let imgList =[];
+                // console.log(img);
+                imgList.push(file);
+                let timeStr = Date.parse(new Date()).toString();
+                let parameter = {
+                    content:file.content,
+                    filename:file.file.name,
+                    folderid: timeStr,
+                    userName: this.userInfo.realName,
+                    userId: this.userInfo.userId,
+                };
+                console.log(parameter);
+                // let obj1={a:1};
+                // let obj2={b:3,c:1};
+                // Object.assign(obj1,obj2);//第一个元素是要追加的对象，之后的是要添加的对象，可以传多个
+                // console.log(obj1);
+
+                ImgUploadUrl(parameter)
+                    .then(function (data) {
+                        console.log(data);
+                    })
+                    .catch(data => {
+
+                    });
             },
+
         },
         mounted() {
             this.getHDVSiIData();
