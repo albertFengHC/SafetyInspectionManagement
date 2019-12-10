@@ -207,9 +207,18 @@
                                 @change="getChangeValue"
                         />
                     </van-popup>
+
                 </van-cell-group>
             </div>
         </van-card>
+        <van-uploader v-model="fileList" multiple  upload-text="照片资料附件" :after-read="afterReadFile"/>
+<!--        <van-card>-->
+<!--            <div slot="tags">-->
+<!--                <van-cell-group>-->
+
+<!--                </van-cell-group>-->
+<!--            </div>-->
+<!--        </van-card>-->
     </div>
 </template>
 
@@ -293,6 +302,8 @@
                 descriptionProblemsFound:'',
                 //整改要求
                 rectificationRequirements:'',
+                //图片文件上传
+                fileList:[]
             }
         },
         methods: {
@@ -749,6 +760,10 @@
                 function onError (obj){
                     // console.log(obj.info + '--' + obj.message);
                 }
+            },
+            //图片资料上传
+            afterReadFile(file){
+                console.log(file);
             },
         },
         mounted() {

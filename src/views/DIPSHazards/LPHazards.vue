@@ -6,14 +6,46 @@
                 left-arrow
                 @click-left="toAddInfo(0)"
         />
-        <el-cascader-panel
-                :options="DangerTreeProject.list"
-                v-model="DangerTreeProject.value"
-                :props="{ expandTrigger: 'hover' }"
-                :show-all-levels="true"
-                @change="handleChange"
-                ref="DangerTree"
-        />
+        <div class="contentBox">
+            <el-cascader-panel
+                    :options="DangerTreeProject.list"
+                    v-model="DangerTreeProject.value"
+                    :props="{ expandTrigger: 'hover' }"
+                    :show-all-levels="true"
+                    @change="handleChange"
+                    ref="DangerTree"
+                    class="DangerTreeProject"
+            />
+            <van-card title="已选隐患清单" class="newDangerList">
+                <div slot="tags">
+                    <!--                <div class="problemsInfoList" v-for="item in newDangerList" :value="item.fId" :key="item.fId">-->
+                    <!--                    <div class="problemsInfoListTitle">-->
+                    <!--                        <p>{{item.fItemno}}</p>-->
+                    <!--                        <p style="color: #ce0c0c">{{item.fTraplevel}}</p>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="problemsInfoListContent">-->
+                    <!--                        <p style="color: #606266">{{item.fItemname}}</p>-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
+
+                    <van-swipe-cell v-for="(item, index) in newDangerList" :name="item.fId">
+                        <van-cell
+                                clickable
+                                size="large"
+                                :key="item.fItemid"
+                                :title="`${item.fItemno}`"
+                                :value="`${item.fTraplevel}`"
+                                :label="`${item.fItemname}`"
+                        >
+                        </van-cell>
+                        <template slot="right">
+                            <van-button square type="danger" text="删除" @click="listDel(item.fItemid)"/>
+                        </template>
+                    </van-swipe-cell>
+                </div>
+            </van-card>
+        </div>
+
         <van-popup
                 v-model="DangerTreeData.show"
                 closeable
@@ -47,34 +79,7 @@
             </van-checkbox-group>
 
         </van-popup>
-        <van-card title="已选隐患清单">
-            <div slot="tags">
-<!--                <div class="problemsInfoList" v-for="item in newDangerList" :value="item.fId" :key="item.fId">-->
-<!--                    <div class="problemsInfoListTitle">-->
-<!--                        <p>{{item.fItemno}}</p>-->
-<!--                        <p style="color: #ce0c0c">{{item.fTraplevel}}</p>-->
-<!--                    </div>-->
-<!--                    <div class="problemsInfoListContent">-->
-<!--                        <p style="color: #606266">{{item.fItemname}}</p>-->
-<!--                    </div>-->
-<!--                </div>-->
 
-                <van-swipe-cell v-for="(item, index) in newDangerList" :name="item.fId">
-                    <van-cell
-                            clickable
-                            size="large"
-                            :key="item.fItemid"
-                            :title="`${item.fItemno}`"
-                            :value="`${item.fTraplevel}`"
-                            :label="`${item.fItemname}`"
-                    >
-                    </van-cell>
-                    <template slot="right">
-                        <van-button square type="danger" text="删除" @click="listDel(item.fItemid)"/>
-                    </template>
-                </van-swipe-cell>
-            </div>
-        </van-card>
         <div class="bottom">
             <van-button type="primary" round  size="small" style='width: 70%' @click="toAddInfo(1)">保存</van-button>
         </div>
@@ -224,7 +229,7 @@
             listDel(id){
                 this.newDangerList = this.newDangerList.filter(data => data.fItemid !== id);
                 this.checkBoxDangerList = this.checkBoxDangerList.filter(data => data !== id);
-            }
+            },
         },
         mounted() {
             this.getDangerTreeData();
@@ -247,6 +252,20 @@
         height 100%
         margin 0
         color #333
+
+    .contentBox
+        display flex
+        flex-direction column
+
+    .DangerTreeProject
+        /*position  fixed*/
+        /*width 100%*/
+
+    .newDangerList
+        position fixed
+        top 31%
+        width 100%
+        overflow-y auto
 
     .problemsInfoList
         padding 10px
