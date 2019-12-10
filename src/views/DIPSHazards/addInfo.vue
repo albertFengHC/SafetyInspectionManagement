@@ -326,7 +326,13 @@
                 //整改要求
                 rectificationRequirements:'',
                 //图片文件上传
-                fileList:[]
+                fileList:[],
+                //整改责任人及传阅人
+                personChargeRectificationCirculant:{
+                    oldList:'',
+                    newList:[],
+                    list:''
+                }
             }
         },
         methods: {
@@ -471,16 +477,16 @@
                     });
             },
 
-
             //整改责任人及传阅人
             getCRCPersonData(){
                 const that = this;
                 let parameter = {
-                    companyId: this.inspectedCompanyId
+                    companyId: this.inspectedCompany.inspectedCompanyId
                 };
                 CRCPersonUrl(parameter)
                     .then(function (data) {
-                        that.personChargeRectificationCirculantOld = data;
+                        that.personChargeRectificationCirculant.oldList = data;
+                        console.log(data);
                         that.getNewPersonList(data);
                     })
                     .catch(data => {
@@ -495,35 +501,35 @@
                     if (value.childList.length) {
                         value.childList.map(item =>{
                             child.push({
-                                title: item.fFullName,
-                                id: item.fDepartmentId,
+                                label: item.fFullName,
+                                value: item.fDepartmentId,
                             });
                             if(item.personList.length){
-                                this.newPersonChargeRectificationCirculant.push(item);
+                                this.personChargeRectificationCirculant.newList.push(item);
                             }
                         });
                         if(value.personList.length){
-                            this.newPersonChargeRectificationCirculant.push(value);
+                            this.personChargeRectificationCirculant.newList.push(value);
                         }
                         return {
                             // ...item,
-                            title: value.fFullName,
-                            id: value.fDepartmentId,
+                            label: value.fFullName,
+                            value: value.fDepartmentId,
                             children: child
                         }
                     } else {
                         if(value.personList.length){
-                            this.newPersonChargeRectificationCirculant.push(value);
+                            this.personChargeRectificationCirculant.newList.push(value);
                         }
                         return {
                             // ...item,
-                            title: value.fFullName,
-                            id: value.fDepartmentId,
+                            label: value.fFullName,
+                            value: value.fDepartmentId,
                         }
                     }
                 };
                 newPerson.push(resetTree(newPersonTree));
-                this.personChargeRectificationCirculant = newPerson;
+                this.personChargeRectificationCirculant.list = newPerson;
             },
 
             //展示被检查公司树形列表
@@ -581,6 +587,7 @@
             searchValSelF(e) {
                 // const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
                 this.inspectedCompany.searchValSel = e.label;
+                this.inspectedCompany.inspectedCompanyId = e.value;
                 let list = this.dangerProject.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
                 let dangerProjectList = [];
                 list.map(data=>{
@@ -787,14 +794,6 @@
             //图片资料上传
             afterReadFile(file){
                 console.log(file);
-                const that = this;
-                // let img = file.file;
-                // let params = new FormData();
-                // console.log(params);
-                // params.append('file', img);
-                let imgList =[];
-                // console.log(img);
-                imgList.push(file);
                 let timeStr = Date.parse(new Date()).toString();
                 let parameter = {
                     content:file.content,
@@ -803,15 +802,9 @@
                     userName: this.userInfo.realName,
                     userId: this.userInfo.userId,
                 };
-                console.log(parameter);
-                // let obj1={a:1};
-                // let obj2={b:3,c:1};
-                // Object.assign(obj1,obj2);//第一个元素是要追加的对象，之后的是要添加的对象，可以传多个
-                // console.log(obj1);
-
                 ImgUploadUrl(parameter)
                     .then(function (data) {
-                        console.log(data);
+
                     })
                     .catch(data => {
 
