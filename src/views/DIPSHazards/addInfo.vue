@@ -223,12 +223,12 @@
         <van-card>
             <div slot="tags">
                 <van-cell-group>
-                    <van-steps direction="vertical" :active="2">
+                    <van-steps direction="vertical" :active="personChargeRectificationCirculant.active">
                         <van-step>
                             <van-row>
                                 <van-col span="19">
                                     <h4>整改责任人</h4>
-                                    <p>2016-07-12 12:40</p>
+                                    <p>{{personChargeRectificationCirculant.personLiableName}}</p>
                                 </van-col>
                                 <van-col span="5">
                                     <van-button plain type="default" size="small" @click="showDepartmentTree(1)">请选择
@@ -240,7 +240,7 @@
                             <van-row>
                                 <van-col span="19">
                                     <h4>传阅人</h4>
-                                    <p>2016-07-12 12:40</p>
+                                    <p>{{personChargeRectificationCirculant.circulantName}}</p>
                                 </van-col>
                                 <van-col span="5">
                                     <van-button plain type="default" size="small" @click="showDepartmentTree(2)">请选择
@@ -259,9 +259,9 @@
                             :highlight-current="true"
                             @node-click="departmentSel">
                     </el-tree>
-                    <van-checkbox-group v-model="personChargeRectificationCirculant.personLiableList" class="personCheck" @change="checkboxPersonLiableChange">
-                        <van-checkbox :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.personLiableListShow">{{item.fStaffName}}</van-checkbox>
-                    </van-checkbox-group>
+                    <van-radio-group v-model="personChargeRectificationCirculant.personLiableList" class="personCheck" @change="checkboxPersonLiableChange">
+                        <van-radio :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.personLiableListShow">{{item.fStaffName}}</van-radio>
+                    </van-radio-group>
                     <van-checkbox-group v-model="personChargeRectificationCirculant.circulantList" class="personCheck" @change="checkboxCirculantChange">
                         <van-checkbox :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.circulantListShow">{{item.fStaffName}}</van-checkbox>
                     </van-checkbox-group>
@@ -361,12 +361,17 @@
                     departmentList: '',
                     newPersonList: [],
                     show:false,
+                    active:2,
                     //责任人
                     personLiableList:[],
                     personLiableListShow:false,
+                    personLiableName:'',
+                    personLiableId:'',
                     //传阅人
                     circulantList: [],
-                    circulantListShow:false
+                    circulantListShow:false,
+                    circulantName:'',
+                    circulantId:'',
                 }
             }
         },
@@ -589,12 +594,32 @@
             //改变整改责任人
             checkboxPersonLiableChange(e){
                 console.log(e);
-
+                const that = this;
+                this.personChargeRectificationCirculant.personLiableName = e;
+                this.personChargeRectificationCirculant.personLiableId = that.personChargeRectificationCirculant.newPersonList.filter(name => name.fStaffName === e)[0].fId;
+                if(this.personChargeRectificationCirculant.personLiableName){
+                    this.personChargeRectificationCirculant.active = 0;
+                }
             },
             //改变传阅人
             checkboxCirculantChange(e){
                 console.log(e);
-
+                const that = this;
+                let PersonLiable = [];
+                e.map(data => {
+                    PersonLiable.push(that.personChargeRectificationCirculant.newPersonList.filter(name => name.fStaffName === data)[0]);
+                });
+                let newPersonLiableName = '';
+                let newPersonLiableId = '';
+                PersonLiable.map(data => {
+                    newPersonLiableName += data.fStaffName+',';
+                    newPersonLiableId += data.fId+','
+                });
+                this.personChargeRectificationCirculant.circulantName = newPersonLiableName.substr(0, newPersonLiableName.length - 1);
+                this.personChargeRectificationCirculant.circulantId = newPersonLiableId.substr(0, newPersonLiableId.length - 1);
+                if(this.personChargeRectificationCirculant.circulantName){
+                    this.personChargeRectificationCirculant.active = 1;
+                }
             },
 
             //展示被检查公司树形列表
