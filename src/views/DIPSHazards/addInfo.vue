@@ -20,7 +20,8 @@
                             disabled
                             @click-right-icon="showCompanyList"
                     />
-                    <van-popup v-model="inspectedCompany.show" :lock-scroll="false"  :style="{ width: '100%',height:'50%' }">
+                    <van-popup v-model="inspectedCompany.show" :lock-scroll="false"
+                               :style="{ width: '100%',height:'50%' }">
                         <el-tree
                                 :data="inspectedCompany.companyTreeList"
                                 accordion
@@ -30,13 +31,13 @@
                         </el-tree>
 
                         <!--                        <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>-->
-<!--                        <el-cascader-panel-->
-<!--                                :options="inspectedCompany.companyTreeList"-->
-<!--                                v-model="inspectedCompany.searchValSel"-->
-<!--                                :props="{ expandTrigger: 'hover'}"-->
-<!--                                @change="searchValSelF"-->
-<!--                                ref="companyTree"-->
-<!--                        />-->
+                        <!--                        <el-cascader-panel-->
+                        <!--                                :options="inspectedCompany.companyTreeList"-->
+                        <!--                                v-model="inspectedCompany.searchValSel"-->
+                        <!--                                :props="{ expandTrigger: 'hover'}"-->
+                        <!--                                @change="searchValSelF"-->
+                        <!--                                ref="companyTree"-->
+                        <!--                        />-->
                     </van-popup>
                     <van-field
                             v-model="inspectionRecordNo"
@@ -46,10 +47,11 @@
                             placeholder="检查记录编号"
                             input-align="right"
                     />
-                    <van-cell is-link @click="showDatePopup" required>检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span></van-cell>
+                    <van-cell is-link @click="showDatePopup" required>检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span>
+                    </van-cell>
                     <van-popup
-                        v-model="checkDatePop.show"
-                        :style="{ width: '100%' }"
+                            v-model="checkDatePop.show"
+                            :style="{ width: '100%' }"
                     >
                         <van-datetime-picker
                                 v-model="checkDate.currentDate"
@@ -79,19 +81,20 @@
                             @click-right-icon="showDangerProjectList"
                     />
                 </van-cell-group>
-                <van-action-sheet v-model="dangerProject.show" :actions="dangerProject.dangerProjectList" @select="dangerProjectSel" />
+                <van-action-sheet v-model="dangerProject.show" :actions="dangerProject.dangerProjectList"
+                                  @select="dangerProjectSel"/>
                 <van-cell-group>
                     <van-field
-                            v-model= 'coordinate.cot'
+                            v-model='coordinate.cot'
                             required
                             clearable
                             label="经度/纬度"
                             disabled
                             input-align="right"
                     />
-                <div class="mapBox">
-                    <div ref="map" class="map"></div>
-                </div>
+                    <div class="mapBox">
+                        <div ref="map" class="map"></div>
+                    </div>
                 </van-cell-group>
             </div>
         </van-card>
@@ -165,7 +168,9 @@
                             right-icon="plus"
                             @click-right-icon="showObjectInvestigationList"
                     />
-                    <van-action-sheet v-model="objectInvestigation.show" :actions="objectInvestigation.objectInvestigationList" @select="objectInvestigationSel" />
+                    <van-action-sheet v-model="objectInvestigation.show"
+                                      :actions="objectInvestigation.objectInvestigationList"
+                                      @select="objectInvestigationSel"/>
                     <van-field
                             v-model="hiddenDangerCategory.hiddenDangerCategoryName"
                             required
@@ -178,7 +183,9 @@
                             right-icon="plus"
                             @click-right-icon="showHiddenDangerCategoryList"
                     />
-                    <van-action-sheet v-model="hiddenDangerCategory.show" :actions="hiddenDangerCategory.hiddenDangerCategoryList" @select="hiddenDangerCategorySel" />
+                    <van-action-sheet v-model="hiddenDangerCategory.show"
+                                      :actions="hiddenDangerCategory.hiddenDangerCategoryList"
+                                      @select="hiddenDangerCategorySel"/>
                     <van-field
                             v-model="hiddenDangerType.hiddenDangerTypeName"
                             required
@@ -191,8 +198,10 @@
                             right-icon="plus"
                             @click-right-icon="showHiddenDangerTypeList"
                     />
-                    <van-action-sheet v-model="hiddenDangerType.show" :actions="hiddenDangerType.hiddenDangerTypeList" @select="hiddenDangerTypeSel" />
-                    <van-cell is-link @click="showDeadlineRectificationPop" required>整改截止时间<span style="position: absolute;right: 10px">{{deadlineRectification.timeValue}}</span></van-cell>
+                    <van-action-sheet v-model="hiddenDangerType.show" :actions="hiddenDangerType.hiddenDangerTypeList"
+                                      @select="hiddenDangerTypeSel"/>
+                    <van-cell is-link @click="showDeadlineRectificationPop" required>整改截止时间<span
+                            style="position: absolute;right: 10px">{{deadlineRectification.timeValue}}</span></van-cell>
                     <van-popup
                             v-model="deadlineRectificationPop.show"
                             :style="{ width: '100%' }"
@@ -207,7 +216,7 @@
                                 @change="getChangeValue"
                         />
                     </van-popup>
-                    <van-uploader v-model="fileList" multiple  upload-text="照片附件" :after-read="afterReadFile"/>
+                    <van-uploader v-model="fileList" multiple upload-text="照片附件" :after-read="afterReadFile"/>
                 </van-cell-group>
             </div>
         </van-card>
@@ -222,7 +231,8 @@
                                     <p>2016-07-12 12:40</p>
                                 </van-col>
                                 <van-col span="5">
-                                    <van-button plain type="default" size="small">请选择</van-button>
+                                    <van-button plain type="default" size="small" @click="showDepartmentTree">请选择
+                                    </van-button>
                                 </van-col>
                             </van-row>
                         </van-step>
@@ -233,13 +243,15 @@
                                     <p>2016-07-12 12:40</p>
                                 </van-col>
                                 <van-col span="5">
-                                    <van-button plain type="default" size="small">请选择</van-button>
+                                    <van-button plain type="default" size="small" @click="showDepartmentTree">请选择
+                                    </van-button>
                                 </van-col>
                             </van-row>
                         </van-step>
                     </van-steps>
                 </van-cell-group>
-                <van-popup v-model="personChargeRectificationCirculant.show" :lock-scroll="false"  :style="{ width: '100%',height:'50%' }">
+                <van-popup v-model="personChargeRectificationCirculant.show" :lock-scroll="false"
+                           :style="{ width: '100%',height:'50%' }">
                     <el-tree
                             :data="personChargeRectificationCirculant.departmentList"
                             accordion
@@ -247,6 +259,9 @@
                             :highlight-current="true"
                             @node-click="departmentSel">
                     </el-tree>
+                    <van-checkbox-group v-model="personChargeRectificationCirculant.checkBoxPersonList" >
+                        <van-checkbox name="" v-for="(item, index) in personChargeRectificationCirculant.newPersonList" @change="checkboxPersonChange">{{item.fStaffName}}</van-checkbox>
+                    </van-checkbox-group>
                 </van-popup>
             </div>
         </van-card>
@@ -256,7 +271,7 @@
 <script>
     import axios from 'axios';
     import {mapState} from "vuex";
-    import {CRCPersonUrl, NCOScheduleAddUrl,HDAddedUrl,HDVSiIUrl,ImgUploadUrl} from "../../urlBase";
+    import {CRCPersonUrl, NCOScheduleAddUrl, HDAddedUrl, HDVSiIUrl, ImgUploadUrl} from "../../urlBase";
 
     export default {
         name: "addInfo",
@@ -264,84 +279,86 @@
             return {
                 //检查记录编号
                 inspectionRecordNo: '',
-                inspectionRecordNoId:'',
+                inspectionRecordNoId: '',
                 //经纬度
-                coordinate:{
+                coordinate: {
                     lat: '',
                     lng: '',
-                    cot:''
+                    cot: ''
                 },
                 //被检查单位
-                inspectedCompany:{
-                    searchValSel:'',
-                    inspectedCompanyId:'',
+                inspectedCompany: {
+                    searchValSel: '',
+                    inspectedCompanyId: '',
                     companyDangerTree: [],
                     show: false
                 },
                 //存在隐患工程名称
-                dangerProject:{
-                    dangerProjectList:[],
-                    dangerProjectName:'',
-                    dangerProjectId:'',
+                dangerProject: {
+                    dangerProjectList: [],
+                    dangerProjectName: '',
+                    dangerProjectId: '',
                     show: false,
                 },
                 //排查对象
-                objectInvestigation:{
-                    objectInvestigationList:[],
-                    objectInvestigationName:'',
+                objectInvestigation: {
+                    objectInvestigationList: [],
+                    objectInvestigationName: '',
                     show: false,
                 },
                 //隐患类别
-                hiddenDangerCategory:{
-                    hiddenDangerCategoryList:[],
-                    hiddenDangerCategoryName:'',
+                hiddenDangerCategory: {
+                    hiddenDangerCategoryList: [],
+                    hiddenDangerCategoryName: '',
                     show: false,
                 },
                 //隐患类型
-                hiddenDangerType:{
-                    hiddenDangerTypeList:[],
-                    hiddenDangerTypeName:'',
+                hiddenDangerType: {
+                    hiddenDangerTypeList: [],
+                    hiddenDangerTypeName: '',
                     show: false,
                 },
                 //检查时间
-                checkDate:{
+                checkDate: {
                     minDate: new Date(),
                     // maxDate: new Date(2019, 10, 1),
                     currentDate: new Date(),
-                    timeValue:'',
+                    timeValue: '',
                 },
                 //检查时间弹出层
-                checkDatePop:{
+                checkDatePop: {
                     show: false,
                 },
                 //整改截止时间
-                deadlineRectification:{
+                deadlineRectification: {
                     minDate: new Date(),
                     // maxDate: new Date(2019, 10, 1),
                     currentDate: new Date(),
-                    timeValue:'',
+                    timeValue: '',
                 },
                 //整改截止时间弹出层
-                deadlineRectificationPop:{
+                deadlineRectificationPop: {
                     show: false,
                 },
                 //检查发现问题
-                problemsFoundInspection:{
-                    activeNames:['0'],
-                    recordMessageItem:'',
+                problemsFoundInspection: {
+                    activeNames: ['0'],
+                    recordMessageItem: '',
                 },
                 //发现问题描述
-                descriptionProblemsFound:'',
+                descriptionProblemsFound: '',
                 //整改要求
-                rectificationRequirements:'',
+                rectificationRequirements: '',
                 //图片文件上传
-                fileList:[],
+                fileList: [],
                 //整改责任人及传阅人
-                personChargeRectificationCirculant:{
-                    List:'',
-                    personList:[],
-                    departmentList:'',
-                    show:false
+                personChargeRectificationCirculant: {
+                    List: '',
+                    personList: [],
+                    departmentList: '',
+                    show: false,
+                    newPersonList: [],
+                    checkBoxPersonList: []
                 }
             }
         },
@@ -368,14 +385,14 @@
                     fTraptype: this.hiddenDangerType,//隐患类型
                     fCheckid: this.userInfo.userId,//检查人id
                     fCheckname: this.userInfo.realName,//检查人
-                    fStatus:'',//状态
+                    fStatus: '',//状态
                     fCheckdates: this.checkdateVale,//检查时间
                     fLastdates: this.dateVale,//整改截止日期
                     fAcceptid: this.newPersonChargeRectificationNameListId,//待签收人id
                     fAcceptname: this.newPersonChargeRectificationNameList,//待签收人
                     fReadid: this.newPersonCirculantNameListId,//待传阅人id
                     fReadname: this.newPersonCirculantNameList,//待传阅人
-                    userId:this.userInfo.userId,//当前用户id
+                    userId: this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
                     fSourcefile: timeStr,//文件id,前端生成
                     recordMessageItem: this.problemsFoundInspection.recordMessageItem//检查发现问题
@@ -410,14 +427,14 @@
                     fTraptype: this.hiddenDangerType,//隐患类型
                     fCheckid: this.userInfo.userId,//检查人id
                     fCheckname: this.userInfo.realName,//检查人
-                    fStatus:'',//状态
+                    fStatus: '',//状态
                     fCheckdates: this.checkdateVale,//检查时间
                     fLastdates: this.dateVale,//整改截止日期
                     fAcceptid: this.newPersonChargeRectificationNameListId,//待签收人id
                     fAcceptname: this.newPersonChargeRectificationNameList,//待签收人
                     fReadid: this.newPersonCirculantNameListId,//待传阅人id
                     fReadname: this.newPersonCirculantNameList,//待传阅人
-                    userId:this.userInfo.userId,//当前用户id
+                    userId: this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
                     fSourcefile: timeStr,//文件id,前端生成
                     recordMessageItem: this.problemsFoundInspection.recordMessageItem//检查发现问题
@@ -435,14 +452,17 @@
             },
             toLPHazards() {
                 const that = this;
-                if(this.problemsFoundInspection.recordMessageItem){
-                    this.$router.push({name: 'LPHazards',params:{LPHazardsList:that.problemsFoundInspection.recordMessageItem}});
-                }else {
+                if (this.problemsFoundInspection.recordMessageItem) {
+                    this.$router.push({
+                        name: 'LPHazards',
+                        params: {LPHazardsList: that.problemsFoundInspection.recordMessageItem}
+                    });
+                } else {
                     this.$router.push({name: 'LPHazards'});
                 }
 
             },
-
+            //获取被检查单位列表
             getCompanyTreeList() {
                 let newCompanyTree = this.companyTree;
                 let newCompanyTreeList = '';
@@ -488,7 +508,7 @@
             },
 
             //整改责任人及传阅人
-            getCRCPersonData(){
+            getCRCPersonData() {
                 const that = this;
                 let parameter = {
                     companyId: this.inspectedCompany.inspectedCompanyId
@@ -504,22 +524,23 @@
                     });
             },
             //获取责任人及传阅人部门及人员列表
-            getNewPersonList(data){
+            getNewPersonList(data) {
                 let newPersonTree = data;
                 let newDepartmentList = [];
                 let child = [];
+                this.personChargeRectificationCirculant.personList = [];
                 let resetTree = (value) => {
                     if (value.childList.length) {
-                        value.childList.map(item =>{
+                        value.childList.map(item => {
                             child.push({
                                 label: item.fFullName,
                                 value: item.fDepartmentId,
                             });
-                            if(item.personList.length){
+                            if (item.personList.length) {
                                 this.personChargeRectificationCirculant.personList.push(item.personList);
                             }
                         });
-                        if(value.personList.length){
+                        if (value.personList.length) {
                             this.personChargeRectificationCirculant.personList.push(value.personList);
                         }
                         return {
@@ -529,7 +550,7 @@
                             children: child
                         }
                     } else {
-                        if(value.personList.length){
+                        if (value.personList.length) {
                             this.personChargeRectificationCirculant.personList.push(value.personList);
                         }
                         return {
@@ -547,19 +568,32 @@
             //选择整改责任人及传阅人部门
             departmentSel(e) {
                 let department = e.label;
-                let list = this.dangerProject.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
-
+                console.log(this.personChargeRectificationCirculant.personList[0]);
+                this.personChargeRectificationCirculant.newPersonList = this.personChargeRectificationCirculant.personList[0].filter(data => data.fDepartmentName === department);
+                console.log(this.personChargeRectificationCirculant.newPersonList);
+            },
+            //展示整改责任人及传阅人部门
+            showDepartmentTree() {
+                this.personChargeRectificationCirculant.show = true;
+            },
+            //点击整改责任人及传阅人部门
+            checkboxPersonClick(e){
+                console.log(e);
+            },
+            //改变整改责任人及传阅人部门
+            checkboxPersonChange(e){
+                console.log(e);
             },
 
             //展示被检查公司树形列表
-            showCompanyList(){
+            showCompanyList() {
                 this.inspectedCompany.show = true;
             },
             //获取未提交数据
-            getHDVSiIData(){
+            getHDVSiIData() {
                 const that = this;
                 this.fId = this.$route.params.fId;
-                if(this.fId){
+                if (this.fId) {
                     const that = this;
                     let parameter = {
                         userId: this.userInfo.userId,
@@ -609,8 +643,8 @@
                 this.inspectedCompany.inspectedCompanyId = e.value;
                 let list = this.dangerProject.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
                 let dangerProjectList = [];
-                list.map(data=>{
-                    dangerProjectList.push({name:data.fDangername});
+                list.map(data => {
+                    dangerProjectList.push({name: data.fDangername});
                 });
                 this.dangerProject.dangerProjectList = dangerProjectList;
                 this.getCRCPersonData();
@@ -622,7 +656,7 @@
             hideDatePopup(val) {
                 this.checkDatePop.show = false;
             },
-            getNewDate(){
+            getNewDate() {
                 let date = this.checkDate.currentDate;
                 let seperator1 = "-";
                 let seperator2 = ":";
@@ -653,11 +687,11 @@
                     seperator2 +
                     minutes;
             },
-            confirmDate(){
+            confirmDate() {
                 this.getNewDate();
                 this.checkDatePop.show = false;
             },
-            getChangeValue(e){
+            getChangeValue(e) {
                 let endTimeArr = e.getValues();//["2019", "03", "22", "17", "28"]
                 let newDate = [];
                 endTimeArr.map(data => {
@@ -667,7 +701,7 @@
                 let end_time = `${newDate[0]}-${newDate[1]}-${newDate[2]}  ${newDate[3]}:${newDate[4]}`;
             },
             //检查时间格式
-            dateFormatter(type, value){
+            dateFormatter(type, value) {
                 if (type === 'year') {
                     return `${value}年`;
                 } else if (type === 'month') {
@@ -687,7 +721,7 @@
             hideDeadlineRectificationPop(val) {
                 this.deadlineRectificationPop.show = false;
             },
-            getNewDeadlineRectification(){
+            getNewDeadlineRectification() {
                 let date = this.deadlineRectification.currentDate;
                 let seperator1 = "-";
                 let seperator2 = ":";
@@ -718,56 +752,56 @@
                     seperator2 +
                     minutes;
             },
-            confirmDeadlineRectification(){
+            confirmDeadlineRectification() {
                 this.getNewDeadlineRectification();
                 this.deadlineRectificationPop.show = false;
             },
             //选择存在隐患工程名称
-            dangerProjectSel(value){
+            dangerProjectSel(value) {
                 this.dangerProject.show = false;
                 this.dangerProject.dangerProjectName = value.name;
                 this.dangerProject.dangerProjectId = value.fId;
             },
-            showDangerProjectList(){
+            showDangerProjectList() {
                 this.dangerProject.show = true;
             },
             //选择排查对象
-            objectInvestigationSel(value){
+            objectInvestigationSel(value) {
                 this.objectInvestigation.show = false;
                 this.objectInvestigation.objectInvestigationName = value.name;
             },
-            showObjectInvestigationList(){
+            showObjectInvestigationList() {
                 this.objectInvestigation.show = true;
             },
-            getObjectInvestigationList(){
-                this.testObject.map(data=>{
-                    this.objectInvestigation.objectInvestigationList.push({name:data.fItemName});
+            getObjectInvestigationList() {
+                this.testObject.map(data => {
+                    this.objectInvestigation.objectInvestigationList.push({name: data.fItemName});
                 });
             },
             //选择隐患类别
-            hiddenDangerCategorySel(value){
+            hiddenDangerCategorySel(value) {
                 this.hiddenDangerCategory.show = false;
                 this.hiddenDangerCategory.hiddenDangerCategoryName = value.name;
             },
-            showHiddenDangerCategoryList(){
+            showHiddenDangerCategoryList() {
                 this.hiddenDangerCategory.show = true;
             },
-            getHiddenDangerCategoryList(){
-                this.trapLevel.map(data=>{
-                    this.hiddenDangerCategory.hiddenDangerCategoryList.push({name:data.fItemName});
+            getHiddenDangerCategoryList() {
+                this.trapLevel.map(data => {
+                    this.hiddenDangerCategory.hiddenDangerCategoryList.push({name: data.fItemName});
                 });
             },
             //选择隐患类型
-            hiddenDangerTypeSel(value){
+            hiddenDangerTypeSel(value) {
                 this.hiddenDangerType.show = false;
                 this.hiddenDangerType.hiddenDangerTypeName = value.name;
             },
-            showHiddenDangerTypeList(){
+            showHiddenDangerTypeList() {
                 this.hiddenDangerType.show = true;
             },
-            getHiddenDangerTypeList(){
-                this.trapType.map(data=>{
-                    this.hiddenDangerType.hiddenDangerTypeList.push({name:data.fItemName});
+            getHiddenDangerTypeList() {
+                this.trapType.map(data => {
+                    this.hiddenDangerType.hiddenDangerTypeList.push({name: data.fItemName});
                 });
             },
             //获取当前坐标
@@ -786,7 +820,7 @@
                         showMarker: true,         // 定位成功后在定位到的位置显示点标记，默认：true
                         showCircle: true,         // 定位成功后用圆圈表示定位精度范围，默认：true
                         panToLocation: true,      // 定位成功后将定位到的位置作为地图中心点，默认：true
-                        zoomToAccuracy:true       // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                        zoomToAccuracy: true       // 定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
                     });
                     mapObj.addControl(geolocation);
                     geolocation.getCurrentPosition();
@@ -794,7 +828,7 @@
                     AMap.event.addListener(geolocation, 'error', onError);       // 返回定位出错信息
                 });
 
-                function onComplete (obj){
+                function onComplete(obj) {
                     // let res = '经纬度：' + obj.position +
                     //     '\n精度范围：' + obj.accuracy +
                     //     '米\n定位结果的来源：' + obj.location_type +
@@ -806,17 +840,17 @@
                     that.coordinate.cot = `${obj.position.lat}/${obj.position.lng}`;
                 }
 
-                function onError (obj){
+                function onError(obj) {
                     // console.log(obj.info + '--' + obj.message);
                 }
             },
             //图片资料上传
-            afterReadFile(file){
+            afterReadFile(file) {
                 console.log(file);
                 let timeStr = Date.parse(new Date()).toString();
                 let parameter = {
-                    content:file.content,
-                    filename:file.file.name,
+                    content: file.content,
+                    filename: file.file.name,
                     folderid: timeStr,
                     userName: this.userInfo.realName,
                     userId: this.userInfo.userId,
@@ -841,12 +875,12 @@
             this.getHiddenDangerTypeList();
         },
         activated() {
-            if(this.$route.params.LPHazardsList !== undefined){
+            if (this.$route.params.LPHazardsList !== undefined) {
                 this.problemsFoundInspection.recordMessageItem = this.$route.params.LPHazardsList;
             }
         },
         computed: {
-            ...mapState(['companyTree', 'userInfo','testObject','trapLevel','trapType'])
+            ...mapState(['companyTree', 'userInfo', 'testObject', 'trapLevel', 'trapType'])
         },
     }
 </script>
