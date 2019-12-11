@@ -384,7 +384,11 @@
                     circulantListShow:false,
                     circulantName:'',
                     circulantId:'',
-                }
+                },
+                //状态
+                fStatus:'',
+                //提交或保存
+                fId:''
             }
         },
         methods: {
@@ -604,7 +608,6 @@
             },
             //获取未提交数据
             getHDVSiIData() {
-                const that = this;
                 this.fId = this.$route.params.fId;
                 if (this.fId) {
                     const that = this;
@@ -616,33 +619,27 @@
                         .then(function (data) {
                             let checkTrapDaily = data.checkTrapDaily;
                             that.fId = checkTrapDaily.fId;
-                            that.fCompanyid = checkTrapDaily.fCompanyid;
-                            that.fCompanyname = checkTrapDaily.fCompanyname;
-                            that.inspectedCompanyId = checkTrapDaily.fPassiveid;
-                            that.searchValSel = checkTrapDaily.fPassivename;
+                            that.inspectedCompany.inspectedCompanyId = checkTrapDaily.fPassiveid;
+                            that.inspectedCompany.searchValSel = checkTrapDaily.fPassivename;
                             that.inspectionRecordNo = checkTrapDaily.fTrapno;
-                            that.inspectionRecordNoId = checkTrapDaily.fDangerid;
-                            that.dangerProjectName = checkTrapDaily.fDangername;
-                            that.lng = checkTrapDaily.fLongitude;
-                            that.lat = checkTrapDaily.fLatitude;
+                            that.dangerProject.dangerProjectId = checkTrapDaily.fDangerid;
+                            that.dangerProject.dangerProjectName = checkTrapDaily.fDangername;
+                            that.coordinate.lng = checkTrapDaily.fLongitude;
+                            that.coordinate.lat = checkTrapDaily.fLatitude;
                             that.descriptionProblemsFound = checkTrapDaily.fProblemdesc;
                             that.rectificationRequirements = checkTrapDaily.fRequiredesc;
-                            that.objectInvestigation = checkTrapDaily.fTestobject;
-                            that.hiddenDangerCategory = checkTrapDaily.fTrapclass;
-                            that.hiddenDangerType = checkTrapDaily.fTraptype;
-                            that.fCheckid = checkTrapDaily.fCheckid;
-                            that.fCheckname = checkTrapDaily.fCheckname;
+                            that.objectInvestigation.objectInvestigationName = checkTrapDaily.fTestobject;
+                            that.hiddenDangerCategory.hiddenDangerCategoryName = checkTrapDaily.fTrapclass;
+                            that.hiddenDangerType.hiddenDangerTypeName = checkTrapDaily.fTraptype;
                             that.fStatus = checkTrapDaily.fStatus;
-                            that.checkdateVale = checkTrapDaily.fCheckdates;
-                            that.dateVale = checkTrapDaily.fLastdates;
-                            that.newPersonChargeRectificationNameListId = checkTrapDaily.fAcceptid;
-                            that.newPersonChargeRectificationNameList = checkTrapDaily.fAcceptname;
-                            that.newPersonCirculantNameListId = checkTrapDaily.fReadid;
-                            that.newPersonCirculantNameList = checkTrapDaily.fReadname;
-                            that.userId = checkTrapDaily.userId;
-                            that.userName = checkTrapDaily.userName;
-                            that.fSourcefile = checkTrapDaily.fSourcefile;
-                            that.recordMessageItem = checkTrapDaily.recordMessageItem;
+                            that.checkDate.timeValue = checkTrapDaily.fCheckdates;
+                            that.deadlineRectification.timeValue = checkTrapDaily.fLastdates;
+                            that.personChargeRectificationCirculant.personLiableId = checkTrapDaily.fAcceptid;
+                            that.personChargeRectificationCirculant.personLiableName = checkTrapDaily.fAcceptname;
+                            that.personChargeRectificationCirculant.circulantId = checkTrapDaily.fReadid;
+                            that.personChargeRectificationCirculant.circulantName = checkTrapDaily.fReadname;
+                            that.timeStr = checkTrapDaily.fSourcefile;
+                            that.problemsFoundInspection.recordMessageItem = checkTrapDaily.recordMessageItem;
                         })
                         .catch(data => {
 
