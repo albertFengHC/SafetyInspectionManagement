@@ -608,8 +608,9 @@
             },
             //获取未提交数据
             getHDVSiIData() {
-                this.fId = this.$route.params.fId;
-                if (this.fId) {
+                console.log(this.$route.params.fId);
+                if(this.$route.params.fId){
+                    this.fId = this.$route.params.fId;
                     const that = this;
                     let parameter = {
                         userId: this.userInfo.userId,
@@ -619,7 +620,7 @@
                         .then(function (data) {
                             let checkTrapDaily = data.checkTrapDaily;
                             that.fId = checkTrapDaily.fId;
-                            that.inspectedCompany.inspectedCompanyId = checkTrapDaily.fPassiveid;
+                            that.inspectedCompany.dangerProjectId = checkTrapDaily.fPassiveid;
                             that.inspectedCompany.searchValSel = checkTrapDaily.fPassivename;
                             that.inspectionRecordNo = checkTrapDaily.fTrapno;
                             that.dangerProject.dangerProjectId = checkTrapDaily.fDangerid;
@@ -650,7 +651,7 @@
             searchValSelF(e) {
                 // const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
                 this.inspectedCompany.searchValSel = e.label;
-                this.inspectedCompany.inspectedCompanyId = e.value;
+                this.inspectedCompany.dangerProjectId = e.value;
                 let list = this.dangerProject.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
                 let dangerProjectList = [];
                 list.map(data => {
