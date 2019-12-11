@@ -6,268 +6,286 @@
                 left-arrow
                 @click-left="toIndex"
         />
-        <van-card>
-            <div slot="tags">
-                <van-cell-group>
-                    <van-field
-                            v-model="inspectedCompany.searchValSel"
-                            required
-                            clearable
-                            label="被检查单位"
-                            placeholder="被检查单位"
-                            input-align="right"
-                            right-icon="plus"
-                            disabled
-                            @click-right-icon="showCompanyList"
-                    />
-                    <van-popup v-model="inspectedCompany.show" :lock-scroll="false"
+        <van-cell-group class="inspectedCompany">
+            <van-field
+                v-model="inspectedCompany.searchValSel"
+                required
+                clearable
+                label="被检查单位"
+                placeholder="被检查单位"
+                input-align="right"
+                right-icon="plus"
+                disabled
+                @click-right-icon="showCompanyList"
+            />
+        </van-cell-group>
+        <van-popup v-model="inspectedCompany.show" :lock-scroll="false"
+                   :style="{ width: '100%',height:'50%' }">
+            <el-tree
+                    :data="inspectedCompany.companyTreeList"
+                    accordion
+                    :default-expand-all="true"
+                    :highlight-current="true"
+                    @node-click="searchValSelF">
+            </el-tree>
+
+            <!--                        <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>-->
+            <!--                        <el-cascader-panel-->
+            <!--                                :options="inspectedCompany.companyTreeList"-->
+            <!--                                v-model="inspectedCompany.searchValSel"-->
+            <!--                                :props="{ expandTrigger: 'hover'}"-->
+            <!--                                @change="searchValSelF"-->
+            <!--                                ref="companyTree"-->
+            <!--                        />-->
+        </van-popup>
+        <div v-show="inspectedCompany.searchValSel">
+            <van-card>
+                <div slot="tags">
+                    <van-cell-group>
+                        <van-field
+                                v-model="inspectionRecordNo"
+                                required
+                                clearable
+                                label="检查记录编号"
+                                placeholder="检查记录编号"
+                                input-align="right"
+                        />
+                        <van-cell is-link @click="showDatePopup" required>检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span>
+                        </van-cell>
+                        <van-popup
+                                v-model="checkDatePop.show"
+                                :style="{ width: '100%' }"
+                        >
+                            <van-datetime-picker
+                                    v-model="checkDate.currentDate"
+                                    type="datetime"
+                                    :min-date="checkDate.minDate"
+                                    :formatter="dateFormatter"
+                                    @confirm="confirmDate"
+                                    @cancel="hideDatePopup"
+                                    @change="getChangeValue"
+                            />
+                        </van-popup>
+                    </van-cell-group>
+                </div>
+            </van-card>
+            <van-card>
+                <div slot="tags">
+                    <van-cell-group>
+                        <van-field
+                                v-model="dangerProject.dangerProjectName"
+                                required
+                                clearable
+                                label="存在隐患工程名称"
+                                placeholder="选择或填写"
+                                input-align="right"
+                                label-width="120px"
+                                right-icon="plus"
+                                @click-right-icon="showDangerProjectList"
+                        />
+                    </van-cell-group>
+                    <van-action-sheet v-model="dangerProject.show" :actions="dangerProject.dangerProjectList"
+                                      @select="dangerProjectSel"/>
+                    <van-cell-group>
+                        <van-field
+                                v-model='coordinate.cot'
+                                required
+                                clearable
+                                label="经度/纬度"
+                                disabled
+                                input-align="right"
+                        />
+                        <van-collapse v-model="coordinate.activeNames" accordion>
+                            <van-collapse-item title="查看地图" name="1">
+                                <div class="mapBox">
+                                    <div ref="map" class="map"></div>
+                                </div>
+                            </van-collapse-item>
+                        </van-collapse>
+                    </van-cell-group>
+                </div>
+            </van-card>
+            <van-card>
+                <div slot="tags">
+                    <van-cell-group>
+                        <van-field
+                                required
+                                clearable
+                                label="检查发现问题"
+                                placeholder=""
+                                input-align="right"
+                                right-icon="plus"
+                                disabled
+                                @click-right-icon="toLPHazards"
+                        />
+                    </van-cell-group>
+                    <van-collapse v-model="problemsFoundInspection.activeNames">
+                        <van-collapse-item title="查看更多" name="1">
+                            <van-cell-group>
+                                <van-cell
+                                        v-for="(item, index) in problemsFoundInspection.recordMessageItem"
+                                        clickable
+                                        size="large"
+                                        :key="item.fId"
+                                        :title="`${item.fItemno}`"
+                                        :value="`${item.fTraplevel}`"
+                                        :label="`${item.fItemname}`"
+                                        class="ProblemsFoundInspectionList"
+                                >
+                                </van-cell>
+                            </van-cell-group>
+                        </van-collapse-item>
+                    </van-collapse>
+                </div>
+            </van-card>
+            <van-card>
+                <div slot="tags">
+                    <van-cell-group>
+                        <van-field
+                                v-model="descriptionProblemsFound"
+                                rows="2"
+                                autosize
+                                required
+                                label="发现问题描述"
+                                type="textarea"
+                                maxlength="50"
+                                placeholder="请输入"
+                                show-word-limit
+                        />
+                        <van-field
+                                v-model="rectificationRequirements"
+                                rows="2"
+                                autosize
+                                required
+                                label="整改要求"
+                                type="textarea"
+                                maxlength="50"
+                                placeholder="请输入"
+                                show-word-limit
+                        />
+                        <van-field
+                                v-model="objectInvestigation.objectInvestigationName"
+                                required
+                                clearable
+                                label="排查对象"
+                                placeholder="选择"
+                                disabled
+                                input-align="right"
+                                label-width="120px"
+                                right-icon="plus"
+                                @click-right-icon="showObjectInvestigationList"
+                        />
+                        <van-action-sheet v-model="objectInvestigation.show"
+                                          :actions="objectInvestigation.objectInvestigationList"
+                                          @select="objectInvestigationSel"/>
+                        <van-field
+                                v-model="hiddenDangerCategory.hiddenDangerCategoryName"
+                                required
+                                clearable
+                                label="隐患类别"
+                                placeholder="选择"
+                                disabled
+                                input-align="right"
+                                label-width="120px"
+                                right-icon="plus"
+                                @click-right-icon="showHiddenDangerCategoryList"
+                        />
+                        <van-action-sheet v-model="hiddenDangerCategory.show"
+                                          :actions="hiddenDangerCategory.hiddenDangerCategoryList"
+                                          @select="hiddenDangerCategorySel"/>
+                        <van-field
+                                v-model="hiddenDangerType.hiddenDangerTypeName"
+                                required
+                                clearable
+                                label="隐患类型"
+                                placeholder="选择"
+                                disabled
+                                input-align="right"
+                                label-width="120px"
+                                right-icon="plus"
+                                @click-right-icon="showHiddenDangerTypeList"
+                        />
+                        <van-action-sheet v-model="hiddenDangerType.show" :actions="hiddenDangerType.hiddenDangerTypeList"
+                                          @select="hiddenDangerTypeSel"/>
+                        <van-cell is-link @click="showDeadlineRectificationPop" required>整改截止时间<span
+                                style="position: absolute;right: 10px">{{deadlineRectification.timeValue}}</span></van-cell>
+                        <van-popup
+                                v-model="deadlineRectificationPop.show"
+                                :style="{ width: '100%' }"
+                        >
+                            <van-datetime-picker
+                                    v-model="deadlineRectification.currentDate"
+                                    type="datetime"
+                                    :min-date="deadlineRectification.minDate"
+                                    :formatter="dateFormatter"
+                                    @confirm="confirmDeadlineRectification"
+                                    @cancel="hideDeadlineRectificationPop"
+                                    @change="getChangeValue"
+                            />
+                        </van-popup>
+                        <van-uploader v-model="fileList" multiple upload-text="照片附件" :after-read="afterReadFile"/>
+                    </van-cell-group>
+                </div>
+            </van-card>
+            <van-card>
+                <div slot="tags">
+                    <van-cell-group>
+                        <van-steps direction="vertical" :active="personChargeRectificationCirculant.active">
+                            <van-step>
+                                <van-row>
+                                    <van-col span="19">
+                                        <h4>整改责任人</h4>
+                                        <p>{{personChargeRectificationCirculant.personLiableName}}</p>
+                                    </van-col>
+                                    <van-col span="5">
+                                        <van-button plain type="default" size="small" @click="showDepartmentTree(1)">请选择
+                                        </van-button>
+                                    </van-col>
+                                </van-row>
+                            </van-step>
+                            <van-step>
+                                <van-row>
+                                    <van-col span="19">
+                                        <h4>传阅人</h4>
+                                        <p>{{personChargeRectificationCirculant.circulantName}}</p>
+                                    </van-col>
+                                    <van-col span="5">
+                                        <van-button plain type="default" size="small" @click="showDepartmentTree(2)">请选择
+                                        </van-button>
+                                    </van-col>
+                                </van-row>
+                            </van-step>
+                        </van-steps>
+                    </van-cell-group>
+                    <van-popup v-model="personChargeRectificationCirculant.show" :lock-scroll="false"
                                :style="{ width: '100%',height:'50%' }">
                         <el-tree
-                                :data="inspectedCompany.companyTreeList"
+                                :data="personChargeRectificationCirculant.departmentList"
                                 accordion
                                 :default-expand-all="true"
                                 :highlight-current="true"
-                                @node-click="searchValSelF">
+                                @node-click="departmentSel">
                         </el-tree>
-
-                        <!--                        <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>-->
-                        <!--                        <el-cascader-panel-->
-                        <!--                                :options="inspectedCompany.companyTreeList"-->
-                        <!--                                v-model="inspectedCompany.searchValSel"-->
-                        <!--                                :props="{ expandTrigger: 'hover'}"-->
-                        <!--                                @change="searchValSelF"-->
-                        <!--                                ref="companyTree"-->
-                        <!--                        />-->
+                        <van-radio-group v-model="personChargeRectificationCirculant.personLiableList" class="personCheck" @change="checkboxPersonLiableChange">
+                            <van-radio :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.personLiableListShow">{{item.fStaffName}}</van-radio>
+                        </van-radio-group>
+                        <van-checkbox-group v-model="personChargeRectificationCirculant.circulantList" class="personCheck" @change="checkboxCirculantChange">
+                            <van-checkbox :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.circulantListShow">{{item.fStaffName}}</van-checkbox>
+                        </van-checkbox-group>
                     </van-popup>
-                    <van-field
-                            v-model="inspectionRecordNo"
-                            required
-                            clearable
-                            label="检查记录编号"
-                            placeholder="检查记录编号"
-                            input-align="right"
-                    />
-                    <van-cell is-link @click="showDatePopup" required>检查时间<span style="position: absolute;right: 10px">{{checkDate.timeValue}}</span>
-                    </van-cell>
-                    <van-popup
-                            v-model="checkDatePop.show"
-                            :style="{ width: '100%' }"
-                    >
-                        <van-datetime-picker
-                                v-model="checkDate.currentDate"
-                                type="datetime"
-                                :min-date="checkDate.minDate"
-                                :formatter="dateFormatter"
-                                @confirm="confirmDate"
-                                @cancel="hideDatePopup"
-                                @change="getChangeValue"
-                        />
-                    </van-popup>
-                </van-cell-group>
+                </div>
+            </van-card>
+            <div class="bottom">
+                <van-row>
+                    <van-col span="12">
+                        <van-button round type="info" size="small" style='width: 70%'>提交</van-button>
+                    </van-col>
+                    <van-col span="12">
+                        <van-button round type="primary" size="small" style='width: 70%'>保存</van-button>
+                    </van-col>
+                </van-row>
             </div>
-        </van-card>
-        <van-card>
-            <div slot="tags">
-                <van-cell-group>
-                    <van-field
-                            v-model="dangerProject.dangerProjectName"
-                            required
-                            clearable
-                            label="存在隐患工程名称"
-                            placeholder="选择或填写"
-                            input-align="right"
-                            label-width="120px"
-                            right-icon="plus"
-                            @click-right-icon="showDangerProjectList"
-                    />
-                </van-cell-group>
-                <van-action-sheet v-model="dangerProject.show" :actions="dangerProject.dangerProjectList"
-                                  @select="dangerProjectSel"/>
-                <van-cell-group>
-                    <van-field
-                            v-model='coordinate.cot'
-                            required
-                            clearable
-                            label="经度/纬度"
-                            disabled
-                            input-align="right"
-                    />
-                    <div class="mapBox">
-                        <div ref="map" class="map"></div>
-                    </div>
-                </van-cell-group>
-            </div>
-        </van-card>
-        <van-card>
-            <div slot="tags">
-                <van-cell-group>
-                    <van-field
-                            required
-                            clearable
-                            label="检查发现问题"
-                            placeholder=""
-                            input-align="right"
-                            right-icon="plus"
-                            disabled
-                            @click-right-icon="toLPHazards"
-                    />
-                </van-cell-group>
-                <van-collapse v-model="problemsFoundInspection.activeNames">
-                    <van-collapse-item title="查看更多" name="1">
-                        <van-cell-group>
-                            <van-cell
-                                    v-for="(item, index) in problemsFoundInspection.recordMessageItem"
-                                    clickable
-                                    size="large"
-                                    :key="item.fId"
-                                    :title="`${item.fItemno}`"
-                                    :value="`${item.fTraplevel}`"
-                                    :label="`${item.fItemname}`"
-                                    class="ProblemsFoundInspectionList"
-                            >
-                            </van-cell>
-                        </van-cell-group>
-                    </van-collapse-item>
-                </van-collapse>
-            </div>
-        </van-card>
-        <van-card>
-            <div slot="tags">
-                <van-cell-group>
-                    <van-field
-                            v-model="descriptionProblemsFound"
-                            rows="2"
-                            autosize
-                            required
-                            label="发现问题描述"
-                            type="textarea"
-                            maxlength="50"
-                            placeholder="请输入"
-                            show-word-limit
-                    />
-                    <van-field
-                            v-model="rectificationRequirements"
-                            rows="2"
-                            autosize
-                            required
-                            label="整改要求"
-                            type="textarea"
-                            maxlength="50"
-                            placeholder="请输入"
-                            show-word-limit
-                    />
-                    <van-field
-                            v-model="objectInvestigation.objectInvestigationName"
-                            required
-                            clearable
-                            label="排查对象"
-                            placeholder="选择"
-                            disabled
-                            input-align="right"
-                            label-width="120px"
-                            right-icon="plus"
-                            @click-right-icon="showObjectInvestigationList"
-                    />
-                    <van-action-sheet v-model="objectInvestigation.show"
-                                      :actions="objectInvestigation.objectInvestigationList"
-                                      @select="objectInvestigationSel"/>
-                    <van-field
-                            v-model="hiddenDangerCategory.hiddenDangerCategoryName"
-                            required
-                            clearable
-                            label="隐患类别"
-                            placeholder="选择"
-                            disabled
-                            input-align="right"
-                            label-width="120px"
-                            right-icon="plus"
-                            @click-right-icon="showHiddenDangerCategoryList"
-                    />
-                    <van-action-sheet v-model="hiddenDangerCategory.show"
-                                      :actions="hiddenDangerCategory.hiddenDangerCategoryList"
-                                      @select="hiddenDangerCategorySel"/>
-                    <van-field
-                            v-model="hiddenDangerType.hiddenDangerTypeName"
-                            required
-                            clearable
-                            label="隐患类型"
-                            placeholder="选择"
-                            disabled
-                            input-align="right"
-                            label-width="120px"
-                            right-icon="plus"
-                            @click-right-icon="showHiddenDangerTypeList"
-                    />
-                    <van-action-sheet v-model="hiddenDangerType.show" :actions="hiddenDangerType.hiddenDangerTypeList"
-                                      @select="hiddenDangerTypeSel"/>
-                    <van-cell is-link @click="showDeadlineRectificationPop" required>整改截止时间<span
-                            style="position: absolute;right: 10px">{{deadlineRectification.timeValue}}</span></van-cell>
-                    <van-popup
-                            v-model="deadlineRectificationPop.show"
-                            :style="{ width: '100%' }"
-                    >
-                        <van-datetime-picker
-                                v-model="deadlineRectification.currentDate"
-                                type="datetime"
-                                :min-date="deadlineRectification.minDate"
-                                :formatter="dateFormatter"
-                                @confirm="confirmDeadlineRectification"
-                                @cancel="hideDeadlineRectificationPop"
-                                @change="getChangeValue"
-                        />
-                    </van-popup>
-                    <van-uploader v-model="fileList" multiple upload-text="照片附件" :after-read="afterReadFile"/>
-                </van-cell-group>
-            </div>
-        </van-card>
-        <van-card>
-            <div slot="tags">
-                <van-cell-group>
-                    <van-steps direction="vertical" :active="personChargeRectificationCirculant.active">
-                        <van-step>
-                            <van-row>
-                                <van-col span="19">
-                                    <h4>整改责任人</h4>
-                                    <p>{{personChargeRectificationCirculant.personLiableName}}</p>
-                                </van-col>
-                                <van-col span="5">
-                                    <van-button plain type="default" size="small" @click="showDepartmentTree(1)">请选择
-                                    </van-button>
-                                </van-col>
-                            </van-row>
-                        </van-step>
-                        <van-step>
-                            <van-row>
-                                <van-col span="19">
-                                    <h4>传阅人</h4>
-                                    <p>{{personChargeRectificationCirculant.circulantName}}</p>
-                                </van-col>
-                                <van-col span="5">
-                                    <van-button plain type="default" size="small" @click="showDepartmentTree(2)">请选择
-                                    </van-button>
-                                </van-col>
-                            </van-row>
-                        </van-step>
-                    </van-steps>
-                </van-cell-group>
-                <van-popup v-model="personChargeRectificationCirculant.show" :lock-scroll="false"
-                           :style="{ width: '100%',height:'50%' }">
-                    <el-tree
-                            :data="personChargeRectificationCirculant.departmentList"
-                            accordion
-                            :default-expand-all="true"
-                            :highlight-current="true"
-                            @node-click="departmentSel">
-                    </el-tree>
-                    <van-radio-group v-model="personChargeRectificationCirculant.personLiableList" class="personCheck" @change="checkboxPersonLiableChange">
-                        <van-radio :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.personLiableListShow">{{item.fStaffName}}</van-radio>
-                    </van-radio-group>
-                    <van-checkbox-group v-model="personChargeRectificationCirculant.circulantList" class="personCheck" @change="checkboxCirculantChange">
-                        <van-checkbox :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.circulantListShow">{{item.fStaffName}}</van-checkbox>
-                    </van-checkbox-group>
-                </van-popup>
-            </div>
-        </van-card>
+        </div>
     </div>
 </template>
 
@@ -287,7 +305,8 @@
                 coordinate: {
                     lat: '',
                     lng: '',
-                    cot: ''
+                    cot: '',
+                    activeNames: '1',
                 },
                 //被检查单位
                 inspectedCompany: {
@@ -376,6 +395,49 @@
             }
         },
         methods: {
+            //提交/保存数据
+            upLoadData(e){
+                const that = this;
+                let timeStr = Date.parse(new Date());
+                let parameter = {
+                    fId: this.fId,//提交或修改时传
+                    isSubmit: e,//1提交 0保存
+                    fCompanyid: this.userInfo.companyId,//检查单位id
+                    fCompanyname: this.userInfo.companyName,//检查单位
+                    fPassiveid: this.inspectedCompanyId,//被检查单位id
+                    fPassivename: this.searchValSel,//被检查单位
+                    fTrapno: this.inspectionRecordNo,//检查记录编号
+                    fDangerid: this.inspectionRecordNoId,//存在隐患工程名称id
+                    fDangername: this.dangerProjectName,//存在隐患工程名称
+                    fLongitude: this.lng,//纬度
+                    fLatitude: this.lat,//经度
+                    fProblemdesc: this.descriptionProblemsFound,//发现问题描述
+                    fRequiredesc: this.rectificationRequirements,//整改要求
+                    fTestobject: this.objectInvestigation,//排查对象
+                    fTrapclass: this.hiddenDangerCategory,//隐患类别
+                    fTraptype: this.hiddenDangerType,//隐患类型
+                    fCheckid: this.userInfo.userId,//检查人id
+                    fCheckname: this.userInfo.realName,//检查人
+                    fStatus: '',//状态
+                    fCheckdates: this.checkdateVale,//检查时间
+                    fLastdates: this.dateVale,//整改截止日期
+                    fAcceptid: this.newPersonChargeRectificationNameListId,//待签收人id
+                    fAcceptname: this.newPersonChargeRectificationNameList,//待签收人
+                    fReadid: this.newPersonCirculantNameListId,//待传阅人id
+                    fReadname: this.newPersonCirculantNameList,//待传阅人
+                    userId: this.userInfo.userId,//当前用户id
+                    userName: this.userInfo.realName,//当前用户姓名
+                    fSourcefile: timeStr,//文件id,前端生成
+                    recordMessageItem: this.problemsFoundInspection.recordMessageItem//检查发现问题
+                };
+                HDAddedUrl(parameter)
+                    .then(function (data) {
+                        that.$router.push({name: 'NoSign'});
+                    })
+                    .catch(data => {
+
+                    });
+            },
             Submission() {
                 const that = this;
                 let timeStr = Date.parse(new Date());
@@ -934,11 +996,19 @@
         margin 0
         color #333
 
+    .inspectedCompany
+        padding 8px 16px
+        padding-bottom 0
+
     .van-nav-bar__title
         font-weight bold
 
     .mapBox
-        display none
+        width 100%
+        height 250px
+        .map
+            width 100%
+            height 100%
 
     .el-cascader-panel.is-bordered
         overflow-x auto
@@ -954,4 +1024,9 @@
         .checkBox
             padding 7px
             border-bottom  1px solid #cbcdd1
+
+    .bottom
+        text-align center
+        width 100%
+        padding-bottom 10px
 </style>
