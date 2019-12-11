@@ -599,6 +599,9 @@
                 this.personChargeRectificationCirculant.personLiableId = that.personChargeRectificationCirculant.newPersonList.filter(name => name.fStaffName === e)[0].fId;
                 if(this.personChargeRectificationCirculant.personLiableName){
                     this.personChargeRectificationCirculant.active = 0;
+                    if(this.personChargeRectificationCirculant.personLiableName && this.personChargeRectificationCirculant.circulantName){
+                        this.personChargeRectificationCirculant.active = 2;
+                    }
                 }
             },
             //改变传阅人
@@ -619,6 +622,8 @@
                 this.personChargeRectificationCirculant.circulantId = newPersonLiableId.substr(0, newPersonLiableId.length - 1);
                 if(this.personChargeRectificationCirculant.circulantName){
                     this.personChargeRectificationCirculant.active = 1;
+                }else if(this.personChargeRectificationCirculant.personLiableName){
+                    this.personChargeRectificationCirculant.active = 0;
                 }
             },
 
