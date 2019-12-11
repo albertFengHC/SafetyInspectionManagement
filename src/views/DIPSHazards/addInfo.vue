@@ -906,7 +906,6 @@
         width 100%
         height 100%
         margin 0
-        color #333
 
     .inspectedCompany
         padding 8px 16px
