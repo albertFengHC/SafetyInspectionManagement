@@ -34,9 +34,9 @@
                             clickable
                             size="large"
                             :key="item.fId"
-                            :title="`${item.fNodeno}`"
-                            :value="`${item.fTraplevel}`"
-                            :label="`${item.fNodename}`"
+                            :title="item.fNodeno"
+                            :value="item.fTraplevel"
+                            :label="item.fNodename"
                     >
                         <van-checkbox
                                 :name="item.fId"
