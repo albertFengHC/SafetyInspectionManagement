@@ -28,15 +28,6 @@
                     :highlight-current="true"
                     @node-click="searchValSelF">
             </el-tree>
-
-            <!--                        <Tree :data="inspectedCompany.companyTreeList" @on-select-change="searchValSelF"/>-->
-            <!--                        <el-cascader-panel-->
-            <!--                                :options="inspectedCompany.companyTreeList"-->
-            <!--                                v-model="inspectedCompany.searchValSel"-->
-            <!--                                :props="{ expandTrigger: 'hover'}"-->
-            <!--                                @change="searchValSelF"-->
-            <!--                                ref="companyTree"-->
-            <!--                        />-->
         </van-popup>
         <div v-show="inspectedCompany.searchValSel">
             <van-card>
@@ -278,10 +269,10 @@
             <div class="bottom">
                 <van-row>
                     <van-col span="12">
-                        <van-button round type="info" size="small" style='width: 70%'>提交</van-button>
+                        <van-button round type="info" size="small" style='width: 70%' @click="upLoadData('1')">提交</van-button>
                     </van-col>
                     <van-col span="12">
-                        <van-button round type="primary" size="small" style='width: 70%'>保存</van-button>
+                        <van-button round type="primary" size="small" style='width: 70%' @click="upLoadData('0')">保存</van-button>
                     </van-col>
                 </van-row>
             </div>
@@ -298,6 +289,8 @@
         name: "addInfo",
         data() {
             return {
+                //时间戳
+                timeStr:'',
                 //检查记录编号
                 inspectionRecordNo: '',
                 inspectionRecordNoId: '',
@@ -398,7 +391,6 @@
             //提交/保存数据
             upLoadData(e){
                 const that = this;
-                let timeStr = Date.parse(new Date());
                 let parameter = {
                     fId: this.fId,//提交或修改时传
                     isSubmit: e,//1提交 0保存
@@ -427,7 +419,7 @@
                     fReadname: this.newPersonCirculantNameList,//待传阅人
                     userId: this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
-                    fSourcefile: timeStr,//文件id,前端生成
+                    fSourcefile: this.timeStr,//文件id,前端生成
                     recordMessageItem: this.problemsFoundInspection.recordMessageItem//检查发现问题
                 };
                 HDAddedUrl(parameter)
@@ -438,90 +430,7 @@
 
                     });
             },
-            Submission() {
-                const that = this;
-                let timeStr = Date.parse(new Date());
-                let parameter = {
-                    fId: this.fId,//提交或修改时传
-                    isSubmit: '1',//1提交 0保存
-                    fCompanyid: this.userInfo.companyId,//检查单位id
-                    fCompanyname: this.userInfo.companyName,//检查单位
-                    fPassiveid: this.inspectedCompanyId,//被检查单位id
-                    fPassivename: this.searchValSel,//被检查单位
-                    fTrapno: this.inspectionRecordNo,//检查记录编号
-                    fDangerid: this.inspectionRecordNoId,//存在隐患工程名称id
-                    fDangername: this.dangerProjectName,//存在隐患工程名称
-                    fLongitude: this.lng,//纬度
-                    fLatitude: this.lat,//经度
-                    fProblemdesc: this.descriptionProblemsFound,//发现问题描述
-                    fRequiredesc: this.rectificationRequirements,//整改要求
-                    fTestobject: this.objectInvestigation,//排查对象
-                    fTrapclass: this.hiddenDangerCategory,//隐患类别
-                    fTraptype: this.hiddenDangerType,//隐患类型
-                    fCheckid: this.userInfo.userId,//检查人id
-                    fCheckname: this.userInfo.realName,//检查人
-                    fStatus: '',//状态
-                    fCheckdates: this.checkdateVale,//检查时间
-                    fLastdates: this.dateVale,//整改截止日期
-                    fAcceptid: this.newPersonChargeRectificationNameListId,//待签收人id
-                    fAcceptname: this.newPersonChargeRectificationNameList,//待签收人
-                    fReadid: this.newPersonCirculantNameListId,//待传阅人id
-                    fReadname: this.newPersonCirculantNameList,//待传阅人
-                    userId: this.userInfo.userId,//当前用户id
-                    userName: this.userInfo.realName,//当前用户姓名
-                    fSourcefile: timeStr,//文件id,前端生成
-                    recordMessageItem: this.problemsFoundInspection.recordMessageItem//检查发现问题
-                };
-                HDAddedUrl(parameter)
-                    .then(function (data) {
-                        that.$router.push({name: 'NoSign'});
-                    })
-                    .catch(data => {
 
-                    });
-            },
-            save() {
-                const that = this;
-                let timeStr = Date.parse(new Date());
-                let parameter = {
-                    fId: '',//提交或修改时传
-                    isSubmit: '0',//1提交 0保存
-                    fCompanyid: this.userInfo.companyId,//检查单位id
-                    fCompanyname: this.userInfo.companyName,//检查单位
-                    fPassiveid: this.inspectedCompanyId,//被检查单位id
-                    fPassivename: this.searchValSel,//被检查单位
-                    fTrapno: this.inspectionRecordNo,//检查记录编号
-                    fDangerid: this.inspectionRecordNoId,//存在隐患工程名称id
-                    fDangername: this.dangerProjectName,//存在隐患工程名称
-                    fLongitude: this.lng,//纬度
-                    fLatitude: this.lat,//经度
-                    fProblemdesc: this.descriptionProblemsFound,//发现问题描述
-                    fRequiredesc: this.rectificationRequirements,//整改要求
-                    fTestobject: this.objectInvestigation,//排查对象
-                    fTrapclass: this.hiddenDangerCategory,//隐患类别
-                    fTraptype: this.hiddenDangerType,//隐患类型
-                    fCheckid: this.userInfo.userId,//检查人id
-                    fCheckname: this.userInfo.realName,//检查人
-                    fStatus: '',//状态
-                    fCheckdates: this.checkdateVale,//检查时间
-                    fLastdates: this.dateVale,//整改截止日期
-                    fAcceptid: this.newPersonChargeRectificationNameListId,//待签收人id
-                    fAcceptname: this.newPersonChargeRectificationNameList,//待签收人
-                    fReadid: this.newPersonCirculantNameListId,//待传阅人id
-                    fReadname: this.newPersonCirculantNameList,//待传阅人
-                    userId: this.userInfo.userId,//当前用户id
-                    userName: this.userInfo.realName,//当前用户姓名
-                    fSourcefile: timeStr,//文件id,前端生成
-                    recordMessageItem: this.problemsFoundInspection.recordMessageItem//检查发现问题
-                };
-                HDAddedUrl(parameter)
-                    .then(function (data) {
-                        that.$router.push({name: 'NoSign'});
-                    })
-                    .catch(data => {
-
-                    });
-            },
             toIndex() {
                 this.$router.push({name: 'NoSign'});
             },
@@ -951,11 +860,10 @@
             //图片资料上传
             afterReadFile(file) {
                 console.log(file);
-                let timeStr = Date.parse(new Date()).toString();
                 let parameter = {
                     content: file.content,
                     filename: file.file.name,
-                    folderid: timeStr,
+                    folderid: this.timeStr.toString(),
                     userName: this.userInfo.realName,
                     userId: this.userInfo.userId,
                 };
@@ -983,6 +891,9 @@
                 this.problemsFoundInspection.recordMessageItem = this.$route.params.LPHazardsList;
             }
             this.$notify({ type: 'primary', message: '请选择被检查单位' });
+            if(this.timeStr === ''){
+                this.timeStr = Date.parse(new Date());
+            }
         },
         computed: {
             ...mapState(['companyTree', 'userInfo', 'testObject', 'trapLevel', 'trapType'])
