@@ -239,6 +239,15 @@
                         </van-step>
                     </van-steps>
                 </van-cell-group>
+                <van-popup v-model="personChargeRectificationCirculant.show" :lock-scroll="false"  :style="{ width: '100%',height:'50%' }">
+                    <el-tree
+                            :data="personChargeRectificationCirculant.departmentList"
+                            accordion
+                            :default-expand-all="true"
+                            :highlight-current="true"
+                            @node-click="departmentSel">
+                    </el-tree>
+                </van-popup>
             </div>
         </van-card>
     </div>
@@ -329,9 +338,10 @@
                 fileList:[],
                 //整改责任人及传阅人
                 personChargeRectificationCirculant:{
-                    oldList:'',
-                    newList:[],
-                    list:''
+                    List:'',
+                    personList:[],
+                    departmentList:'',
+                    show:false
                 }
             }
         },
@@ -485,7 +495,7 @@
                 };
                 CRCPersonUrl(parameter)
                     .then(function (data) {
-                        that.personChargeRectificationCirculant.oldList = data;
+                        that.personChargeRectificationCirculant.List = data;
                         console.log(data);
                         that.getNewPersonList(data);
                     })
@@ -493,9 +503,10 @@
 
                     });
             },
+            //获取责任人及传阅人部门及人员列表
             getNewPersonList(data){
                 let newPersonTree = data;
-                let newPerson = [];
+                let newDepartmentList = [];
                 let child = [];
                 let resetTree = (value) => {
                     if (value.childList.length) {
@@ -505,11 +516,11 @@
                                 value: item.fDepartmentId,
                             });
                             if(item.personList.length){
-                                this.personChargeRectificationCirculant.newList.push(item);
+                                this.personChargeRectificationCirculant.personList.push(item.personList);
                             }
                         });
                         if(value.personList.length){
-                            this.personChargeRectificationCirculant.newList.push(value);
+                            this.personChargeRectificationCirculant.personList.push(value.personList);
                         }
                         return {
                             // ...item,
@@ -519,7 +530,7 @@
                         }
                     } else {
                         if(value.personList.length){
-                            this.personChargeRectificationCirculant.newList.push(value);
+                            this.personChargeRectificationCirculant.personList.push(value.personList);
                         }
                         return {
                             // ...item,
@@ -528,8 +539,16 @@
                         }
                     }
                 };
-                newPerson.push(resetTree(newPersonTree));
-                this.personChargeRectificationCirculant.list = newPerson;
+                console.log(this.personChargeRectificationCirculant.personList);
+                newDepartmentList.push(resetTree(newPersonTree));
+                this.personChargeRectificationCirculant.departmentList = newDepartmentList;
+                console.log(this.personChargeRectificationCirculant.departmentList);
+            },
+            //选择整改责任人及传阅人部门
+            departmentSel(e) {
+                let department = e.label;
+                let list = this.dangerProject.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
+
             },
 
             //展示被检查公司树形列表
