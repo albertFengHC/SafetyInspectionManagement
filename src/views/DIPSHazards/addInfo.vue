@@ -982,6 +982,7 @@
             if (this.$route.params.LPHazardsList !== undefined) {
                 this.problemsFoundInspection.recordMessageItem = this.$route.params.LPHazardsList;
             }
+            this.$notify({ type: 'primary', message: '请选择被检查单位' });
         },
         computed: {
             ...mapState(['companyTree', 'userInfo', 'testObject', 'trapLevel', 'trapType'])
