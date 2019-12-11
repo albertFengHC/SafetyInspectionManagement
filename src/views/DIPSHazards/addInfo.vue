@@ -50,7 +50,7 @@
                             <van-datetime-picker
                                     v-model="checkDate.currentDate"
                                     type="datetime"
-                                    :min-date="checkDate.minDate"
+                                    :max-date="checkDate.maxDate"
                                     :formatter="dateFormatter"
                                     @confirm="confirmDate"
                                     @cancel="hideDatePopup"
@@ -139,7 +139,7 @@
                                 required
                                 label="发现问题描述"
                                 type="textarea"
-                                maxlength="50"
+                                maxlength="300"
                                 placeholder="请输入"
                                 show-word-limit
                         />
@@ -150,7 +150,7 @@
                                 required
                                 label="整改要求"
                                 type="textarea"
-                                maxlength="50"
+                                maxlength="300"
                                 placeholder="请输入"
                                 show-word-limit
                         />
@@ -335,7 +335,7 @@
                 },
                 //检查时间
                 checkDate: {
-                    minDate: new Date(),
+                    maxDate: new Date(),
                     // maxDate: new Date(2019, 10, 1),
                     currentDate: new Date(),
                     timeValue: '',
@@ -890,7 +890,9 @@
             if (this.$route.params.LPHazardsList !== undefined) {
                 this.problemsFoundInspection.recordMessageItem = this.$route.params.LPHazardsList;
             }
-            this.$notify({ type: 'primary', message: '请选择被检查单位' });
+            if(this.inspectedCompany.searchValSel === ''){
+                this.$notify({ type: 'primary', message: '请选择被检查单位' });
+            }
             if(this.timeStr === ''){
                 this.timeStr = Date.parse(new Date());
             }
