@@ -149,45 +149,41 @@
         </van-card>
         <van-card>
             <div slot="tags">
-
+                <p>检查发现问题</p>
+                <van-collapse v-model="problemsFoundInspection.activeNames">
+                    <van-collapse-item title="查看更多" name="1">
+                        <van-cell-group>
+                            <van-cell
+                                    v-for="(item, index) in listData.recordMessageItem"
+                                    clickable
+                                    size="large"
+                                    :key="item.fId"
+                                    :title="`${item.fItemno}`"
+                                    :value="`${item.fTraplevel}`"
+                                    :label="`${item.fItemname}`"
+                                    class="ProblemsFoundInspectionList"
+                            >
+                            </van-cell>
+                        </van-cell-group>
+                    </van-collapse-item>
+                </van-collapse>
             </div>
         </van-card>
-
-
-
-        <div class="content">
-            <div class="contentTop">
-                <div class="problems">
-                    <h3>检查发现问题</h3>
-                    <div class="problemsInfo">
-                        <div class="problemsInfo" v-if="listData.recordMessageItem">
-                            <div class="problemsInfoList" v-for="item in listData.recordMessageItem" :value="item.fId" :key="item.fId">
-                                <div class="problemsInfoListTitle">
-                                    <h4>{{item.fItemno}}</h4>
-                                    <h4>{{item.fTraplevel}}</h4>
-                                </div>
-                                <div class="problemsInfoListContent">
-                                    <p>{{item.fItemname}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <van-card v-if="allData.isUpdate === '1'">
+            <div slot="tags">
+                <van-field
+                        v-model="signAdvice"
+                        clearable
+                        label="签收意见"
+                        type="textarea"
+                        maxlength="300"
+                        show-word-limit
+                />
+                <div class="bottom">
+                    <van-button type="info" round  size="small" style='width: 70%' @click="sign">签收</van-button>
                 </div>
             </div>
-            <div class="contentBottom">
-                <div class="signAdvice" v-if="allData.isUpdate === '1'">
-                    <p>签收意见</p>
-                    <div>
-                        <textarea name="" id="" cols="45" rows="10" v-model="signAdvice"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bottom" v-if="allData.isUpdate === '1'">
-            <div class="agreeBtn">
-                <button @click="sign">签收</button>
-            </div>
-        </div>
+        </van-card>
     </div>
 </template>
 
@@ -203,7 +199,12 @@
                 listData:'',
                 logInfo: '',
                 //签收意见
-                signAdvice:''
+                signAdvice:'',
+                //检查发现问题
+                problemsFoundInspection:{
+                    activeNames: ['0'],
+                    recordMessageItem: '',
+                }
             }
         },
         methods:{
@@ -279,4 +280,13 @@
                 margin 0
                 margin-top 5px
                 color #e1a14c
+
+    .ProblemsFoundInspectionList
+        /deep/ .van-cell__title
+            flex 6
+
+    .bottom
+        text-align center
+        width 100%
+        padding 10px 0
 </style>
