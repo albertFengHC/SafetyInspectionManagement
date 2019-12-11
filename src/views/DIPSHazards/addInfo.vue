@@ -396,27 +396,27 @@
                     isSubmit: e,//1提交 0保存
                     fCompanyid: this.userInfo.companyId,//检查单位id
                     fCompanyname: this.userInfo.companyName,//检查单位
-                    fPassiveid: this.inspectedCompanyId,//被检查单位id
-                    fPassivename: this.searchValSel,//被检查单位
+                    fPassiveid: this.inspectedCompany.inspectedCompanyId,//被检查单位id
+                    fPassivename: this.inspectedCompany.searchValSel,//被检查单位
                     fTrapno: this.inspectionRecordNo,//检查记录编号
-                    fDangerid: this.inspectionRecordNoId,//存在隐患工程名称id
-                    fDangername: this.dangerProjectName,//存在隐患工程名称
-                    fLongitude: this.lng,//纬度
-                    fLatitude: this.lat,//经度
+                    fDangerid: this.dangerProject.dangerProjectId,//存在隐患工程名称id
+                    fDangername: this.dangerProject.dangerProjectName,//存在隐患工程名称
+                    fLongitude: this.coordinate.lng,//纬度
+                    fLatitude: this.coordinate.lat,//经度
                     fProblemdesc: this.descriptionProblemsFound,//发现问题描述
                     fRequiredesc: this.rectificationRequirements,//整改要求
-                    fTestobject: this.objectInvestigation,//排查对象
-                    fTrapclass: this.hiddenDangerCategory,//隐患类别
-                    fTraptype: this.hiddenDangerType,//隐患类型
+                    fTestobject: this.objectInvestigation.objectInvestigationName,//排查对象
+                    fTrapclass: this.hiddenDangerCategory.hiddenDangerCategoryName,//隐患类别
+                    fTraptype: this.hiddenDangerType.hiddenDangerTypeName,//隐患类型
                     fCheckid: this.userInfo.userId,//检查人id
                     fCheckname: this.userInfo.realName,//检查人
                     fStatus: '',//状态
-                    fCheckdates: this.checkdateVale,//检查时间
-                    fLastdates: this.dateVale,//整改截止日期
-                    fAcceptid: this.newPersonChargeRectificationNameListId,//待签收人id
-                    fAcceptname: this.newPersonChargeRectificationNameList,//待签收人
-                    fReadid: this.newPersonCirculantNameListId,//待传阅人id
-                    fReadname: this.newPersonCirculantNameList,//待传阅人
+                    fCheckdates: this.checkDate.timeValue,//检查时间
+                    fLastdates: this.deadlineRectification.timeValue,//整改截止日期
+                    fAcceptid: this.personChargeRectificationCirculant.personLiableId,//待签收人id
+                    fAcceptname: this.personChargeRectificationCirculant.personLiableName,//待签收人
+                    fReadid: this.personChargeRectificationCirculant.circulantId,//待传阅人id
+                    fReadname: this.personChargeRectificationCirculant.circulantName,//待传阅人
                     userId: this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
                     fSourcefile: this.timeStr,//文件id,前端生成
