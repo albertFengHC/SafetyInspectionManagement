@@ -679,7 +679,7 @@
                 newDepartmentList.push(resetTree(newPersonTree));
                 this.circulant.departmentList = newDepartmentList;
             },
-            //选择整改责任人部门
+            //选择传阅人部门
             circulantDepartmentSel(e) {
                 let department = e.label;
                 this.circulant.newPersonList = this.circulant.personList[0].filter(data => data.fDepartmentName === department);
