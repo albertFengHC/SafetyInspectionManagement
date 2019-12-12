@@ -248,7 +248,7 @@
                             </van-step>
                         </van-steps>
                     </van-cell-group>
-                    //选择责任人列表
+                    <!--选择责任人列表-->
                     <van-popup v-model="personLiable.show" :lock-scroll="false"
                                :style="{ width: '100%',height:'50%' }">
                         <el-tree
@@ -263,9 +263,10 @@
                         </van-radio-group>
                     </van-popup>
 
-                    //传阅人公司列表
+                    <!--传阅人公司列表-->
                     <van-popup v-model="circulant.companyShow" :lock-scroll="false"
-                               :style="{ width: '100%',height:'50%' }">
+                               :style="{ width: '100%',height:'80%' }">
+                        <h5  style="padding-left: 20px;padding-top: 15px">公司列表</h5>
                         <el-tree
                                 :data="inspectedCompany.companyTreeList"
                                 accordion
@@ -273,10 +274,8 @@
                                 :highlight-current="true"
                                 @node-click="circulantCompanySel">
                         </el-tree>
-                    </van-popup>
-                    //选择传阅人列表
-                    <van-popup v-model="circulant.show" :lock-scroll="false"
-                               :style="{ width: '100%',height:'50%' }">
+                        <!--选择传阅人列表-->
+                        <h5  style="margin-top: 30px;padding-left: 20px">部门列表</h5>
                         <el-tree
                                 :data="circulant.departmentList"
                                 accordion
@@ -284,11 +283,15 @@
                                 :highlight-current="true"
                                 @node-click="circulantDepartmentSel">
                         </el-tree>
-                        <van-checkbox-group v-model="circulant.name" class="personCheck" @change="checkboxCirculantChange">
+                        <van-checkbox-group v-model="circulant.name" class="personCheck" @change="checkboxCirculantChange" v-show="circulant.show">
                             <van-checkbox :name="item.fStaffName"  v-for="(item, index) in circulant.newPersonList" :key="index" class="checkBox">{{item.fStaffName}}</van-checkbox>
                         </van-checkbox-group>
                     </van-popup>
-
+                    <!--选择传阅人列表-->
+<!--                    <van-popup v-model="circulant.show" :lock-scroll="false"-->
+<!--                               :style="{ width: '100%',height:'50%' }">-->
+<!--                        -->
+<!--                    </van-popup>-->
                 </div>
             </van-card>
             <div class="bottom">
@@ -409,7 +412,7 @@
                     personList:[],//人员列表
                     departmentList:[],//部门列表
                     newPersonList:[],//新人员列表
-                    name:'',//选中人员
+                    name:[],//选中人员
                     nameStr:'',//选中人员拼接字符串
                     idStr:'',//选择人员id拼接字符串
                     show:false,
@@ -620,8 +623,8 @@
                 this.circulant.companyVal = e.label;
                 this.circulant.companyId = e.value;
                 this.getCirculantData();
-                this.circulant.companyShow = false;
-                this.circulant.show = true;
+                // this.circulant.companyShow = false;
+                // this.circulant.show = true;
             },
             //获取传阅人数据
             getCirculantData(){
@@ -682,7 +685,12 @@
             //选择传阅人部门
             circulantDepartmentSel(e) {
                 let department = e.label;
-                this.circulant.newPersonList = this.circulant.personList[0].filter(data => data.fDepartmentName === department);
+                if(this.circulant.personList.length){
+                    this.circulant.newPersonList = this.circulant.personList[0].filter(data => data.fDepartmentName === department);
+                    this.circulant.show = true;
+                }else {
+                    this.circulant.show = false;
+                }
             },
             //改变传阅人
             checkboxCirculantChange(e){
