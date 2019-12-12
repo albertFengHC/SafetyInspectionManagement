@@ -15,7 +15,7 @@ module.exports = {
         //服务器
         // host:'129.28.66.56',
         //本地IP
-        host: '192.168.2.126',
+        host: '192.168.0.100',
         // host: 'localhost',
         port: 8080,
         https: false,

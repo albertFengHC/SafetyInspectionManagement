@@ -248,6 +248,18 @@
                             </van-step>
                         </van-steps>
                     </van-cell-group>
+                    //传阅人公司列表
+                    <van-popup v-model="personChargeRectificationCirculant.circulantCompanyShow" :lock-scroll="false"
+                               :style="{ width: '100%',height:'50%' }">
+                        <el-tree
+                                :data="inspectedCompany.companyTreeList"
+                                accordion
+                                :default-expand-all="true"
+                                :highlight-current="true"
+                                @node-click="circulantCompanySel">
+                        </el-tree>
+                    </van-popup>
+                    //选择整改人及传阅人员列表
                     <van-popup v-model="personChargeRectificationCirculant.show" :lock-scroll="false"
                                :style="{ width: '100%',height:'50%' }">
                         <el-tree
@@ -374,11 +386,16 @@
                     show:false,
                     active:2,
                     //责任人
+                    personLiableListOld:[],
                     personLiableList:[],
                     personLiableListShow:false,
                     personLiableName:'',
                     personLiableId:'',
                     //传阅人
+                    circulantCompanyVal:'',
+                    circulantCompanyId:'',
+                    circulantCompanyShow:false,
+                    circulantListOld:[],
                     circulantList: [],
                     circulantListShow:false,
                     circulantName:'',
@@ -500,17 +517,40 @@
                     });
             },
 
-            //整改责任人及传阅人
-            getCRCPersonData() {
+            //获取整改责任人数据
+            getPersonLiableData() {
                 const that = this;
                 let parameter = {
-                    companyId: this.inspectedCompany.inspectedCompanyId
+                    companyId: this.inspectedCompany.dangerProjectId
                 };
                 CRCPersonUrl(parameter)
                     .then(function (data) {
-                        that.personChargeRectificationCirculant.List = data;
+                        that.personChargeRectificationCirculant.personLiableListOld = data;
                         console.log(data);
                         that.getNewPersonList(data);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+            //选择传阅人公司
+            circulantCompanySel(e) {
+                // const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
+                this.personChargeRectificationCirculant.circulantCompanyVal = e.label;
+                this.personChargeRectificationCirculant.circulantCompanyId = e.value;
+                this.getCirculantData();
+            },
+            //获取传阅人数据
+            getCirculantData(){
+                const that = this;
+                let parameter = {
+                    companyId: this.personChargeRectificationCirculant.circulantCompanyId
+                };
+                CRCPersonUrl(parameter)
+                    .then(function (data) {
+                        that.personChargeRectificationCirculant.circulantListOld = data;
+                        console.log(data);
+                        // that.getNewPersonList(data);
                     })
                     .catch(data => {
 
@@ -614,7 +654,6 @@
             },
             //获取未提交数据
             getHDVSiIData() {
-                console.log(this.$route.params.fId);
                 if(this.$route.params.fId){
                     this.fId = this.$route.params.fId;
                     const that = this;
@@ -664,7 +703,7 @@
                     dangerProjectList.push({name: data.fDangername});
                 });
                 this.dangerProject.dangerProjectList = dangerProjectList;
-                this.getCRCPersonData();
+                this.getPersonLiableData();
             },
             //检查时间弹出层
             showDatePopup() {
