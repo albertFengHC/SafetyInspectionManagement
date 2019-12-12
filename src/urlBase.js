@@ -2,7 +2,8 @@ import axios from 'axios';
 // import axios from './axiosBase'
 
 // const baseUrl = 'http://192.168.1.2:8080/safeScreen/App/';
-const baseUrl = 'http://129.28.66.56:8044/safeScreen/App/';
+const baseUrl = 'http://129.28.66.56:8033/safeScreen/App/';
+// const baseUrl = 'http://129.28.66.56:8044/safeScreen/App/';
 
 //登录
 export function LoginUrl(parameter) {
@@ -240,7 +241,7 @@ export function ImgUploadUrl(parameter) {
             // headers: {'Content-Type': 'multipart/form-data'}
         })
             .then(response => {
-                resolve(response.data.data);
+                // resolve(response);
             })
             .catch(function (error) {
                 // console.log(error);

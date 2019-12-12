@@ -169,6 +169,12 @@
                 </van-collapse>
             </div>
         </van-card>
+        <van-card>
+            <div slot="tags">
+                <p>现场照片</p>
+                <van-uploader v-model="checkTrapDailyFileList" multiple :deletable="false" disabled/>
+            </div>
+        </van-card>
         <van-card v-if="allData.isUpdate === '1'">
             <div slot="tags">
                 <van-field
@@ -204,7 +210,9 @@
                 problemsFoundInspection:{
                     activeNames: ['0'],
                     recordMessageItem: '',
-                }
+                },
+                //现场照片
+                checkTrapDailyFileList: []
             }
         },
         methods:{
@@ -220,9 +228,14 @@
                 };
                 HDVSiIUrl(parameter)
                     .then(function (data) {
-                        that.listData = data.checkTrapDaily;
                         that.allData = data;
-                        console.log(that.listData);
+                        that.listData = data.checkTrapDaily;
+                        data.checkTrapDailyFileList.map(data => {
+                            that.checkTrapDailyFileList.push({
+                                url: data.filePath
+                            });
+                        });
+                        console.log(data);
                     })
                     .catch(data => {
 
@@ -289,4 +302,7 @@
         text-align center
         width 100%
         padding 10px 0
+
+    /deep/ .van-uploader__upload
+        display none
 </style>
