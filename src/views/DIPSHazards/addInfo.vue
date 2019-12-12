@@ -281,7 +281,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import {mapState} from "vuex";
     import {CRCPersonUrl, NCOScheduleAddUrl, HDAddedUrl, HDVSiIUrl, ImgUploadUrl} from "../../urlBase";
 
@@ -388,7 +387,9 @@
                 //状态
                 fStatus:'',
                 //提交或保存
-                fId:''
+                fId:'',
+                //隐患清单列表数据
+                DangerTreeList:''
             }
         },
         methods: {
@@ -443,10 +444,13 @@
                 if (this.problemsFoundInspection.recordMessageItem) {
                     this.$router.push({
                         name: 'LPHazards',
-                        params: {LPHazardsList: that.problemsFoundInspection.recordMessageItem}
+                        params: {LPHazardsList: that.problemsFoundInspection.recordMessageItem,DangerTreeList: that.DangerTreeList,nodesList: that.DangerTreeData.nodesList}
                     });
                 } else {
-                    this.$router.push({name: 'LPHazards'});
+                    this.$router.push({
+                        name: 'LPHazards',
+                        params: {DangerTreeList: that.DangerTreeList,nodesList: that.DangerTreeData.nodesList}
+                    });
                 }
 
             },
@@ -485,9 +489,9 @@
                 NCOScheduleAddUrl(parameter)
                     .then(function (data) {
                         console.log(data);
-                        that.dangerProject.companyDangerTree = data.companyDangerTree;
                         that.inspectedCompany.companyDangerTree = data.companyDangerTree;
                         that.DangerTreeData.nodesList = data.nodesList;
+                        that.DangerTreeList = data.selectTrapItems;
                     })
                     .catch(data => {
 
@@ -652,7 +656,7 @@
                 // const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
                 this.inspectedCompany.searchValSel = e.label;
                 this.inspectedCompany.dangerProjectId = e.value;
-                let list = this.dangerProject.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
+                let list = this.inspectedCompany.companyDangerTree.filter(data => data.fCompanyname === this.inspectedCompany.searchValSel);
                 let dangerProjectList = [];
                 list.map(data => {
                     dangerProjectList.push({name: data.fDangername});
@@ -873,7 +877,6 @@
 
                     });
             },
-
         },
         mounted() {
             this.getHDVSiIData();

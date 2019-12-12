@@ -122,22 +122,22 @@
                 }
             },
             //获取列表数据
-            getDangerTreeData(param) {
-                const that = this;
-                let parameter = {
-                    fCompanyid: this.userInfo.companyId,
-                    fUserid: this.userInfo.userId,
-                };
-                NCOScheduleAddUrl(parameter)
-                    .then(function (data) {
-                        console.log(data);
-                        that.getNewList(data.nodesList[0].child);
-                        that.DangerTreeDataList=data.selectTrapItems;
-                    })
-                    .catch(data => {
-
-                    });
-            },
+            // getDangerTreeData(param) {
+            //     const that = this;
+            //     let parameter = {
+            //         fCompanyid: this.userInfo.companyId,
+            //         fUserid: this.userInfo.userId,
+            //     };
+            //     NCOScheduleAddUrl(parameter)
+            //         .then(function (data) {
+            //             console.log(data);
+            //             that.getNewList(data.nodesList[0].child);
+            //             that.DangerTreeDataList=data.selectTrapItems;
+            //         })
+            //         .catch(data => {
+            //
+            //         });
+            // },
             //获取隐患工程列表
             getNewList(list){
                 let newCompanyTreeList = '';
@@ -228,7 +228,9 @@
             },
         },
         mounted() {
-            this.getDangerTreeData();
+            // this.getDangerTreeData();
+            this.DangerTreeDataList = this.$route.params.DangerTreeList;
+            this.getNewList(this.$route.params.nodesList[0].child);
         },
         activated() {
             if(this.$route.params.LPHazardsList != undefined){
