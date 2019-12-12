@@ -389,7 +389,10 @@
                 //提交或保存
                 fId:'',
                 //隐患清单列表数据
-                DangerTreeList:''
+                LPHazardsData:{
+                    DangerTreeList:'',
+                    nodesList:''
+                }
             }
         },
         methods: {
@@ -444,15 +447,14 @@
                 if (this.problemsFoundInspection.recordMessageItem) {
                     this.$router.push({
                         name: 'LPHazards',
-                        params: {LPHazardsList: that.problemsFoundInspection.recordMessageItem,DangerTreeList: that.DangerTreeList,nodesList: that.DangerTreeData.nodesList}
+                        params: {LPHazardsList: that.problemsFoundInspection.recordMessageItem,DangerTreeList: that.LPHazardsData.DangerTreeList,NodesList: that.LPHazardsData.nodesList}
                     });
                 } else {
                     this.$router.push({
                         name: 'LPHazards',
-                        params: {DangerTreeList: that.DangerTreeList,nodesList: that.DangerTreeData.nodesList}
+                        params: {DangerTreeList: that.LPHazardsData.DangerTreeList,NodesList: that.LPHazardsData.nodesList}
                     });
                 }
-
             },
             //获取被检查单位列表
             getCompanyTreeList() {
@@ -490,8 +492,8 @@
                     .then(function (data) {
                         console.log(data);
                         that.inspectedCompany.companyDangerTree = data.companyDangerTree;
-                        that.DangerTreeData.nodesList = data.nodesList;
-                        that.DangerTreeList = data.selectTrapItems;
+                        that.LPHazardsData.nodesList = data.nodesList;
+                        that.LPHazardsData.DangerTreeList = data.selectTrapItems;
                     })
                     .catch(data => {
 

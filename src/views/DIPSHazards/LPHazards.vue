@@ -230,7 +230,7 @@
         mounted() {
             // this.getDangerTreeData();
             this.DangerTreeDataList = this.$route.params.DangerTreeList;
-            this.getNewList(this.$route.params.nodesList[0].child);
+            this.getNewList(this.$route.params.NodesList[0].child);
         },
         activated() {
             if(this.$route.params.LPHazardsList != undefined){
