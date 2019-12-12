@@ -6,17 +6,22 @@
                 left-arrow
                 @click-left="toWaitingSign"
         />
-        <div class="topUser">
-            <div class="topUserImg">
-                <img src="../../assets/DHDIList/已同意.png">
-            </div>
-            <div class="topUserBottom">
-                <h4>{{listData.fCheckname}}</h4>
-                <p>{{listData.fStatus}}</p>
-            </div>
-        </div>
         <van-card>
             <div slot="tags">
+                <van-field
+                        v-model="listData.fCompanyname"
+                        clearable
+                        label="检查单位"
+                        input-align="right"
+                        disabled
+                />
+                <van-field
+                        v-model="listData.fTrapno"
+                        clearable
+                        label="检查记录编号"
+                        input-align="right"
+                        disabled
+                />
                 <van-field
                         v-model="listData.fCheckname"
                         clearable
@@ -38,24 +43,10 @@
                         input-align="right"
                         disabled
                 />
-                <van-field
-                        v-model="listData.fLastdates"
-                        clearable
-                        label="整改截止日期"
-                        input-align="right"
-                        disabled
-                />
             </div>
         </van-card>
         <van-card>
             <div slot="tags">
-                <van-field
-                        v-model="listData.fCompanyname"
-                        clearable
-                        label="检查单位"
-                        input-align="right"
-                        disabled
-                />
                 <van-field
                         v-model="listData.fPassivename"
                         clearable
@@ -64,16 +55,13 @@
                         disabled
                 />
                 <van-field
-                        v-model="listData.fTrapno"
+                        v-model="listData.fLastdates"
                         clearable
-                        label="检查记录编号"
+                        label="要求整改截止日期"
                         input-align="right"
+                        label-width="120px"
                         disabled
                 />
-            </div>
-        </van-card>
-        <van-card>
-            <div slot="tags">
                 <van-field
                         v-model="listData.fDangername"
                         clearable
@@ -93,55 +81,6 @@
                         v-model="listData.fLongitude"
                         clearable
                         label="纬度"
-                        input-align="right"
-                        disabled
-                />
-            </div>
-        </van-card>
-        <van-card>
-            <div slot="tags">
-                <van-field
-                        v-model="listData.fProblemdesc"
-                        clearable
-                        label="发现问题描述"
-                        input-align="right"
-                        disabled
-                        type="textarea"
-                        maxlength="300"
-                        show-word-limit
-                />
-                <van-field
-                        v-model="listData.fRequiredesc"
-                        clearable
-                        label="整改要求"
-                        input-align="right"
-                        disabled
-                        type="textarea"
-                        maxlength="300"
-                        show-word-limit
-                />
-            </div>
-        </van-card>
-        <van-card>
-            <div slot="tags">
-                <van-field
-                        v-model="listData.fTestobject"
-                        clearable
-                        label="排查对象"
-                        input-align="right"
-                        disabled
-                />
-                <van-field
-                        v-model="listData.fTrapclass"
-                        clearable
-                        label="隐患类别"
-                        input-align="right"
-                        disabled
-                />
-                <van-field
-                        v-model="listData.fTraptype"
-                        clearable
-                        label="隐患类型"
                         input-align="right"
                         disabled
                 />
@@ -171,8 +110,87 @@
         </van-card>
         <van-card>
             <div slot="tags">
+                <van-field
+                        v-model="listData.fProblemdesc"
+                        clearable
+                        label="发现问题描述"
+                        input-align="right"
+                        disabled
+                        type="textarea"
+                        maxlength="300"
+                        show-word-limit
+                />
+                <van-field
+                        v-model="listData.fRequiredesc"
+                        clearable
+                        label="整改要求"
+                        input-align="right"
+                        disabled
+                        type="textarea"
+                        maxlength="300"
+                        show-word-limit
+                />
+                <van-field
+                        v-model="listData.fTestobject"
+                        clearable
+                        label="排查对象"
+                        input-align="right"
+                        disabled
+                />
+                <van-field
+                        v-model="listData.fTrapclass"
+                        clearable
+                        label="隐患类别"
+                        input-align="right"
+                        disabled
+                />
+                <van-field
+                        v-model="listData.fTraptype"
+                        clearable
+                        label="隐患类型"
+                        input-align="right"
+                        disabled
+                />
+                <van-field
+                        v-model="listData.fAcceptname"
+                        clearable
+                        label="待签收人"
+                        input-align="right"
+                        disabled
+                />
+                <van-field
+                        v-model="listData.fReadname"
+                        clearable
+                        label="待传阅人"
+                        input-align="right"
+                        disabled
+                />
+            </div>
+        </van-card>
+        <van-card>
+            <div slot="tags">
                 <p>现场照片</p>
                 <van-uploader v-model="checkTrapDailyFileList" multiple :deletable="false" disabled/>
+            </div>
+        </van-card>
+        <van-card>
+            <div slot="tags">
+                <van-cell-group>
+                    <van-steps direction="vertical" :active="process">
+                        <van-step>
+                            <h4>检查人</h4>
+                            <p>{{listData.fCheckname}}</p>
+                        </van-step>
+                        <van-step>
+                            <h4>整改责任人</h4>
+                            <p>{{listData.fAcceptname}}</p>
+                        </van-step>
+                        <van-step>
+                            <h4>传阅人</h4>
+                            <p>{{listData.fReadname}}</p>
+                        </van-step>
+                    </van-steps>
+                </van-cell-group>
             </div>
         </van-card>
         <van-card v-if="allData.isUpdate === '1'">
@@ -212,7 +230,11 @@
                     recordMessageItem: '',
                 },
                 //现场照片
-                checkTrapDailyFileList: []
+                checkTrapDailyFileList: [],
+                //签收进度
+                process:10,
+                //签收流程
+                lrCheckTasks:''
             }
         },
         methods:{
@@ -235,6 +257,7 @@
                                 url: data.filePath
                             });
                         });
+                        that.lrCheckTasks = data.lrCheckTasks;
                         console.log(data);
                     })
                     .catch(data => {
@@ -277,22 +300,6 @@
         width 100%
         height 100%
         margin 0
-
-    .topUser
-        display flex
-        justify-content space-between
-        border-bottom 1px solid #eee
-        margin-bottom 10px
-        padding 0 20px
-        .topUserImg
-            padding-top 10px
-        .topUserBottom
-            flex 1
-            padding 10px
-            p
-                margin 0
-                margin-top 5px
-                color #e1a14c
 
     .ProblemsFoundInspectionList
         /deep/ .van-cell__title

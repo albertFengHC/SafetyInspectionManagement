@@ -297,7 +297,7 @@
             <div class="bottom">
                 <van-row>
                     <van-col span="12">
-                        <van-button round type="info" size="small" style='width: 70%' @click="upLoadData('1')">提交</van-button>
+                        <van-button round type="info" size="small" style='width: 70%' @click="upLoadData('1')">下发</van-button>
                     </van-col>
                     <van-col span="12">
                         <van-button round type="primary" size="small" style='width: 70%' @click="upLoadData('0')">保存</van-button>
