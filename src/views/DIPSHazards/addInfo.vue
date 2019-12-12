@@ -221,15 +221,15 @@
             <van-card>
                 <div slot="tags">
                     <van-cell-group>
-                        <van-steps direction="vertical" :active="personChargeRectificationCirculant.active">
+                        <van-steps direction="vertical" :active="process">
                             <van-step>
                                 <van-row>
                                     <van-col span="19">
                                         <h4>整改责任人</h4>
-                                        <p>{{personChargeRectificationCirculant.personLiableName}}</p>
+                                        <p>{{personLiable.name}}</p>
                                     </van-col>
                                     <van-col span="5">
-                                        <van-button plain type="default" size="small" @click="showDepartmentTree(1)">请选择
+                                        <van-button plain type="default" size="small" @click="showPersonLiableDepartmentTree">请选择
                                         </van-button>
                                     </van-col>
                                 </van-row>
@@ -238,18 +238,33 @@
                                 <van-row>
                                     <van-col span="19">
                                         <h4>传阅人</h4>
-                                        <p>{{personChargeRectificationCirculant.circulantName}}</p>
+                                        <p>{{circulant.nameStr}}</p>
                                     </van-col>
                                     <van-col span="5">
-                                        <van-button plain type="default" size="small" @click="showDepartmentTree(2)">请选择
+                                        <van-button plain type="default" size="small" @click="showCirculantCompanyTree">请选择
                                         </van-button>
                                     </van-col>
                                 </van-row>
                             </van-step>
                         </van-steps>
                     </van-cell-group>
+                    //选择责任人列表
+                    <van-popup v-model="personLiable.show" :lock-scroll="false"
+                               :style="{ width: '100%',height:'50%' }">
+                        <el-tree
+                                :data="personLiable.departmentList"
+                                accordion
+                                :default-expand-all="true"
+                                :highlight-current="true"
+                                @node-click="personLiableDepartmentSel">
+                        </el-tree>
+                        <van-radio-group v-model="personLiable.name" class="personCheck" @change="checkboxPersonLiableChange">
+                            <van-radio :name="item.fStaffName"  v-for="(item, index) in personLiable.newPersonList" :key="index" class="checkBox">{{item.fStaffName}}</van-radio>
+                        </van-radio-group>
+                    </van-popup>
+
                     //传阅人公司列表
-                    <van-popup v-model="personChargeRectificationCirculant.circulantCompanyShow" :lock-scroll="false"
+                    <van-popup v-model="circulant.companyShow" :lock-scroll="false"
                                :style="{ width: '100%',height:'50%' }">
                         <el-tree
                                 :data="inspectedCompany.companyTreeList"
@@ -259,23 +274,21 @@
                                 @node-click="circulantCompanySel">
                         </el-tree>
                     </van-popup>
-                    //选择整改人及传阅人员列表
-                    <van-popup v-model="personChargeRectificationCirculant.show" :lock-scroll="false"
+                    //选择传阅人列表
+                    <van-popup v-model="circulant.show" :lock-scroll="false"
                                :style="{ width: '100%',height:'50%' }">
                         <el-tree
-                                :data="personChargeRectificationCirculant.departmentList"
+                                :data="circulant.departmentList"
                                 accordion
                                 :default-expand-all="true"
                                 :highlight-current="true"
-                                @node-click="departmentSel">
+                                @node-click="circulantDepartmentSel">
                         </el-tree>
-                        <van-radio-group v-model="personChargeRectificationCirculant.personLiableList" class="personCheck" @change="checkboxPersonLiableChange">
-                            <van-radio :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.personLiableListShow">{{item.fStaffName}}</van-radio>
-                        </van-radio-group>
-                        <van-checkbox-group v-model="personChargeRectificationCirculant.circulantList" class="personCheck" @change="checkboxCirculantChange">
-                            <van-checkbox :name="item.fStaffName"  v-for="(item, index) in personChargeRectificationCirculant.newPersonList" :key="index" class="checkBox" v-show="personChargeRectificationCirculant.circulantListShow">{{item.fStaffName}}</van-checkbox>
+                        <van-checkbox-group v-model="circulant.name" class="personCheck" @change="checkboxCirculantChange">
+                            <van-checkbox :name="item.fStaffName"  v-for="(item, index) in circulant.newPersonList" :key="index" class="checkBox">{{item.fStaffName}}</van-checkbox>
                         </van-checkbox-group>
                     </van-popup>
+
                 </div>
             </van-card>
             <div class="bottom">
@@ -377,30 +390,31 @@
                 rectificationRequirements: '',
                 //图片文件上传
                 fileList: [],
-                //整改责任人及传阅人
-                personChargeRectificationCirculant: {
-                    List: '',
-                    personList: [],
-                    departmentList: '',
-                    newPersonList: [],
-                    show:false,
-                    active:2,
-                    //责任人
-                    personLiableListOld:[],
-                    personLiableList:[],
-                    personLiableListShow:false,
-                    personLiableName:'',
-                    personLiableId:'',
-                    //传阅人
-                    circulantCompanyVal:'',
-                    circulantCompanyId:'',
-                    circulantCompanyShow:false,
-                    circulantListOld:[],
-                    circulantList: [],
-                    circulantListShow:false,
-                    circulantName:'',
-                    circulantId:'',
+                //整改责任人
+                personLiable:{
+                    allData:[],//原数据
+                    personList:[],//人员列表
+                    departmentList:[],//部门列表
+                    newPersonList:[],//新人员列表
+                    name:'',//选中人员
+                    id:'',//选择人员id
+                    show:false
                 },
+                //传阅人
+                circulant:{
+                    companyVal:'',//选中公司名
+                    companyId:'',//选中公司Id
+                    companyShow:false,//公司列表
+                    allData:[],//原数据
+                    personList:[],//人员列表
+                    departmentList:[],//部门列表
+                    newPersonList:[],//新人员列表
+                    name:'',//选中人员
+                    nameStr:'',//选中人员拼接字符串
+                    idStr:'',//选择人员id拼接字符串
+                    show:false,
+                },
+                process: 2,
                 //状态
                 fStatus:'',
                 //提交或保存
@@ -438,10 +452,10 @@
                     fStatus: '',//状态
                     fCheckdates: this.checkDate.timeValue,//检查时间
                     fLastdates: this.deadlineRectification.timeValue,//整改截止日期
-                    fAcceptid: this.personChargeRectificationCirculant.personLiableId,//待签收人id
-                    fAcceptname: this.personChargeRectificationCirculant.personLiableName,//待签收人
-                    fReadid: this.personChargeRectificationCirculant.circulantId,//待传阅人id
-                    fReadname: this.personChargeRectificationCirculant.circulantName,//待传阅人
+                    fAcceptid: this.personLiable.id,//待签收人id
+                    fAcceptname: this.personLiable.name,//待签收人
+                    fReadid: this.circulant.idStr,//待传阅人id
+                    fReadname: this.circulant.nameStr,//待传阅人
                     userId: this.userInfo.userId,//当前用户id
                     userName: this.userInfo.realName,//当前用户姓名
                     fSourcefile: this.timeStr,//文件id,前端生成
@@ -525,43 +539,20 @@
                 };
                 CRCPersonUrl(parameter)
                     .then(function (data) {
-                        that.personChargeRectificationCirculant.personLiableListOld = data;
+                        that.personLiable.allData = data;
                         console.log(data);
-                        that.getNewPersonList(data);
+                        that.getNewPersonLiableList(data);
                     })
                     .catch(data => {
 
                     });
             },
-            //选择传阅人公司
-            circulantCompanySel(e) {
-                // const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
-                this.personChargeRectificationCirculant.circulantCompanyVal = e.label;
-                this.personChargeRectificationCirculant.circulantCompanyId = e.value;
-                this.getCirculantData();
-            },
-            //获取传阅人数据
-            getCirculantData(){
-                const that = this;
-                let parameter = {
-                    companyId: this.personChargeRectificationCirculant.circulantCompanyId
-                };
-                CRCPersonUrl(parameter)
-                    .then(function (data) {
-                        that.personChargeRectificationCirculant.circulantListOld = data;
-                        console.log(data);
-                        // that.getNewPersonList(data);
-                    })
-                    .catch(data => {
-
-                    });
-            },
-            //获取责任人及传阅人部门及人员列表
-            getNewPersonList(data) {
+            //获取责任人部门及人员列表
+            getNewPersonLiableList(data) {
                 let newPersonTree = data;
                 let newDepartmentList = [];
                 let child = [];
-                this.personChargeRectificationCirculant.personList = [];
+                this.personLiable.personList = [];
                 let resetTree = (value) => {
                     if (value.childList.length) {
                         value.childList.map(item => {
@@ -570,11 +561,11 @@
                                 value: item.fDepartmentId,
                             });
                             if (item.personList.length) {
-                                this.personChargeRectificationCirculant.personList.push(item.personList);
+                                this.personLiable.personList.push(item.personList);
                             }
                         });
                         if (value.personList.length) {
-                            this.personChargeRectificationCirculant.personList.push(value.personList);
+                            this.personLiable.personList.push(value.personList);
                         }
                         return {
                             // ...item,
@@ -584,7 +575,7 @@
                         }
                     } else {
                         if (value.personList.length) {
-                            this.personChargeRectificationCirculant.personList.push(value.personList);
+                            this.personLiable.personList.push(value.personList);
                         }
                         return {
                             // ...item,
@@ -594,36 +585,104 @@
                     }
                 };
                 newDepartmentList.push(resetTree(newPersonTree));
-                this.personChargeRectificationCirculant.departmentList = newDepartmentList;
+                this.personLiable.departmentList = newDepartmentList;
             },
-            //选择整改责任人及传阅人部门
-            departmentSel(e) {
+            //展示整改责任人部门
+            showPersonLiableDepartmentTree() {
+                this.personLiable.show = true;
+            },
+            //选择整改责任人部门
+            personLiableDepartmentSel(e) {
                 let department = e.label;
-                this.personChargeRectificationCirculant.newPersonList = this.personChargeRectificationCirculant.personList[0].filter(data => data.fDepartmentName === department);
-            },
-            //展示整改责任人及传阅人部门
-            showDepartmentTree(e) {
-                this.personChargeRectificationCirculant.show = true;
-                if(e === 1){
-                    this.personChargeRectificationCirculant.personLiableListShow = true;
-                    this.personChargeRectificationCirculant.circulantListShow = false;
-                }else if(e === 2){
-                    this.personChargeRectificationCirculant.circulantListShow = true;
-                    this.personChargeRectificationCirculant.personLiableListShow = false;
-                }
+                this.personLiable.newPersonList = this.personLiable.personList[0].filter(data => data.fDepartmentName === department);
             },
             //改变整改责任人
             checkboxPersonLiableChange(e){
                 console.log(e);
                 const that = this;
-                this.personChargeRectificationCirculant.personLiableName = e;
-                this.personChargeRectificationCirculant.personLiableId = that.personChargeRectificationCirculant.newPersonList.filter(name => name.fStaffName === e)[0].fId;
-                if(this.personChargeRectificationCirculant.personLiableName){
-                    this.personChargeRectificationCirculant.active = 0;
-                    if(this.personChargeRectificationCirculant.personLiableName && this.personChargeRectificationCirculant.circulantName){
-                        this.personChargeRectificationCirculant.active = 2;
+                this.personLiable.name = e;
+                this.personLiable.id = that.personLiable.newPersonList.filter(name => name.fStaffName === e)[0].fId;
+                if(this.personLiable.name){
+                    this.process = 0;
+                    if(this.personLiable.name && this.circulant.name){
+                        this.process = 2;
                     }
                 }
+            },
+
+            //展示传阅人公司选择列表
+            showCirculantCompanyTree(e) {
+                this.circulant.companyShow = true;
+            },
+            //选择传阅人公司
+            circulantCompanySel(e) {
+                // const pId = this.$refs.companyTree.getCheckedNodes()[0].data.fItemid;
+                this.circulant.companyVal = e.label;
+                this.circulant.companyId = e.value;
+                this.getCirculantData();
+                this.circulant.companyShow = false;
+                this.circulant.show = true;
+            },
+            //获取传阅人数据
+            getCirculantData(){
+                const that = this;
+                let parameter = {
+                    companyId: this.circulant.companyId
+                };
+                CRCPersonUrl(parameter)
+                    .then(function (data) {
+                        that.circulant.allData = data;
+                        console.log(data);
+                        that.getNewPersonCirculantList(data);
+                    })
+                    .catch(data => {
+
+                    });
+            },
+            //获取传阅人部门及人员列表
+            getNewPersonCirculantList(data) {
+                let newPersonTree = data;
+                let newDepartmentList = [];
+                let child = [];
+                this.circulant.personList = [];
+                let resetTree = (value) => {
+                    if (value.childList.length) {
+                        value.childList.map(item => {
+                            child.push({
+                                label: item.fFullName,
+                                value: item.fDepartmentId,
+                            });
+                            if (item.personList.length) {
+                                this.circulant.personList.push(item.personList);
+                            }
+                        });
+                        if (value.personList.length) {
+                            this.circulant.personList.push(value.personList);
+                        }
+                        return {
+                            // ...item,
+                            label: value.fFullName,
+                            value: value.fDepartmentId,
+                            children: child
+                        }
+                    } else {
+                        if (value.personList.length) {
+                            this.circulant.personList.push(value.personList);
+                        }
+                        return {
+                            // ...item,
+                            label: value.fFullName,
+                            value: value.fDepartmentId,
+                        }
+                    }
+                };
+                newDepartmentList.push(resetTree(newPersonTree));
+                this.circulant.departmentList = newDepartmentList;
+            },
+            //选择整改责任人部门
+            circulantDepartmentSel(e) {
+                let department = e.label;
+                this.circulant.newPersonList = this.circulant.personList[0].filter(data => data.fDepartmentName === department);
             },
             //改变传阅人
             checkboxCirculantChange(e){
@@ -631,7 +690,7 @@
                 const that = this;
                 let PersonLiable = [];
                 e.map(data => {
-                    PersonLiable.push(that.personChargeRectificationCirculant.newPersonList.filter(name => name.fStaffName === data)[0]);
+                    PersonLiable.push(that.circulant.newPersonList.filter(name => name.fStaffName === data)[0]);
                 });
                 let newPersonLiableName = '';
                 let newPersonLiableId = '';
@@ -639,12 +698,12 @@
                     newPersonLiableName += data.fStaffName+',';
                     newPersonLiableId += data.fId+','
                 });
-                this.personChargeRectificationCirculant.circulantName = newPersonLiableName.substr(0, newPersonLiableName.length - 1);
-                this.personChargeRectificationCirculant.circulantId = newPersonLiableId.substr(0, newPersonLiableId.length - 1);
-                if(this.personChargeRectificationCirculant.circulantName){
-                    this.personChargeRectificationCirculant.active = 1;
-                }else if(this.personChargeRectificationCirculant.personLiableName){
-                    this.personChargeRectificationCirculant.active = 0;
+                this.circulant.nameStr = newPersonLiableName.substr(0, newPersonLiableName.length - 1);
+                this.circulant.idStr = newPersonLiableId.substr(0, newPersonLiableId.length - 1);
+                if(this.circulant.name){
+                    this.process = 1;
+                }else if(this.personLiable.name){
+                    this.process = 0;
                 }
             },
 
@@ -680,10 +739,10 @@
                             that.fStatus = checkTrapDaily.fStatus;
                             that.checkDate.timeValue = checkTrapDaily.fCheckdates;
                             that.deadlineRectification.timeValue = checkTrapDaily.fLastdates;
-                            that.personChargeRectificationCirculant.personLiableId = checkTrapDaily.fAcceptid;
-                            that.personChargeRectificationCirculant.personLiableName = checkTrapDaily.fAcceptname;
-                            that.personChargeRectificationCirculant.circulantId = checkTrapDaily.fReadid;
-                            that.personChargeRectificationCirculant.circulantName = checkTrapDaily.fReadname;
+                            that.personLiable.id = checkTrapDaily.fAcceptid;
+                            that.personLiable.name = checkTrapDaily.fAcceptname;
+                            that.circulant.idStr = checkTrapDaily.fReadid;
+                            that.circulant.nameStr = checkTrapDaily.fReadname;
                             that.timeStr = checkTrapDaily.fSourcefile;
                             that.problemsFoundInspection.recordMessageItem = checkTrapDaily.recordMessageItem;
                         })
